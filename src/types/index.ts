@@ -1,0 +1,70 @@
+export type Track = 'A' | 'B' | 'C';
+export type VoiceContext = 'morning' | 'comfort' | 'celebrate' | 'acknowledge';
+
+export interface UserProfile {
+  name: string;
+  track: Track;
+  startDate: string;
+  assessmentAnswers: number[];
+}
+
+export interface GerdSymptoms {
+  heartburn: boolean;
+  bloating: boolean;
+  nausea: boolean;
+  chestTightness: boolean;
+  swallowingDifficulty: boolean;
+  none: boolean;
+}
+
+export interface CheckInData {
+  mood: number; // 1-5
+  anxietyLevel: number; // 1-10
+  symptoms: GerdSymptoms;
+  triggers: string[];
+  sleepHours: number;
+  sleepQuality: number; // 1-5
+  activities: string[];
+  notes: string;
+}
+
+export interface DayEntry {
+  dayNumber: number;
+  date: string;
+  completed: boolean;
+  checkInData?: CheckInData;
+  voiceNotePlayed: boolean;
+  voiceNoteContext?: VoiceContext;
+}
+
+export interface AppSettings {
+  reminderEnabled: boolean;
+  reminderTime: string; // "08:00"
+  autoPlayVoice: boolean;
+  onboardingDone: boolean;
+}
+
+export interface DayContent {
+  dayNumber: number;
+  title: string;
+  subtitle: string;
+  mission: string[];
+  material: string;
+  voiceNotes: Record<VoiceContext, string>;
+}
+
+export interface TrackContent {
+  track: Track;
+  name: string;
+  description: string;
+  image: string;
+  color: string;
+  days: DayContent[];
+}
+
+export const STORAGE_KEYS = {
+  profile: 'lt-profile',
+  entries: 'lt-entries',
+  settings: 'lt-settings',
+  firstVisit: 'lt-first-visit',
+} as const;

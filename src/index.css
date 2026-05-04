@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 44 26% 95%; /* #F5F3EF */
+    --foreground: 0 0% 18%; /* #2D2D2D */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 18%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 18%;
+    --primary: 104 22% 45%; /* #6B8E5A */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 42%; /* #6B6B6B */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 63%; /* #A0A0A0 */
+    --muted-foreground: 0 0% 42%;
+    --accent: 104 22% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 30 38% 64%; /* #C4A484 */
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 21% 91%; /* #EDE9E3 */
+    --input: 36 21% 91%;
+    --ring: 104 22% 45%;
+    --radius: 1.25rem;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F3EF;
+    color: #2D2D2D;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', sans-serif;
+    color: #2D2D2D;
+  }
+
+  .font-handwritten {
+    font-family: 'Caveat', cursive;
+  }
+}
+
+@layer components {
+  .card-soft {
+    @apply bg-white rounded-2xl border border-transparent shadow-sm;
+  }
+
+  .btn-primary {
+    @apply bg-[#6B8E5A] text-white font-medium rounded-full px-6 py-3.5 active:scale-[0.98] transition-all hover:bg-[#5A7A4A] disabled:bg-[#D0D0D0] disabled:text-[#F5F3EF] disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-[#2D2D2D] font-semibold rounded-full px-6 py-3.5 border border-[#EDE9E3] hover:bg-[#F5F3EF] active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .page-container {
+    @apply px-4 sm:px-6 w-full max-w-md mx-auto relative;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pb-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+}
