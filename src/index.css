@@ -27,7 +27,7 @@
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: #F5F3EF;
     color: #2D2D2D;
     -webkit-tap-highlight-color: transparent;
@@ -35,7 +35,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'EB Garamond', 'Garamond', serif;
     color: #2D2D2D;
   }
 
