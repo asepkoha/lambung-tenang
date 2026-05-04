@@ -33,6 +33,45 @@ export function useAudioPlayer() {
     }
   }, []);
 
+  const playTTS = useCallback((track: Track, day: number, context: VoiceContext) => {
+    if (!window.speechSynthesis) return;
+
+    const text = getVoiceNoteTranscript(track, day, context);
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'id-ID';
+    utterance.rate = 0.9;
+    utterance.pitch = 1.0;
+
+    // Try to find Indonesian voice
+    const voices = window.speechSynthesis.getVoices();
+    const idVoice = voices.find((v) => v.lang.startsWith('id'));
+    if (idVoice) utterance.voice = idVoice;
+
+    utteranceRef.current = utterance;
+
+    const estimatedDuration = text.length * 0.12; // rough estimate
+    setState((s) => ({ ...s, duration: estimatedDuration, isPlaying: true, hasAudioFile: false }));
+
+    const startTime = Date.now();
+    timerRef.current = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      setState((s) => ({ ...s, currentTime: Math.min(elapsed, estimatedDuration) }));
+    }, 500);
+
+    utterance.onend = () => {
+      setState((s) => ({ ...s, isPlaying: false, currentTime: 0 }));
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+
+    utterance.onerror = () => {
+      setState((s) => ({ ...s, isPlaying: false }));
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
   const play = useCallback(async (track: Track, day: number, context: VoiceContext) => {
     // Stop any current playback
     if (audioRef.current) {
@@ -80,46 +119,7 @@ export function useAudioPlayer() {
     } else {
       playTTS(track, day, context);
     }
-  }, [checkAudioFile]);
-
-  const playTTS = useCallback((track: Track, day: number, context: VoiceContext) => {
-    if (!window.speechSynthesis) return;
-
-    const text = getVoiceNoteTranscript(track, day, context);
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'id-ID';
-    utterance.rate = 0.9;
-    utterance.pitch = 1.0;
-
-    // Try to find Indonesian voice
-    const voices = window.speechSynthesis.getVoices();
-    const idVoice = voices.find((v) => v.lang.startsWith('id'));
-    if (idVoice) utterance.voice = idVoice;
-
-    utteranceRef.current = utterance;
-
-    const estimatedDuration = text.length * 0.12; // rough estimate
-    setState((s) => ({ ...s, duration: estimatedDuration, isPlaying: true, hasAudioFile: false }));
-
-    let startTime = Date.now();
-    timerRef.current = setInterval(() => {
-      const elapsed = (Date.now() - startTime) / 1000;
-      setState((s) => ({ ...s, currentTime: Math.min(elapsed, estimatedDuration) }));
-    }, 500);
-
-    utterance.onend = () => {
-      setState((s) => ({ ...s, isPlaying: false, currentTime: 0 }));
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-
-    utterance.onerror = () => {
-      setState((s) => ({ ...s, isPlaying: false }));
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
-  }, []);
+  }, [checkAudioFile, playTTS]);
 
   const pause = useCallback(() => {
     if (audioRef.current) {
@@ -187,13 +187,9 @@ export function useAudioPlayer() {
 }
 
 export function useNotification() {
-  const [permission, setPermission] = useState<NotificationPermission | 'default'>('default');
-
-  useEffect(() => {
-    if ('Notification' in window) {
-      setPermission(Notification.permission);
-    }
-  }, []);
+  const [permission, setPermission] = useState<NotificationPermission | 'default'>(
+    typeof window !== 'undefined' && 'Notification' in window ? Notification.permission : 'default'
+  );
 
   const requestPermission = useCallback(async () => {
     if (!('Notification' in window)) return false;
