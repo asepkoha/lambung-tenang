@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
 import { allTrackContent } from '@/data/content';
 import { useProfile } from '@/hooks/useProfile';
@@ -73,12 +74,12 @@ export default function Assessment() {
             <label className="block text-xs font-bold text-lt-text-secondary uppercase tracking-widest mb-2">
               Siapa namamu?
             </label>
-            <input
+            <Input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ketik nama panggilanmu..."
-              className="w-full px-3 py-3 rounded-xl border border-lt-border-subtle bg-lt-bg-base focus:outline-none focus:border-lt-color-primary focus:ring-4 focus:ring-lt-color-primary/10 text-base font-bold text-lt-text-primary transition-all placeholder:text-lt-text-muted/50"
+              className="w-full h-14 px-4 rounded-xl border-lt-border-subtle bg-lt-bg-base focus-visible:ring-lt-color-primary/40 text-base font-bold text-lt-text-primary transition-all placeholder:text-lt-text-muted/50"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
