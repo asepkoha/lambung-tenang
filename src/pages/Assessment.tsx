@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { allTrackContent } from '@/data/content';
 import { useProfile } from '@/hooks/useProfile';
@@ -44,18 +45,20 @@ export default function Assessment() {
           className="text-center mt-4 mb-4 flex-1 flex flex-col justify-center"
         >
           <div
-            className="w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mb-4 overflow-hidden border-4 shadow-xl ring-4 ring-white shrink-0"
-            style={{ borderColor: info.color }}
+            className={cn(
+              "w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mb-4 overflow-hidden border-4 shadow-xl ring-4 ring-lt-bg-base shrink-0",
+              track === 'A' ? 'border-track-A' : track === 'B' ? 'border-track-B' : 'border-track-C'
+            )}
           >
-            <img src={info.image} alt={info.name} className="w-full h-full object-cover bg-white" />
+            <img src={info.image} alt={info.name} className="w-full h-full object-cover bg-lt-bg-surface" />
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-sage-muted">Analisis Selesai</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-sage-text leading-tight">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-lt-text-secondary">Analisis Selesai</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-lt-text-primary leading-tight">
               {info.name}
             </h2>
           </div>
-          <p className="text-sage-muted text-xs sm:text-sm leading-relaxed px-4 mt-3 bg-white/50 py-3 rounded-2xl italic">
+          <p className="text-lt-text-secondary text-xs sm:text-sm leading-relaxed px-4 mt-3 bg-lt-bg-subtle py-3 rounded-2xl italic border border-lt-border-subtle">
             "{info.description}"
           </p>
         </motion.div>
@@ -65,9 +68,9 @@ export default function Assessment() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="card-soft p-4 mb-4 border-2 border-transparent shadow-lg"
+            className="card-soft p-4 mb-4 border border-lt-border-subtle shadow-lg"
           >
-            <label className="block text-xs font-bold text-sage-muted uppercase tracking-widest mb-2">
+            <label className="block text-xs font-bold text-lt-text-secondary uppercase tracking-widest mb-2">
               Siapa namamu?
             </label>
             <input
@@ -75,8 +78,13 @@ export default function Assessment() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ketik nama panggilanmu..."
-              className="w-full px-3 py-3 rounded-xl border-2 border-gray-200 bg-white focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 text-base font-bold text-sage-text transition-all"
-              onKeyDown={(e) => e.key === 'Enter' && finish()}
+              className="w-full px-3 py-3 rounded-xl border border-lt-border-subtle bg-lt-bg-base focus:outline-none focus:border-lt-color-primary focus:ring-4 focus:ring-lt-color-primary/10 text-base font-bold text-lt-text-primary transition-all placeholder:text-lt-text-muted/50"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  finish();
+                }
+              }}
               autoFocus
             />
           </motion.div>
@@ -100,8 +108,8 @@ export default function Assessment() {
   return (
     <div className="page-container min-h-screen flex flex-col pt-6 pb-24 overflow-y-auto">
       <div className="mb-2 shrink-0 text-center">
-        <h1 className="text-xl font-bold text-sage-text">Asesmen Personal</h1>
-        <p className="text-[10px] sm:text-xs text-sage-muted">Bantu kami menyesuaikan program untukmu</p>
+        <h1 className="text-xl font-bold text-lt-text-primary">Asesmen Personal</h1>
+        <p className="text-[10px] sm:text-xs text-lt-text-secondary">Bantu kami menyesuaikan program untukmu</p>
       </div>
       
       <div className="flex-1 flex flex-col min-h-0">

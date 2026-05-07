@@ -93,26 +93,26 @@ export default function HomeScreen(props: HomeScreenProps) {
 
   if (isLoading || !trackContent) {
     return (
-      <div className="min-h-screen bg-[#F4F7F4] animate-pulse">
-        <div className="h-14 bg-sage-light/40" />
+      <div className="min-h-screen bg-lt-bg-base animate-pulse">
+        <div className="h-14 bg-lt-bg-subtle/40" />
         <div className="p-4 space-y-4">
-          <div className="h-6 w-48 bg-sage-light/60 rounded" />
-          <div className="h-12 w-40 bg-sage-light/60 rounded" />
-          <div className="h-32 bg-sage-light/40 rounded-2xl" />
-          <div className="h-64 bg-sage-light/40 rounded-2xl" />
+          <div className="h-6 w-48 bg-lt-bg-subtle/60 rounded" />
+          <div className="h-12 w-40 bg-lt-bg-subtle/60 rounded" />
+          <div className="h-32 bg-lt-bg-subtle/40 rounded-2xl" />
+          <div className="h-64 bg-lt-bg-subtle/40 rounded-2xl" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen text-sage-text dark:text-dark-text pb-20">
+    <div className="min-h-screen text-lt-text-primary pb-20">
       {/* Topbar */}
-      <header className="sticky top-0 z-30 bg-[#F4F7F4]/90 dark:bg-[#0F1412]/90 backdrop-blur border-b border-sage-light dark:border-dark-disabled">
+      <header className="sticky top-0 z-30 bg-lt-bg-base/90 backdrop-blur border-b border-lt-border-subtle">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
-            <img src="/logo-kas.webp" alt="Lambung Tenang" className="w-9 h-9 rounded-full object-cover" />
-            <span className="text-sm font-semibold text-sage-text dark:text-dark-text">Lambung Tenang</span>
+            <img src="/logo-kas.webp" alt="Lambung Tenang" className="w-9 h-9 rounded-full object-cover border border-lt-border-subtle" />
+            <span className="text-sm font-semibold text-lt-text-primary">Lambung Tenang</span>
           </div>
           <SOSButton />
         </div>
@@ -126,12 +126,12 @@ export default function HomeScreen(props: HomeScreenProps) {
           className="flex items-start justify-between gap-3 mb-4"
         >
           <div>
-            <p className="text-sm text-sage-muted dark:text-dark-muted mb-1">Salam hangat,</p>
-            <h1 className="text-xl font-bold text-sage-text dark:text-dark-text leading-tight">
+            <p className="text-sm text-lt-text-secondary mb-1">Salam hangat,</p>
+            <h1 className="text-xl font-bold text-lt-text-primary leading-tight">
               Kak {userName}
             </h1>
           </div>
-          <div className="px-3 py-1 rounded-full text-[9px] font-bold text-white bg-sage-accent uppercase tracking-wider whitespace-nowrap mt-1 shrink-0">
+          <div className="px-3 py-1 rounded-full text-[9px] font-bold text-white bg-lt-color-primary uppercase tracking-wider whitespace-nowrap mt-1 shrink-0">
             {trackContent.name}
           </div>
         </motion.div>
@@ -142,17 +142,17 @@ export default function HomeScreen(props: HomeScreenProps) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="bg-gradient-to-r from-sage/10 to-sage-light/30 dark:from-dark-primary/20 dark:to-dark-surface/40 border border-sage/30 dark:border-dark-primary/30 rounded-2xl p-4 mb-4 flex items-center justify-between gap-3"
+            className="bg-lt-bg-subtle border border-lt-border-subtle rounded-2xl p-4 mb-4 flex items-center justify-between gap-3"
           >
             <div className="flex items-center gap-3 flex-1">
-              <div className="w-10 h-10 bg-sage/20 dark:bg-dark-primary/30 rounded-full flex items-center justify-center shrink-0">
-                <Download size={20} className="text-sage dark:text-dark-primary-light" />
+              <div className="w-10 h-10 bg-lt-color-primary/20 rounded-full flex items-center justify-center shrink-0 border border-lt-border-subtle">
+                <Download size={20} className="text-lt-color-primary" />
               </div>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-sage-text dark:text-dark-text">
+                <p className="text-sm font-semibold text-lt-text-primary">
                   Pasang di Home Screen
                 </p>
-                <p className="text-xs text-sage-muted dark:text-dark-muted">
+                <p className="text-xs text-lt-text-secondary">
                   Akses lebih cepat tanpa browser
                 </p>
               </div>
@@ -160,13 +160,13 @@ export default function HomeScreen(props: HomeScreenProps) {
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setShowInstallModal(true)}
-                className="px-4 py-2 bg-sage dark:bg-dark-primary hover:bg-sage-dark dark:hover:bg-dark-primary-light text-white text-xs font-semibold rounded-full transition-colors"
+                className="px-4 py-2 bg-lt-color-primary hover:bg-lt-color-primary/90 text-white text-xs font-semibold rounded-full transition-colors shadow-sm"
               >
                 Pasang
               </button>
               <button
                 onClick={dismiss}
-                className="p-2 text-sage-muted dark:text-dark-muted hover:text-sage-dark dark:hover:text-dark-text transition-colors"
+                className="p-2 text-lt-text-muted hover:text-lt-text-primary transition-colors"
                 aria-label="Tutup"
               >
                 <X size={18} />
@@ -183,10 +183,10 @@ export default function HomeScreen(props: HomeScreenProps) {
           className="mb-6"
         >
           <div className="flex items-baseline gap-2 flex-wrap">
-            <h2 className="text-4xl font-bold text-sage-text dark:text-dark-text leading-none">
+            <h2 className="text-4xl font-bold text-lt-text-primary leading-none">
               {isComplete ? 'Selesai' : `Hari ${currentDay}`}
             </h2>
-            <span className="text-xs text-sage-muted dark:text-dark-muted">
+            <span className="text-xs text-lt-text-secondary">
               • {format(today, 'EEEE, d MMMM yyyy', { locale: id })}
             </span>
           </div>
@@ -200,10 +200,10 @@ export default function HomeScreen(props: HomeScreenProps) {
           className="mb-6"
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-sage-muted dark:text-dark-muted">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-lt-text-secondary">
               Perjalanan 14 Hari
             </span>
-            <span className="text-xs font-medium text-sage-accent">
+            <span className="text-xs font-medium text-lt-color-primary">
               {currentDay} / {totalDays}
             </span>
           </div>
@@ -217,33 +217,33 @@ export default function HomeScreen(props: HomeScreenProps) {
               const isFuture = dayNum > currentDay;
               const isLast = dayNum === 14;
 
-              let pillClass = 'bg-white dark:bg-dark-surface shadow-sm';
-              let textClass = 'text-sage-muted dark:text-dark-muted';
+              let pillClass = 'bg-lt-bg-surface shadow-sm';
+              let textClass = 'text-lt-text-secondary';
               let icon: React.ReactNode = null;
               let label: React.ReactNode = (
                 <span className="text-xs font-semibold">{dayNum}</span>
               );
 
               if (isToday) {
-                pillClass = 'bg-sage dark:bg-sage shadow-md shadow-sage/30';
+                pillClass = 'bg-lt-color-primary shadow-md shadow-lt-color-primary/30';
                 textClass = 'text-white';
                 icon = <Sprout size={20} className="text-white" strokeWidth={2.2} />;
                 label = null;
               } else if (isDone) {
-                pillClass = 'bg-sage-light dark:bg-dark-disabled shadow-sm';
-                textClass = 'text-sage-dark dark:text-dark-primary-light';
-                icon = <CheckCircle2 size={16} className="text-sage dark:text-dark-primary-light" strokeWidth={2.5} />;
+                pillClass = 'bg-lt-bg-subtle shadow-sm border border-lt-border-subtle';
+                textClass = 'text-lt-color-primary';
+                icon = <CheckCircle2 size={16} className="text-lt-color-primary" strokeWidth={2.5} />;
                 label = null;
               } else if (isFuture) {
                 if (isLast) {
-                  pillClass = 'bg-white dark:bg-dark-surface shadow-sm border border-sage-light/60 dark:border-dark-disabled/60';
-                  textClass = 'text-sage-muted dark:text-dark-muted';
-                  icon = <Sprout size={20} className="text-[#DDE5DF] dark:text-dark-muted" strokeWidth={2.2} />;
+                  pillClass = 'bg-lt-bg-surface shadow-sm border border-lt-border-subtle/60';
+                  textClass = 'text-lt-text-muted';
+                  icon = <Sprout size={20} className="text-lt-text-muted/40" strokeWidth={2.2} />;
                   label = null;
                 } else {
-                  pillClass = 'bg-white dark:bg-dark-surface shadow-sm';
-                  textClass = 'text-sage-muted dark:text-dark-muted';
-                  icon = <Lock size={10} className="text-[#DDE5DF] dark:text-dark-disabled" />;
+                  pillClass = 'bg-lt-bg-surface shadow-sm opacity-60';
+                  textClass = 'text-lt-text-muted';
+                  icon = <Lock size={10} className="text-lt-text-muted/40" />;
                 }
               }
 
@@ -263,7 +263,7 @@ export default function HomeScreen(props: HomeScreenProps) {
                   {icon}
                   {label}
                   {isToday && (
-                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] font-bold text-sage-dark dark:text-dark-primary-light whitespace-nowrap">
+                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] font-bold text-lt-color-primary whitespace-nowrap">
                       Hari {dayNum}
                     </span>
                   )}
@@ -283,17 +283,17 @@ export default function HomeScreen(props: HomeScreenProps) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className="bg-white dark:bg-dark-surface rounded-2xl shadow-sm dark:shadow-black/40 p-5 mb-4 mt-6"
+            className="bg-lt-bg-surface rounded-2xl shadow-sm dark:shadow-black/40 p-5 mb-4 mt-6"
           >
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-1 rounded-full bg-sage-accent" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-sage-accent">
+              <div className="w-6 h-1 rounded-full bg-lt-color-primary" />
+              <span className="text-[10px] font-bold uppercase tracking-wider text-lt-color-primary">
                 Untuk Hari Ini
               </span>
             </div>
 
-            <h3 className="text-lg font-bold text-sage-text dark:text-dark-text mb-1">{lessonTitle}</h3>
-            <p className="text-sm italic text-sage-muted dark:text-dark-muted leading-relaxed mb-4">
+            <h3 className="text-lg font-bold text-lt-text-primary mb-1">{lessonTitle}</h3>
+            <p className="text-sm italic text-lt-text-secondary leading-relaxed mb-4">
               "{lessonQuote}"
             </p>
 
@@ -307,14 +307,14 @@ export default function HomeScreen(props: HomeScreenProps) {
             <div className="flex gap-2 items-center">
               <button
                 onClick={handleCheckIn}
-                className="flex-1 flex items-center justify-center gap-2 h-12 rounded-full bg-sage-dark dark:bg-dark-primary hover:bg-sage dark:hover:bg-dark-primary-light text-white font-medium text-sm transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 h-12 rounded-full bg-lt-color-primary hover:bg-lt-color-primary/90 text-white font-medium text-sm transition-colors shadow-sm"
               >
                 {todayEntry?.completed ? 'Update Check-in' : 'Yuk, Cerita Kondisi Hari Ini'}
               </button>
               <button
                 onClick={handleViewDay}
                 aria-label="Lihat detail hari"
-                className="w-12 h-12 rounded-full border border-sage-light dark:border-dark-disabled hover:border-sage dark:hover:border-dark-primary flex items-center justify-center text-sage-dark dark:text-dark-muted transition-colors"
+                className="w-12 h-12 rounded-full border border-lt-border-subtle hover:border-lt-color-primary flex items-center justify-center text-lt-color-primary transition-colors bg-lt-bg-base"
               >
                 <ChevronRight size={20} />
               </button>
@@ -329,37 +329,36 @@ export default function HomeScreen(props: HomeScreenProps) {
           transition={{ delay: 0.2 }}
           className="grid grid-cols-2 gap-3 mb-4"
         >
-          <div className="bg-white dark:bg-dark-surface rounded-2xl shadow-sm dark:shadow-black/40 p-4">
+          <div className="bg-lt-bg-surface rounded-2xl shadow-sm p-4 border border-lt-border-subtle">
             <div className="flex items-start justify-between mb-2">
-              <div className="w-8 h-8 rounded-full bg-sage-light dark:bg-dark-disabled flex items-center justify-center">
-                <Flame size={16} className="text-sage-accent dark:text-dark-primary-light" />
+              <div className="w-8 h-8 rounded-full bg-lt-bg-subtle flex items-center justify-center border border-lt-border-subtle">
+                <Flame size={16} className="text-lt-color-primary" />
               </div>
-              <button aria-label="Opsi" className="text-sage-muted dark:text-dark-muted hover:text-sage-dark">
+              <button aria-label="Opsi" className="text-lt-text-muted hover:text-lt-text-primary">
                 <MoreHorizontal size={16} />
               </button>
             </div>
-            <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Konsistensi</p>
-            <p className="text-2xl font-bold text-sage-text dark:text-dark-text leading-tight">
-              {streak} <span className="text-sm font-normal text-sage-muted dark:text-dark-muted">hari</span>
+            <p className="text-2xl font-bold text-lt-text-primary leading-tight">
+              {streak} <span className="text-sm font-normal text-lt-text-secondary">hari</span>
             </p>
-            <p className="text-[11px] text-sage-muted dark:text-dark-muted">berturut-turut</p>
+            <p className="text-[11px] text-lt-text-secondary">berturut-turut</p>
           </div>
 
-          <div className="bg-white dark:bg-dark-surface rounded-2xl shadow-sm dark:shadow-black/40 p-4">
+          <div className="bg-lt-bg-surface rounded-2xl shadow-sm p-4 border border-lt-border-subtle">
             <div className="flex items-start justify-between mb-2">
-              <div className="w-8 h-8 rounded-full bg-sage-light dark:bg-dark-disabled flex items-center justify-center">
-                <Smile size={16} className="text-sage-accent dark:text-dark-primary-light" />
+              <div className="w-8 h-8 rounded-full bg-lt-bg-subtle flex items-center justify-center border border-lt-border-subtle">
+                <Smile size={16} className="text-lt-color-primary" />
               </div>
-              <button aria-label="Opsi" className="text-sage-muted dark:text-dark-muted hover:text-sage-dark">
+              <button aria-label="Opsi" className="text-lt-text-muted hover:text-lt-text-primary">
                 <MoreHorizontal size={16} />
               </button>
             </div>
-            <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Perasaanmu</p>
-            <p className="text-sm font-semibold text-sage-text dark:text-dark-text mb-1">{moodStatus}</p>
+            <p className="text-xs text-lt-text-secondary mb-1">Perasaanmu</p>
+            <p className="text-sm font-semibold text-lt-text-primary mb-1">{moodStatus}</p>
             {!todayEntry?.checkInData?.mood && (
               <button
                 onClick={handleCheckIn}
-                className="flex items-center gap-1 text-[11px] font-semibold text-sage-accent hover:text-sage-dark"
+                className="flex items-center gap-1 text-[11px] font-semibold text-lt-color-primary hover:text-lt-color-primary/80"
               >
                 Catat sekarang <ArrowRight size={11} />
               </button>
@@ -372,14 +371,14 @@ export default function HomeScreen(props: HomeScreenProps) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="bg-sage-light/60 dark:bg-dark-surface-2 rounded-2xl p-4 flex gap-3 items-start"
+          className="bg-lt-bg-subtle rounded-2xl p-4 flex gap-3 items-start border border-lt-border-subtle"
         >
-          <div className="w-9 h-9 rounded-full bg-white dark:bg-dark-surface flex items-center justify-center shrink-0">
-            <Heart size={16} className="text-sage-accent fill-sage-accent/20" />
+          <div className="w-9 h-9 rounded-full bg-lt-bg-surface flex items-center justify-center shrink-0 border border-lt-border-subtle shadow-sm">
+            <Heart size={16} className="text-lt-color-primary fill-lt-color-primary/20" />
           </div>
           <div className="flex-1">
-            <p className="text-xs font-bold text-sage-dark dark:text-dark-primary-light mb-1">Pesan dari Kang Asep</p>
-            <p className="text-xs text-sage-text/80 dark:text-dark-muted leading-relaxed italic">
+            <p className="text-xs font-bold text-lt-color-primary mb-1">Pesan dari Kang Asep</p>
+            <p className="text-xs text-lt-text-secondary leading-relaxed italic">
               "{motivationMessage}"
             </p>
           </div>
@@ -400,25 +399,25 @@ export default function HomeScreen(props: HomeScreenProps) {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="bg-white dark:bg-dark-surface rounded-3xl shadow-lg dark:shadow-black/40 p-6 w-full max-w-sm"
+              className="bg-lt-bg-surface rounded-3xl shadow-xl p-6 w-full max-w-sm border border-lt-border-subtle"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-sage/20 dark:bg-dark-primary/30 rounded-full flex items-center justify-center">
-                    <Download size={24} className="text-sage dark:text-dark-primary-light" />
+                  <div className="w-12 h-12 bg-lt-color-primary/20 rounded-full flex items-center justify-center border border-lt-border-subtle">
+                    <Download size={24} className="text-lt-color-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-sage-text dark:text-dark-text">
+                    <h3 className="text-lg font-bold text-lt-text-primary">
                       Pasang Aplikasi
                     </h3>
-                    <p className="text-xs text-sage-muted dark:text-dark-muted">
+                    <p className="text-xs text-lt-text-secondary">
                       Lambung Tenang di HP kamu
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setShowInstallModal(false)}
-                  className="p-2 text-sage-muted dark:text-dark-muted hover:text-sage-dark dark:hover:text-dark-text transition-colors"
+                  className="p-2 text-lt-text-muted hover:text-lt-text-primary transition-colors"
                   aria-label="Tutup"
                 >
                   <X size={20} />
@@ -427,34 +426,34 @@ export default function HomeScreen(props: HomeScreenProps) {
 
               <div className="space-y-3 mb-6">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-sage/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-sage dark:text-dark-primary-light text-xs">✓</span>
+                  <div className="w-6 h-6 bg-lt-color-primary/10 rounded-full flex items-center justify-center shrink-0 mt-0.5 border border-lt-color-primary/20">
+                    <span className="text-lt-color-primary text-xs">✓</span>
                   </div>
-                  <p className="text-sm text-sage-text dark:text-dark-text">
+                  <p className="text-sm text-lt-text-primary">
                     Akses offline tanpa internet
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-sage/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-sage dark:text-dark-primary-light text-xs">✓</span>
+                  <div className="w-6 h-6 bg-lt-color-primary/10 rounded-full flex items-center justify-center shrink-0 mt-0.5 border border-lt-color-primary/20">
+                    <span className="text-lt-color-primary text-xs">✓</span>
                   </div>
-                  <p className="text-sm text-sage-text dark:text-dark-text">
+                  <p className="text-sm text-lt-text-primary">
                     Icon di home screen seperti native app
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-sage/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-sage dark:text-dark-primary-light text-xs">✓</span>
+                  <div className="w-6 h-6 bg-lt-color-primary/10 rounded-full flex items-center justify-center shrink-0 mt-0.5 border border-lt-color-primary/20">
+                    <span className="text-lt-color-primary text-xs">✓</span>
                   </div>
-                  <p className="text-sm text-sage-text dark:text-dark-text">
+                  <p className="text-sm text-lt-text-primary">
                     Loading lebih cepat dan ringan
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-sage/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-sage dark:text-dark-primary-light text-xs">✓</span>
+                  <div className="w-6 h-6 bg-lt-color-primary/10 rounded-full flex items-center justify-center shrink-0 mt-0.5 border border-lt-color-primary/20">
+                    <span className="text-lt-color-primary text-xs">✓</span>
                   </div>
-                  <p className="text-sm text-sage-text dark:text-dark-text">
+                  <p className="text-sm text-lt-text-primary">
                     Notifikasi pengingat tetap berfungsi
                   </p>
                 </div>
@@ -463,7 +462,7 @@ export default function HomeScreen(props: HomeScreenProps) {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowInstallModal(false)}
-                  className="flex-1 px-4 py-3 bg-sage-light dark:bg-dark-disabled text-sage-text dark:text-dark-text rounded-full font-semibold text-sm transition-colors hover:bg-sage-light/80 dark:hover:bg-dark-disabled/80"
+                  className="flex-1 px-4 py-3 bg-lt-bg-subtle text-lt-text-primary rounded-full font-semibold text-sm transition-colors hover:bg-lt-bg-subtle/80"
                 >
                   Batal
                 </button>
@@ -472,7 +471,7 @@ export default function HomeScreen(props: HomeScreenProps) {
                     await install();
                     setShowInstallModal(false);
                   }}
-                  className="flex-1 px-4 py-3 bg-sage dark:bg-dark-primary text-white rounded-full font-semibold text-sm transition-colors hover:bg-sage-dark dark:hover:bg-dark-primary-light"
+                  className="flex-1 px-4 py-3 bg-lt-color-primary text-white rounded-full font-semibold text-sm transition-colors hover:bg-lt-color-primary/90 shadow-sm"
                 >
                   Lanjutkan
                 </button>

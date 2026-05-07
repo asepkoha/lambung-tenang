@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { STORAGE_KEYS } from '@/types';
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
@@ -12,12 +12,34 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   });
 
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent | CustomEvent) => {
+      if ((e as StorageEvent).key === key || (e as CustomEvent).detail?.key === key) {
+        try {
+          const item = localStorage.getItem(key);
+          setStoredValue(item ? JSON.parse(item) : initialValue);
+        } catch (error) {
+          console.error('Error reading localStorage on change', error);
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('local-storage-sync', handleStorageChange as EventListener);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('local-storage-sync', handleStorageChange as EventListener);
+    };
+  }, [key, initialValue]);
+
   const setValue = useCallback(
     (value: T | ((val: T) => T)) => {
       try {
         const valueToStore = value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         localStorage.setItem(key, JSON.stringify(valueToStore));
+        window.dispatchEvent(new CustomEvent('local-storage-sync', { detail: { key } }));
       } catch (error) {
         console.error('Error writing localStorage', error);
       }

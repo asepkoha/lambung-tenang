@@ -57,10 +57,10 @@ export default function Onboarding() {
             </div>
             
             <div className="space-y-3 shrink-0">
-              <h2 className="text-2xl sm:text-3xl font-bold text-sage-text dark:text-dark-text leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold text-lt-text-primary leading-tight">
                 {slides[current].title}
               </h2>
-              <p className="text-sage-muted dark:text-dark-muted text-sm sm:text-base leading-relaxed px-4">
+              <p className="text-lt-text-secondary text-sm sm:text-base leading-relaxed px-4">
                 {slides[current].text}
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function Onboarding() {
             <div
               key={i}
               className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
-                i === current ? 'w-6 sm:w-8 bg-sage' : 'w-1.5 sm:w-2 bg-sage-light dark:bg-dark-disabled'}
+                i === current ? 'w-6 sm:w-8 bg-lt-color-primary' : 'w-1.5 sm:w-2 bg-lt-bg-subtle'}
               }`}
             />
           ))}

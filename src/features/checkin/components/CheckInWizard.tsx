@@ -11,7 +11,18 @@ import { cn } from '@/lib/utils';
 import { MOOD_OPTIONS, SYMPTOM_LIST, ACTIVITY_LIST, WALMAGH_OPTIONS } from '@/config/checkinOptions';
 
 interface CheckInWizardProps {
-  onComplete: (data: any) => void;
+  onComplete: (data: {
+    date: string;
+    dayNumber: number;
+    mood: number;
+    anxiety: number;
+    symptoms: string[];
+    food: string;
+    sleep: number;
+    activities: string[];
+    reflection: string;
+    walmagh: 'sesuai' | 'tidak_sesuai' | 'belum';
+  }) => void;
   dayNumber: number;
 }
 
@@ -20,7 +31,9 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
   const [direction, setDirection] = useState(1);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTimeout, setRecordingTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
-  const [supportsSpeech, setSupportsSpeech] = useState(false);
+  const [supportsSpeech] = useState(() => 
+    typeof window !== 'undefined' && (!!(window as any).SpeechRecognition || !!(window as any).webkitSpeechRecognition)
+  );
   const [showMicPermissionModal, setShowMicPermissionModal] = useState(false);
   const recognitionRef = useRef<any>(null);
   const [formData, setFormData] = useState({
@@ -31,7 +44,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
     sleep: 7,
     activities: [] as string[],
     reflection: '',
-    walmagh: '' as '' | 'sesuai' | 'tidak_sesuai' | 'belum',
+    walmagh: 'belum' as 'sesuai' | 'tidak_sesuai' | 'belum',
   });
 
   // Check if dzikir/ruhiyah is selected
@@ -63,7 +76,6 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
   // Check browser support for Speech Recognition
   useEffect(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    setSupportsSpeech(!!SpeechRecognition);
 
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
@@ -107,7 +119,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         recognitionRef.current.abort();
       }
     };
-  }, []);
+  }, [recordingTimeout]);
 
   const toggleRecording = () => {
     if (!recognitionRef.current) return;
@@ -172,8 +184,8 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         return (
           <div className="flex flex-col h-full justify-center space-y-4 sm:space-y-8 py-2">
             <div className="text-center space-y-1">
-              <h2 className="text-xl sm:text-2xl font-bold">Bagaimana perasaanmu hari ini?</h2>
-              <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Pilih emoji yang paling mewakili mood-mu.</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Bagaimana perasaanmu hari ini?</h2>
+              <p className="text-xs sm:text-sm text-lt-text-secondary">Pilih emoji yang paling mewakili mood-mu.</p>
             </div>
             <div className="flex justify-between items-center gap-2 sm:gap-3 px-1 sm:px-2">
               {MOOD_OPTIONS.map((m) => (
@@ -197,12 +209,15 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                     setTimeout(nextStep, 400);
                   }}
                   className={cn(
-                    "flex flex-col items-center gap-1 sm:gap-2 flex-1",
-                    formData.mood === m.value ? "" : "opacity-50 grayscale hover:opacity-100 hover:grayscale-0"
+                    "flex flex-col items-center gap-1 sm:gap-2 flex-1 transition-all duration-300",
+                    formData.mood === m.value ? "scale-110" : "opacity-30 grayscale hover:opacity-100 hover:grayscale-0"
                   )}
                 >
-                  <span className="text-[40px] sm:text-5xl drop-shadow-sm leading-none">{m.emoji}</span>
-                  <span className="text-[9px] sm:text-[10px] font-medium uppercase tracking-tighter text-center">{m.label}</span>
+                  <span className="text-[40px] sm:text-5xl drop-shadow-md leading-none">{m.emoji}</span>
+                  <span className={cn(
+                    "text-[9px] sm:text-[10px] font-bold uppercase tracking-tighter text-center transition-colors",
+                    formData.mood === m.value ? "text-lt-color-primary" : "text-lt-text-muted"
+                  )}>{m.label}</span>
                 </motion.button>
               ))}
             </div>
@@ -212,12 +227,12 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         return (
           <div className="flex flex-col h-full justify-center space-y-6 sm:space-y-10 py-2">
             <div className="text-center space-y-1">
-              <h2 className="text-xl sm:text-2xl font-bold">Tingkat Anxiety</h2>
-              <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Seberapa cemas yang kamu rasakan (1-10)?</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Tingkat Anxiety</h2>
+              <p className="text-xs sm:text-sm text-lt-text-secondary">Seberapa cemas yang kamu rasakan (1-10)?</p>
             </div>
             <div className="px-4 sm:px-6 space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-lg font-bold text-sage-muted dark:text-dark-muted">1</span>
+                <span className="text-lg font-bold text-lt-text-secondary">1</span>
                 <Slider
                   value={[formData.anxiety]}
                   min={1}
@@ -226,11 +241,11 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   onValueChange={(val) => updateFormData('anxiety', val[0])}
                   className="flex-1 [&_[role=slider]]:active:scale-150 [&_[role=slider]]:transition-transform py-4"
                 />
-                <span className="text-lg font-bold text-sage-muted dark:text-dark-muted">10</span>
+                <span className="text-lg font-bold text-lt-text-secondary">10</span>
               </div>
               <div className="text-center mt-2">
-                <span className="text-3xl sm:text-4xl font-black text-sage bg-sage/10 dark:bg-sage/20 px-4 py-1 rounded-xl inline-block mb-2">{formData.anxiety}</span>
-                <p className="text-xs sm:text-sm italic text-sage-muted mt-1">
+                <span className="text-3xl sm:text-4xl font-black text-lt-color-primary bg-lt-bg-subtle px-4 py-1 rounded-xl inline-block mb-2">{formData.anxiety}</span>
+                <p className="text-xs sm:text-sm italic text-lt-text-secondary mt-1">
                   {formData.anxiety <= 3 ? "Cukup tenang & terkendali" : 
                    formData.anxiety <= 7 ? "Mulai terasa mengganggu" : 
                    "Sangat intens & butuh perhatian"}
@@ -243,8 +258,8 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         return (
           <div className="flex flex-col h-full space-y-4 py-2">
             <div className="text-center space-y-1 shrink-0">
-              <h2 className="text-xl sm:text-2xl font-bold">Gejala Lambung</h2>
-              <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Apa yang perutmu rasakan hari ini?</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Gejala Lambung</h2>
+              <p className="text-xs sm:text-sm text-lt-text-secondary">Apa yang perutmu rasakan hari ini?</p>
             </div>
             <motion.div 
               initial="hidden"
@@ -267,12 +282,12 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   key={s.id}
                   onClick={() => toggleItem('symptoms', s.id)}
                   className={cn(
-                    "flex items-center space-x-2 p-3 sm:p-4 rounded-xl border-2 transition-all cursor-pointer h-full",
-                    formData.symptoms.includes(s.id) ? "border-sage bg-sage/5 dark:bg-sage/10" : "border-sage-light dark:border-dark-disabled"
+                    "flex items-center space-x-2 p-3 sm:p-4 rounded-xl border transition-all cursor-pointer h-full",
+                    formData.symptoms.includes(s.id) ? "border-lt-color-primary bg-lt-bg-subtle" : "border-lt-border-subtle"
                   )}
                 >
                   <Checkbox checked={formData.symptoms.includes(s.id)} className="shrink-0" />
-                  <Label className="cursor-pointer text-[13px] sm:text-sm leading-tight flex-1">{s.label}</Label>
+                  <Label className="cursor-pointer text-[13px] sm:text-sm leading-tight flex-1 text-lt-text-primary">{s.label}</Label>
                 </motion.div>
               ))}
             </motion.div>
@@ -282,27 +297,27 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         return (
           <div className="flex flex-col h-full justify-center space-y-6 sm:space-y-8 py-2">
             <div className="text-center space-y-1 shrink-0">
-              <h2 className="text-xl sm:text-2xl font-bold">Makan & Tidur</h2>
-              <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Catat sedikit tentang fisikmu hari ini.</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Makan & Tidur</h2>
+              <p className="text-xs sm:text-sm text-lt-text-secondary">Catat sedikit tentang fisikmu hari ini.</p>
             </div>
             <div className="space-y-5 flex-1">
               <div className="space-y-2">
-                <Label className="flex items-center gap-2 text-sm">
-                  <Coffee className="h-4 w-4 text-sage" /> Makanan pemicu yang dikonsumsi?
+                <Label className="flex items-center gap-2 text-sm text-lt-text-primary">
+                  <Coffee className="h-4 w-4 text-lt-color-primary" /> Makanan pemicu yang dikonsumsi?
                 </Label>
                 <Input 
                   placeholder="Misal: kopi, pedas, gorengan..." 
                   value={formData.food}
                   onChange={(e) => updateFormData('food', e.target.value)}
-                  className="rounded-xl text-sm h-11"
+                  className="rounded-xl text-sm h-11 border-lt-border-subtle bg-lt-bg-surface text-lt-text-primary placeholder:text-lt-text-muted/50"
                 />
               </div>
               <div className="space-y-3 pt-2">
                 <div className="flex justify-between items-center mb-1">
-                  <Label className="flex items-center gap-2 text-sm">
-                    <Moon className="h-4 w-4 text-sage" /> Jam tidur semalam
+                  <Label className="flex items-center gap-2 text-sm text-lt-text-primary">
+                    <Moon className="h-4 w-4 text-lt-color-primary" /> Jam tidur semalam
                   </Label>
-                  <span className="text-sage font-bold text-sm">{formData.sleep} jam</span>
+                  <span className="text-lt-color-primary font-bold text-sm">{formData.sleep} jam</span>
                 </div>
                 <Slider
                   value={[formData.sleep]}
@@ -320,8 +335,8 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         return (
           <div className="flex flex-col h-full space-y-4 py-2">
             <div className="text-center space-y-1 shrink-0">
-              <h2 className="text-xl sm:text-2xl font-bold">Sudah Minum Walmagh Hari ini?</h2>
-              <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Catat konsistensi minum Walmagh harianmu.</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Sudah Minum Walmagh Hari ini?</h2>
+              <p className="text-xs sm:text-sm text-lt-text-secondary">Catat konsistensi minum Walmagh harianmu.</p>
             </div>
             <motion.div
               initial="hidden"
@@ -341,19 +356,19 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   key={opt.id}
                   onClick={() => updateFormData('walmagh', opt.id)}
                   className={cn(
-                    "flex items-center space-x-3 p-4 rounded-xl border-2 transition-all cursor-pointer",
-                    formData.walmagh === opt.id ? "border-sage bg-sage/5 dark:bg-sage/10" : "border-sage-light dark:border-dark-disabled"
+                    "flex items-center space-x-3 p-4 rounded-xl border transition-all cursor-pointer",
+                    formData.walmagh === opt.id ? "border-lt-color-primary bg-lt-bg-subtle" : "border-lt-border-subtle"
                   )}
                 >
                   <div className={cn(
-                    "w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center",
-                    formData.walmagh === opt.id ? "border-sage" : "border-sage-muted/40 dark:border-dark-disabled"
+                    "w-5 h-5 rounded-full border shrink-0 flex items-center justify-center",
+                    formData.walmagh === opt.id ? "border-lt-color-primary" : "border-lt-border-subtle"
                   )}>
                     {formData.walmagh === opt.id && (
-                      <div className="w-2.5 h-2.5 rounded-full bg-sage" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-lt-color-primary" />
                     )}
                   </div>
-                  <Label className="cursor-pointer text-sm flex-1">{opt.label}</Label>
+                  <Label className="cursor-pointer text-sm flex-1 text-lt-text-primary">{opt.label}</Label>
                 </motion.div>
               ))}
             </motion.div>
@@ -363,11 +378,11 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         return (
           <div className={cn(
             "flex flex-col h-full space-y-4 py-2",
-            hasDzikir ? "bg-sage-warm rounded-xl p-4 border-sage-light text-sage-text" : ""
+            hasDzikir ? "bg-lt-color-primary/5 rounded-xl p-4 border border-lt-color-primary/20" : ""
           )}>
             <div className="text-center space-y-1 shrink-0">
-              <h2 className="text-xl sm:text-2xl font-bold">Yang Menenangkan Hari ini</h2>
-              <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Apa yang kamu lakukan untuk rileks?</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Yang Menenangkan Hari ini</h2>
+              <p className="text-xs sm:text-sm text-lt-text-secondary">Apa yang kamu lakukan untuk rileks?</p>
             </div>
             <motion.div 
               initial="hidden"
@@ -390,14 +405,14 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   key={a.id}
                   onClick={() => toggleItem('activities', a.id)}
                   className={cn(
-                    "flex items-center space-x-2 p-3 sm:p-4 rounded-xl border-2 transition-all cursor-pointer h-full",
+                    "flex items-center space-x-2 p-3 sm:p-4 rounded-xl border transition-all cursor-pointer h-full",
                     formData.activities.includes(a.id)
-                      ? (hasDzikir ? "border-[#D4A373] bg-[#E8E0D5]" : "border-sage bg-sage/10 dark:bg-sage/20")
-                      : (hasDzikir ? "border-[#E8E2D5]" : "border-sage-light dark:border-dark-disabled")
+                      ? "border-lt-color-primary bg-lt-bg-subtle"
+                      : "border-lt-border-subtle"
                   )}
                 >
                   <Checkbox checked={formData.activities.includes(a.id)} className="shrink-0" />
-                  <Label className="cursor-pointer text-[13px] sm:text-sm leading-tight flex-1">{a.label}</Label>
+                  <Label className="cursor-pointer text-[13px] sm:text-sm leading-tight flex-1 text-lt-text-primary">{a.label}</Label>
                 </motion.div>
               ))}
             </motion.div>
@@ -407,8 +422,8 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
         return (
           <div className="flex flex-col h-full space-y-4 py-2">
             <div className="text-center space-y-1 shrink-0">
-              <h2 className="text-xl sm:text-2xl font-bold">Refleksi Singkat</h2>
-              <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Satu hal untuk dirimu sendiri.</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Refleksi Singkat</h2>
+              <p className="text-xs sm:text-sm text-lt-text-secondary">Satu hal untuk dirimu sendiri.</p>
             </div>
             <div className="space-y-3 flex-1 flex flex-col">
               <div className="relative">
@@ -416,7 +431,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   placeholder="Tuliskan di sini..."
                   className={cn(
                     "flex-1 max-h-[120px] rounded-2xl p-4 pr-16 pb-16 resize-none text-sm leading-relaxed transition-all",
-                    isRecording ? "border-2 border-sage" : "border border-sage-light dark:border-dark-disabled dark:bg-dark-surface-2"
+                    isRecording ? "border-2 border-lt-color-primary" : "border border-lt-border-subtle bg-lt-bg-surface text-lt-text-primary"
                   )}
                   value={formData.reflection}
                   onChange={(e) => updateFormData('reflection', e.target.value)}
@@ -431,7 +446,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                         "absolute right-4 bottom-4 w-12 h-12 rounded-full shadow-md flex items-center justify-center transition-all",
                         isRecording
                           ? 'bg-red-500 animate-pulse'
-                          : 'bg-sage hover:bg-sage-dark hover:scale-105'
+                          : 'bg-lt-color-primary hover:bg-lt-color-primary-dark hover:scale-105'
                       )}
                       aria-label={isRecording ? 'Stop merekam' : 'Mulai merekam suara'}
                     >
@@ -440,14 +455,14 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                     
                     {/* Recording indicator */}
                     {isRecording && (
-                      <span className="absolute right-4 bottom-20 text-[10px] text-sage font-medium">
+                      <span className="absolute right-4 bottom-20 text-[10px] text-lt-color-primary font-medium">
                         Mendengarkan...
                       </span>
                     )}
                   </>
                 )}
               </div>
-              <p className="text-center text-[10px] sm:text-[11px] text-sage-muted/70 dark:text-dark-muted/70 px-2 mt-auto">
+              <p className="text-center text-[10px] sm:text-[11px] text-lt-text-muted px-2 mt-auto">
                 Refleksi membantu otak memproses emosi dan pengalaman dengan lebih tenang.
               </p>
             </div>
@@ -467,7 +482,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
             key={i}
             className={cn(
               "h-1.5 flex-1 rounded-full transition-all duration-300",
-              i <= step ? "bg-sage" : "bg-sage-light dark:bg-dark-disabled"
+              i <= step ? "bg-lt-color-primary" : "bg-lt-bg-subtle border border-lt-border-subtle"
             )}
           />
         ))}
@@ -490,16 +505,16 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
 
       <div className="flex gap-2 mt-auto shrink-0 pb-2">
         {step > 1 && (
-          <Button variant="outline" onClick={prevStep} className="flex-1 rounded-xl h-12 border-2">
+          <Button variant="outline" onClick={prevStep} className="flex-1 rounded-xl h-12 border border-lt-border-subtle bg-lt-bg-surface text-lt-text-primary">
             <ChevronLeft className="mr-1 h-5 w-5" />
           </Button>
         )}
         {step < 7 ? (
-          <Button onClick={nextStep} className="flex-[3] rounded-xl h-12 text-base font-bold bg-sage hover:bg-sage-dark text-white">
+          <Button onClick={nextStep} className="flex-[3] rounded-xl h-12 text-base font-bold bg-lt-color-primary hover:bg-lt-color-primary-dark text-white shadow-lg shadow-lt-color-primary/20">
             Lanjut <ChevronRight className="ml-1 h-5 w-5" />
           </Button>
         ) : (
-          <Button onClick={handleFinish} className="flex-[3] rounded-xl h-12 text-base font-bold bg-sage hover:bg-sage-dark text-white">
+          <Button onClick={handleFinish} className="flex-[3] rounded-xl h-12 text-base font-bold bg-lt-color-primary hover:bg-lt-color-primary-dark text-white shadow-lg shadow-lt-color-primary/20">
             Selesai <Check className="ml-1 h-5 w-5" />
           </Button>
         )}
@@ -511,27 +526,27 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-sm"
+            className="bg-lt-bg-surface rounded-2xl shadow-2xl p-6 w-full max-w-sm border border-lt-border-subtle"
           >
             <div className="flex items-center justify-center mb-4">
-              <div className="w-16 h-16 bg-sage-light rounded-full flex items-center justify-center">
-                <Mic size={32} className="text-sage" />
+              <div className="w-16 h-16 bg-lt-bg-subtle rounded-full flex items-center justify-center border border-lt-border-subtle">
+                <Mic size={32} className="text-lt-color-primary" />
               </div>
             </div>
-            <h3 className="text-lg font-bold text-sage-text mb-2 text-center">Izinkan Akses Mikrofon?</h3>
-            <p className="text-sm text-sage-muted mb-6 text-center leading-relaxed">
+            <h3 className="text-lg font-bold text-lt-text-primary mb-2 text-center">Izinkan Akses Mikrofon?</h3>
+            <p className="text-sm text-lt-text-secondary mb-6 text-center leading-relaxed">
               Kami akan menggunakan mikrofon untuk mengubah suara Anda menjadi teks di refleksi. Data Anda tetap aman dan tidak disimpan.
             </p>
             <div className="flex gap-3">
               <button
                 onClick={handleDenyMic}
-                className="flex-1 h-12 rounded-xl border-2 border-sage-light text-sage-muted font-medium hover:bg-sage-warm transition-colors"
+                className="flex-1 h-12 rounded-xl border border-lt-border-subtle text-lt-text-secondary font-medium hover:bg-lt-bg-subtle transition-colors"
               >
                 Nanti
               </button>
               <button
                 onClick={handleAllowMic}
-                className="flex-1 h-12 rounded-xl bg-sage text-white font-medium hover:bg-sage-dark transition-colors"
+                className="flex-1 h-12 rounded-xl bg-lt-color-primary text-white font-medium hover:bg-lt-color-primary-dark transition-colors"
               >
                 Izinkan
               </button>

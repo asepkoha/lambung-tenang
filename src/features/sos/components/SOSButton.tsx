@@ -24,11 +24,7 @@ export function SOSButton({ className }: SOSButtonProps) {
   }, [expanded]);
 
   const handleClick = () => {
-    if (expanded) {
-      navigate('/sos');
-    } else {
-      setExpanded(true);
-    }
+    navigate('/sos');
   };
 
   return (
@@ -42,7 +38,7 @@ export function SOSButton({ className }: SOSButtonProps) {
       aria-label={expanded ? 'Masuk ke Ruang Aman' : 'Buka Ruang Aman'}
       title="Ruang Aman"
       className={cn(
-        "flex items-center gap-2 h-9 px-2.5 rounded-full bg-white border border-sage-light text-sage-dark shadow-sm hover:shadow-md hover:bg-sage-warm transition-shadow",
+        "flex items-center gap-2 h-9 px-2.5 rounded-full bg-lt-bg-surface border border-lt-border-subtle text-lt-color-primary shadow-sm hover:shadow-md hover:bg-lt-bg-subtle transition-shadow",
         className
       )}
     >

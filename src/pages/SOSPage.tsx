@@ -148,7 +148,7 @@ export default function SOSPage() {
       <div className="relative z-10 px-5 pb-8">
         <button
           onClick={() => navigate('/dashboard')}
-          className="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-[#D4A373] hover:bg-[#C49063] text-[#2D1F13] font-medium transition-colors shadow-lg shadow-[#D4A373]/20"
+          className="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-lt-color-primary hover:bg-lt-color-primary-dark text-white font-bold transition-all shadow-lg active:scale-[0.98]"
         >
           <span>Saya Sudah Tenang</span>
         </button>

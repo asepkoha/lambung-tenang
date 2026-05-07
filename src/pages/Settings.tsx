@@ -170,8 +170,8 @@ export default function Settings() {
 
 
   return (
-    <div className="page-container pb-20 dark:text-dark-text">
-      <h1 className="text-2xl font-bold text-sage-text dark:text-dark-text mb-6">Pengaturan</h1>
+    <div className="page-container pb-20 dark:text-lt-text-primary">
+      <h1 className="text-2xl font-bold text-lt-text-primary mb-6">Pengaturan</h1>
 
       {/* Profile card */}
       {profile && (
@@ -180,12 +180,12 @@ export default function Settings() {
           animate={{ opacity: 1, y: 0 }}
           className="card-soft p-5 mb-4 flex items-center gap-4"
         >
-          <div className="w-12 h-12 bg-sage/10 rounded-full flex items-center justify-center">
-            <Leaf size={24} className="text-sage" />
+          <div className="w-12 h-12 bg-lt-color-primary/10 rounded-full flex items-center justify-center">
+            <Leaf size={24} className="text-lt-color-primary" />
           </div>
           <div>
-            <p className="font-bold text-sage-text dark:text-dark-text">{profile.name}</p>
-            <p className="text-xs text-sage-muted dark:text-dark-muted">
+            <p className="font-bold text-lt-text-primary">{profile.name}</p>
+            <p className="text-xs text-lt-text-secondary">
               {profile.track === 'A' ? 'Jalur Ketenangan' : profile.track === 'B' ? 'Jalur Fisik' : 'Jalur Berat Bersama'}
             </p>
           </div>
@@ -196,20 +196,22 @@ export default function Settings() {
       <div className="card-soft p-5 mb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Moon size={20} className="text-sage dark:text-dark-primary-light" />
+            <Moon size={20} className="text-lt-color-primary" />
             <div>
-              <p className="font-medium text-sage-text dark:text-dark-text">Mode Malam</p>
-              <p className="text-xs text-sage-muted dark:text-dark-muted">Tampilan gelap untuk malam hari</p>
+              <p className="font-medium text-lt-text-primary">Mode Malam</p>
+              <p className="text-xs text-lt-text-secondary">Tampilan gelap untuk malam hari</p>
             </div>
           </div>
           <button
             onClick={toggleTheme}
+            aria-label={isDark ? "Aktifkan Mode Terang" : "Aktifkan Mode Malam"}
+            title={isDark ? "Aktifkan Mode Terang" : "Aktifkan Mode Malam"}
             className={`w-12 h-7 rounded-full transition-colors relative ${
-              isDark ? 'bg-dark-primary' : 'bg-sage-light'
+              isDark ? 'bg-lt-color-primary' : 'bg-lt-bg-subtle'
             }`}
           >
             <div
-              className={`w-5 h-5 bg-white rounded-full absolute top-1 transition-all shadow-sm ${
+              className={`w-5 h-5 bg-lt-bg-surface rounded-full absolute top-1 transition-all shadow-sm ${
                 isDark ? 'left-6' : 'left-1'
               }`}
             />
@@ -221,20 +223,22 @@ export default function Settings() {
       <div className="card-soft p-5 mb-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <Bell size={20} className="text-sage" />
+            <Bell size={20} className="text-lt-color-primary" />
             <div>
-              <p className="font-medium text-sage-text dark:text-dark-text">Pengingat Harian</p>
-              <p className="text-xs text-sage-muted dark:text-dark-muted">Kami ingatkan dengan lembut</p>
+              <p className="font-medium text-lt-text-primary">Pengingat Harian</p>
+              <p className="text-xs text-lt-text-secondary">Kami ingatkan dengan lembut</p>
             </div>
           </div>
           <button
             onClick={toggleReminder}
+            aria-label={settings.reminderEnabled ? "Matikan Pengingat" : "Aktifkan Pengingat"}
+            title={settings.reminderEnabled ? "Matikan Pengingat" : "Aktifkan Pengingat"}
             className={`w-12 h-7 rounded-full transition-colors relative ${
-              settings.reminderEnabled ? 'bg-sage' : 'bg-sage-light dark:bg-dark-disabled'
+              settings.reminderEnabled ? 'bg-lt-color-primary' : 'bg-lt-bg-subtle'
             }`}
           >
             <div
-              className={`w-5 h-5 bg-white rounded-full absolute top-1 transition-all shadow-sm ${
+              className={`w-5 h-5 bg-lt-bg-surface rounded-full absolute top-1 transition-all shadow-sm ${
                 settings.reminderEnabled ? 'left-6' : 'left-1'
               }`}
             />
@@ -242,25 +246,25 @@ export default function Settings() {
         </div>
 
         {settings.reminderEnabled && (
-          <div className="pt-3 border-t border-sage-light dark:border-dark-disabled">
-            <label className="text-xs text-sage-muted dark:text-dark-muted mb-2 block">Waktu pengingat</label>
+          <div className="pt-3 border-t border-lt-border-subtle">
+            <label className="text-xs text-lt-text-secondary mb-2 block">Waktu pengingat</label>
             <div className="relative">
               <Select
                 value={settings.reminderTime}
                 onValueChange={(value) => setSettings((s) => ({ ...s, reminderTime: value }))}
               >
-                <SelectTrigger className="w-full h-11 px-3 rounded-xl border-sage bg-white text-sage-text focus:ring-sage focus:ring-offset-0">
+                <SelectTrigger className="w-full h-11 px-3 rounded-xl border-lt-border-subtle bg-lt-bg-surface text-lt-text-primary focus:ring-lt-color-primary focus:ring-offset-0">
                   <div className="flex items-center gap-2">
-                    <Clock size={16} className="text-sage" />
+                    <Clock size={16} className="text-lt-color-primary" />
                     <SelectValue placeholder="Pilih waktu" />
                   </div>
                 </SelectTrigger>
-                <SelectContent className="rounded-xl border-sage bg-white">
+                <SelectContent className="rounded-xl border-lt-border-subtle bg-lt-bg-surface">
                   {timeOptions.map((option) => (
                     <SelectItem
                       key={option.value}
                       value={option.value}
-                      className="focus:bg-sage-light focus:text-sage cursor-pointer"
+                      className="focus:bg-lt-bg-subtle focus:text-lt-color-primary cursor-pointer"
                     >
                       {option.label}
                     </SelectItem>
@@ -272,7 +276,7 @@ export default function Settings() {
         )}
 
         {notificationBlocked && (
-          <div className="pt-3 border-t border-sage-light">
+          <div className="pt-3 border-t border-lt-border-subtle">
             <p className="text-xs text-destructive">
               Notifikasi diblokir. Buka pengaturan browser untuk mengizinkan.
             </p>
@@ -283,22 +287,22 @@ export default function Settings() {
       {/* Pengaturan Dosis Walmagh */}
       <div className="card-soft p-5 mb-4">
         <div className="flex items-center gap-3 mb-4">
-          <Clock size={20} className="text-sage dark:text-dark-primary-light" />
+          <Clock size={20} className="text-lt-color-primary" />
           <div>
-            <p className="font-medium text-sage-text dark:text-dark-text">Jadwal Minum Walmagh</p>
-            <p className="text-xs text-sage-muted dark:text-dark-muted">Sesuaikan jam dosis ke rutinitas harianmu</p>
+            <p className="font-medium text-lt-text-primary">Jadwal Minum Walmagh</p>
+            <p className="text-xs text-lt-text-secondary">Sesuaikan jam dosis ke rutinitas harianmu</p>
           </div>
         </div>
         
-        <div className="flex justify-between items-center bg-sage-light/30 dark:bg-dark-disabled/30 p-1 rounded-xl mb-4">
+        <div className="flex justify-between items-center bg-lt-bg-subtle/30 p-1 rounded-xl mb-4">
           {[-2, -1, 0, 1, 2].map((val) => (
             <button
               key={val}
               onClick={() => setOffset(val)}
               className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${
                 offset === val 
-                  ? 'bg-white dark:bg-dark-surface shadow-sm text-sage-text dark:text-dark-text' 
-                  : 'text-sage-muted dark:text-dark-muted hover:bg-white/50 dark:hover:bg-dark-surface/50'
+                  ? 'bg-lt-bg-surface shadow-sm text-lt-text-primary' 
+                  : 'text-lt-text-secondary hover:bg-lt-bg-surface/50'
               }`}
             >
               {val === 0 ? 'Default' : val > 0 ? `+${val} jam` : `${val} jam`}
@@ -306,11 +310,11 @@ export default function Settings() {
           ))}
         </div>
         
-        <div className="pt-3 border-t border-sage-light dark:border-dark-disabled">
-          <p className="text-[11px] text-sage-muted dark:text-dark-muted mb-2">Preview Jadwal ({frekuensi}x sehari):</p>
+        <div className="pt-3 border-t border-lt-border-subtle">
+          <p className="text-[11px] text-lt-text-secondary mb-2">Preview Jadwal ({frekuensi}x sehari):</p>
           <div className="flex gap-2 flex-wrap">
             {schedule.map((jam, i) => (
-              <span key={i} className="text-xs font-medium text-sage-text dark:text-dark-text bg-sage/10 px-2 py-1 rounded-md">
+              <span key={i} className="text-xs font-medium text-lt-text-primary bg-lt-color-primary/10 px-2 py-1 rounded-md">
                 {i === 0 ? 'Pagi' : i === 1 && frekuensi === 3 ? 'Siang' : 'Malam'}: {jam.toString().padStart(2, '0')}.00
               </span>
             ))}
@@ -322,21 +326,21 @@ export default function Settings() {
       <div className="card-soft overflow-hidden mb-4">
         <button
           onClick={handleExport}
-          className="w-full p-4 flex items-center justify-between text-left hover:bg-sage-light/50 dark:hover:bg-dark-disabled/50 transition-colors"
+          className="w-full p-4 flex items-center justify-between text-left hover:bg-lt-bg-subtle/50 transition-colors"
         >
           <div className="flex items-center gap-3">
-            <Download size={20} className="text-sage dark:text-dark-primary-light" />
-            <span className="text-sage-text dark:text-dark-text">Export Data</span>
+            <Download size={20} className="text-lt-color-primary" />
+            <span className="text-lt-text-primary">Export Data</span>
           </div>
-          <ChevronRight size={18} className="text-sage-muted dark:text-dark-muted" />
+          <ChevronRight size={18} className="text-lt-text-secondary" />
         </button>
 
-        <label className="w-full p-4 flex items-center justify-between text-left hover:bg-sage-light/50 dark:hover:bg-dark-disabled/50 transition-colors cursor-pointer border-t border-sage-light dark:border-dark-disabled">
+        <label className="w-full p-4 flex items-center justify-between text-left hover:bg-lt-bg-subtle/50 transition-colors cursor-pointer border-t border-lt-border-subtle">
           <div className="flex items-center gap-3">
             <Upload size={20} className="text-destructive" />
-            <span className="text-sage-text dark:text-dark-text">Import Data</span>
+            <span className="text-lt-text-primary">Import Data</span>
           </div>
-          <ChevronRight size={18} className="text-sage-muted dark:text-dark-muted" />
+          <ChevronRight size={18} className="text-lt-text-secondary" />
           <input type="file" accept="application/json" onChange={handleImport} className="hidden" />
         </label>
 
@@ -350,7 +354,7 @@ export default function Settings() {
         <div className="card-soft overflow-hidden mb-6">
           <button
             onClick={simulate14Days}
-            className="w-full p-4 flex items-center gap-3 text-left hover:bg-sage-light/50 transition-colors text-sage"
+            className="w-full p-4 flex items-center gap-3 text-left hover:bg-lt-color-primary/10 transition-colors text-lt-color-primary"
           >
             <FlaskConical size={20} />
             <span>Simulasi Selesai 14 Hari (Dev)</span>
@@ -362,7 +366,7 @@ export default function Settings() {
       <div className="card-soft overflow-hidden mb-6">
         <button
           onClick={() => setShowDeleteConfirm(true)}
-          className="w-full p-4 flex items-center gap-3 text-left hover:bg-sage-light/50 dark:hover:bg-dark-disabled/50 transition-colors text-destructive"
+          className="w-full p-4 flex items-center gap-3 text-left hover:bg-lt-bg-subtle/50 transition-colors text-destructive"
         >
           <Trash2 size={20} />
           <span>Hapus Semua Data</span>
@@ -372,20 +376,20 @@ export default function Settings() {
       {/* About */}
       <div className="card-soft p-5 mb-6">
         <div className="flex items-center gap-3 mb-3">
-          <Info size={20} className="text-sage-muted dark:text-dark-muted" />
-          <h3 className="font-bold text-sage-text dark:text-dark-text">Tentang</h3>
+          <Info size={20} className="text-lt-text-secondary" />
+          <h3 className="font-bold text-lt-text-primary">Tentang</h3>
         </div>
-        <p className="text-xs text-sage-muted dark:text-dark-muted leading-relaxed mb-3">
+        <p className="text-xs text-lt-text-secondary leading-relaxed mb-3">
           Lambung Tenang adalah aplikasi pendamping untuk perjalanan 14 hari ikhtiar pemulihan GERD-Anxiety.
           Dibuat dari pengalaman pribadi, bukan pengganti medis.
         </p>
-        <p className="text-xs text-sage-muted dark:text-dark-muted leading-relaxed">
+        <p className="text-xs text-lt-text-secondary leading-relaxed">
           Semua data tersimpan lokal di perangkatmu. Tidak ada server, tidak ada yang mengintai.
           Kamu punya kendali penuh atas data dan suaramu.
         </p>
       </div>
 
-      <p className="text-center text-xs text-sage-muted/50 dark:text-dark-muted/50">Lambung Tenang v1.0</p>
+      <p className="text-center text-xs text-lt-text-muted/30">Lambung Tenang v1.0</p>
 
       {/* Notification permission modal */}
       {showNotificationModal && (
@@ -393,10 +397,10 @@ export default function Settings() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white dark:bg-dark-surface rounded-2xl shadow-lg p-6 w-full max-w-sm"
+            className="bg-lt-bg-surface rounded-2xl shadow-lg p-6 w-full max-w-sm"
           >
-            <h3 className="text-lg font-bold text-sage-text dark:text-dark-text mb-2">Izinkan Pengingat?</h3>
-            <p className="text-sm text-sage-muted dark:text-dark-muted mb-6">
+            <h3 className="text-lg font-bold text-lt-text-primary mb-2">Izinkan Pengingat?</h3>
+            <p className="text-sm text-lt-text-secondary mb-6">
               Kami akan mengingatkan Anda untuk check-in setiap hari melalui notifikasi aplikasi.
             </p>
             <div className="flex gap-3">
@@ -423,10 +427,10 @@ export default function Settings() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white dark:bg-dark-surface rounded-3xl p-6 w-full max-w-sm"
+            className="bg-lt-bg-surface rounded-3xl p-6 w-full max-w-sm"
           >
-            <h3 className="text-lg font-bold text-sage-text dark:text-dark-text mb-2">Hapus Semua Data?</h3>
-            <p className="text-sm text-sage-muted dark:text-dark-muted mb-6">
+            <h3 className="text-lg font-bold text-lt-text-primary mb-2">Hapus Semua Data?</h3>
+            <p className="text-sm text-lt-text-secondary mb-6">
               Tindakan ini tidak bisa dibatalkan. Semua check-in, profil, dan pengaturan akan hilang.
             </p>
             <div className="flex gap-3">

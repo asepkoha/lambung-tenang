@@ -81,9 +81,9 @@ export default function CompletionPage() {
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
-          className="w-24 h-24 bg-sage/20 rounded-full flex items-center justify-center mb-6"
+          className="w-24 h-24 bg-lt-color-primary/20 rounded-full flex items-center justify-center mb-6"
         >
-          <Trophy size={48} className="text-sage" />
+          <Trophy size={48} className="text-lt-color-primary" />
         </motion.div>
 
         {/* Congratulations Text */}
@@ -93,12 +93,12 @@ export default function CompletionPage() {
           transition={{ delay: 0.4 }}
           className="mb-8"
         >
-          <h1 className="text-3xl sm:text-4xl font-bold text-sage-text dark:text-dark-text mb-3">
+          <h1 className="text-3xl sm:text-4xl font-bold text-lt-text-primary mb-3">
             Selamat, {profile.name}!
           </h1>
-          <p className="text-lg text-sage-muted dark:text-dark-muted leading-relaxed">
+          <p className="text-lg text-lt-text-secondary leading-relaxed">
             Kamu telah menyelesaikan perjalanan<br />
-            <span className="font-bold text-sage">14 Hari Lambung Tenang</span>
+            <span className="font-bold text-lt-color-primary">14 Hari Lambung Tenang</span>
           </p>
         </motion.div>
 
@@ -109,36 +109,36 @@ export default function CompletionPage() {
           transition={{ delay: 0.6 }}
           className="grid grid-cols-2 gap-3 w-full max-w-xs mb-8"
         >
-          <div className="bg-white dark:bg-dark-surface rounded-2xl p-4 shadow-sm">
+          <div className="bg-lt-bg-surface rounded-2xl p-4 shadow-sm border border-lt-border-subtle">
             <div className="flex items-center gap-2 mb-1">
-              <Star size={16} className="text-sage" />
-              <span className="text-xs text-sage-muted dark:text-dark-muted">Hari Selesai</span>
+              <Star size={16} className="text-lt-color-primary" />
+              <span className="text-xs text-lt-text-secondary">Hari Selesai</span>
             </div>
-            <p className="text-2xl font-bold text-sage-text dark:text-dark-text">{completedDays}/14</p>
+            <p className="text-2xl font-bold text-lt-text-primary">{completedDays}/14</p>
           </div>
 
-          <div className="bg-white dark:bg-dark-surface rounded-2xl p-4 shadow-sm">
+          <div className="bg-lt-bg-surface rounded-2xl p-4 shadow-sm border border-lt-border-subtle">
             <div className="flex items-center gap-2 mb-1">
-              <Sparkles size={16} className="text-sage" />
-              <span className="text-xs text-sage-muted dark:text-dark-muted">Streak</span>
+              <Sparkles size={16} className="text-lt-color-primary" />
+              <span className="text-xs text-lt-text-secondary">Streak</span>
             </div>
-            <p className="text-2xl font-bold text-sage-text dark:text-dark-text">{streak} hari</p>
+            <p className="text-2xl font-bold text-lt-text-primary">{streak} hari</p>
           </div>
 
-          <div className="bg-white dark:bg-dark-surface rounded-2xl p-4 shadow-sm">
+          <div className="bg-lt-bg-surface rounded-2xl p-4 shadow-sm border border-lt-border-subtle">
             <div className="flex items-center gap-2 mb-1">
-              <Heart size={16} className="text-sage" />
-              <span className="text-xs text-sage-muted dark:text-dark-muted">Mood Rata-rata</span>
+              <Heart size={16} className="text-lt-color-primary" />
+              <span className="text-xs text-lt-text-secondary">Mood Rata-rata</span>
             </div>
-            <p className="text-2xl font-bold text-sage-text dark:text-dark-text">{avgMood.toFixed(1)}/5</p>
+            <p className="text-2xl font-bold text-lt-text-primary">{avgMood.toFixed(1)}/5</p>
           </div>
 
-          <div className="bg-white dark:bg-dark-surface rounded-2xl p-4 shadow-sm">
+          <div className="bg-lt-bg-surface rounded-2xl p-4 shadow-sm border border-lt-border-subtle">
             <div className="flex items-center gap-2 mb-1">
-              <Sparkles size={16} className="text-sage" />
-              <span className="text-xs text-sage-muted dark:text-dark-muted">Anxiety Rata-rata</span>
+              <Sparkles size={16} className="text-lt-color-primary" />
+              <span className="text-xs text-lt-text-secondary">Anxiety Rata-rata</span>
             </div>
-            <p className="text-2xl font-bold text-sage-text dark:text-dark-text">{avgAnxiety.toFixed(1)}/10</p>
+            <p className="text-2xl font-bold text-lt-text-primary">{avgAnxiety.toFixed(1)}/10</p>
           </div>
         </motion.div>
 
@@ -147,9 +147,9 @@ export default function CompletionPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="bg-sage-warm dark:bg-dark-surface-2 rounded-2xl p-4 mb-8 max-w-xs"
+          className="bg-lt-bg-subtle rounded-2xl p-4 mb-8 max-w-xs border border-lt-border-subtle"
         >
-          <p className="text-sm text-sage-muted dark:text-dark-muted italic leading-relaxed">
+          <p className="text-sm text-lt-text-secondary italic leading-relaxed">
             "Perjalanan ini bukanlah akhir, melainkan awal dari kebiasaan baik yang telah kamu bangun. Teruslah berproses dengan penuh kasih sayang pada dirimu sendiri."
           </p>
         </motion.div>

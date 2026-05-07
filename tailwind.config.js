@@ -5,14 +5,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'lt-bg': {
+          base: 'var(--bg-base)',
+          surface: 'var(--bg-surface)',
+          elevated: 'var(--bg-elevated)',
+          subtle: 'var(--bg-subtle)',
+        },
+        'lt-text': {
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          muted: 'var(--text-muted)',
+        },
+        'lt-color': {
+          primary: 'var(--color-primary)',
+          'primary-dark': 'var(--color-primary-dark)',
+        },
+        'lt-border': {
+          subtle: 'var(--border-subtle)',
+        },
         sage: {
-          DEFAULT: '#8FCF97',
-          dark: '#4A8A57',
-          light: '#E6F1E8',
-          accent: '#8FCF97',
-          text: '#24342A',
-          muted: '#6E7F73',
-          warm: '#F4F7F4',
+          DEFAULT: "hsl(var(--sage))",
+          dark: "hsl(var(--sage-dark))",
+          light: "hsl(var(--sage-light))",
+          accent: "hsl(var(--sage-accent))",
+          text: "hsl(var(--sage-text))",
+          muted: "hsl(var(--sage-muted))",
+          warm: "hsl(var(--sage-warm))",
         },
         'dark-bg': '#0F1412',
         'dark-surface': '#161D19',

@@ -4,23 +4,23 @@ const THEME_KEY = 'lt-theme';
 const PWA_DISMISSED_KEY = 'lt-pwa-dismissed';
 
 function applyTheme(dark: boolean) {
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
   if (dark) {
-    document.documentElement.classList.add('dark');
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.setAttribute('content', '#0F1412');
+    document.documentElement.classList.remove('light');
+    if (metaTheme) metaTheme.setAttribute('content', '#1a1f1b'); // --lt-bg-base
   } else {
-    document.documentElement.classList.remove('dark');
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.setAttribute('content', '#8FCF97');
+    document.documentElement.classList.add('light');
+    if (metaTheme) metaTheme.setAttribute('content', '#f5f3ef'); // --lt-bg-base light
   }
 }
 
 export function useTheme() {
   const [isDark, setIsDark] = useState<boolean>(() => {
     try {
-      return localStorage.getItem(THEME_KEY) === 'dark';
+      const saved = localStorage.getItem(THEME_KEY);
+      return saved !== 'light'; // Default to dark (true) if null or 'dark'
     } catch {
-      return false;
+      return true;
     }
   });
 
@@ -44,8 +44,10 @@ export function useTheme() {
 export function initTheme() {
   try {
     const saved = localStorage.getItem(THEME_KEY);
-    applyTheme(saved === 'dark');
-  } catch {}
+    applyTheme(saved !== 'light');
+  } catch {
+    applyTheme(true);
+  }
 }
 
 // PWA Install Hook

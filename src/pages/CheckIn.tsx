@@ -83,15 +83,15 @@ export default function CheckIn() {
           animate={{ opacity: 1, scale: 1 }}
           className="flex-1 flex flex-col items-center justify-center text-center"
         >
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sage/10 rounded-full flex items-center justify-center mb-4 shrink-0">
-            <Star size={32} className="text-sage fill-sage" />
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-lt-color-primary/10 rounded-full flex items-center justify-center mb-4 shrink-0">
+            <Star size={32} className="text-lt-color-primary fill-lt-color-primary" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-sage-text dark:text-dark-text mb-1">Check-in Selesai</h2>
-          <p className="text-sage-muted dark:text-dark-muted text-xs sm:text-sm mb-8">Terima kasih sudah menemani dirimu hari ini.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-lt-text-primary mb-1">Check-in Selesai</h2>
+          <p className="text-lt-text-secondary text-xs sm:text-sm mb-8">Terima kasih sudah menemani dirimu hari ini.</p>
 
           <div className="w-full space-y-3 mb-8">
             <div className="text-left px-1">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-sage-muted dark:text-dark-muted">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-lt-text-muted">
                 Respons Khusus Untukmu
               </span>
             </div>
@@ -99,7 +99,7 @@ export default function CheckIn() {
               track={profile.track || 'A'}
               day={day}
               checkinData={checkinData}
-              className="shadow-xl shadow-sage/5 border border-sage-light dark:border-dark-disabled"
+              className="shadow-xl shadow-lt-color-primary/5 border border-lt-border-subtle"
             />
           </div>
 
@@ -116,8 +116,8 @@ export default function CheckIn() {
   return (
     <div className="page-container min-h-screen flex flex-col pt-6 pb-24 overflow-y-auto">
       <div className="mb-4 shrink-0 text-center">
-        <h1 className="text-xl sm:text-2xl font-bold text-sage-text dark:text-dark-text">Check-in Hari {day}</h1>
-        <p className="text-[10px] sm:text-sm text-sage-muted dark:text-dark-muted italic">"{dayContent.subtitle}"</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Check-in Hari {day}</h1>
+        <p className="text-[10px] sm:text-sm text-lt-text-secondary italic">"{dayContent.subtitle}"</p>
       </div>
       
       <div className="flex-1 flex flex-col min-h-0">

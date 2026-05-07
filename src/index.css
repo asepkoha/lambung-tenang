@@ -4,88 +4,95 @@
 
 @layer base {
   :root {
-    /* Sage Green Palette */
-    --sage: 128 40% 69%; /* #8FCF97 */
-    --sage-dark: 136 31% 41%; /* #4A8A57 */
-    --sage-light: 130 32% 92%; /* #E6F1E8 */
-    --sage-accent: 128 40% 69%; /* #8FCF97 */
-    --sage-text: 145 18% 18%; /* #24342A */
-    --sage-muted: 140 7% 47%; /* #6E7F73 */
-    --sage-warm: 120 13% 97%; /* #F4F7F4 */
+    /* Dark mode as default */
+    --bg-base:        #1a1f1b;
+    --bg-surface:     #232b24;
+    --bg-elevated:    #2d3a2f;
+    --bg-subtle:      #3a4a3c;
+    --text-primary:   #e8f0e9;
+    --text-secondary: #8fa891;
+    --text-muted:     #5a6b5c;
+    --color-primary:  #8fcf97;
+    --color-primary-dark: #6bbf76;
+    --border-subtle:  rgba(143,207,151,0.12);
 
-    --background: 120 13% 97%; /* #F4F7F4 - soft sage background */
-    --foreground: 145 18% 18%; /* #24342A - deep sage text */
+    /* Legacy HSL variables for shadcn compatibility */
+    --sage: 128 40% 69%;
+    --sage-dark: 136 31% 41%;
+    --sage-light: 130 32% 92%;
+    --sage-accent: 128 40% 69%;
+    --sage-text: 145 18% 18%;
+    --sage-muted: 140 7% 47%;
+    --sage-warm: 120 13% 97%;
+
+    --background: 150 13% 7%;
+    --foreground: 140 30% 93%;
+    --card: 150 12% 10%;
+    --card-foreground: 140 30% 93%;
+    --popover: 150 12% 10%;
+    --popover-foreground: 140 30% 93%;
+    --primary: 128 40% 69%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 145 12% 18%;
+    --secondary-foreground: 140 30% 93%;
+    --muted: 145 12% 18%;
+    --muted-foreground: 145 14% 66%;
+    --accent: 133 27% 51%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 25 30% 58%;
+    --destructive-foreground: 150 12% 10%;
+    --border: 145 12% 18%;
+    --input: 145 12% 18%;
+    --ring: 133 27% 51%;
+    --radius: 1.25rem;
+  }
+
+  /* Light mode CSS variables */
+  .light {
+    --bg-base:        #f5f3ef;
+    --bg-surface:     #ffffff;
+    --bg-elevated:    #ffffff;
+    --bg-subtle:      #f0faf2;
+    --text-primary:   #2d2a26;
+    --text-secondary: #6b6b6b;
+    --text-muted:     #9e9e9e;
+    --color-primary:  #8fcf97;
+    --color-primary-dark: #6bbf76;
+    --border-subtle:  #e8e8e8;
+
+    /* Legacy HSL variables for shadcn compatibility */
+    --background: 120 13% 97%;
+    --foreground: 145 18% 18%;
     --card: 0 0% 100%;
     --card-foreground: 145 18% 18%;
     --popover: 0 0% 100%;
     --popover-foreground: 145 18% 18%;
-    --primary: 128 40% 69%; /* #8FCF97 - sage green */
+    --primary: 128 40% 69%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 140 7% 47%; /* #6E7F73 - sage muted */
+    --secondary: 140 7% 47%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 130 32% 92%; /* #E6F1E8 - sage light */
+    --muted: 130 32% 92%;
     --muted-foreground: 140 7% 47%;
     --accent: 128 40% 69%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 30 38% 64%; /* #C4A484 - warm tan */
+    --destructive: 30 38% 64%;
     --destructive-foreground: 0 0% 100%;
-    --border: 130 32% 92%; /* #E6F1E8 - sage light */
+    --border: 130 32% 92%;
     --input: 130 32% 92%;
     --ring: 131 28% 56%;
-    --radius: 1.25rem;
-  }
-
-  /* Dark mode CSS variables */
-  .dark {
-    --background: 150 13% 7%; /* #0F1412 */
-    --foreground: 140 30% 93%; /* #E6F1EA */
-    --card: 150 12% 10%; /* #161D19 */
-    --card-foreground: 140 30% 93%;
-    --popover: 150 12% 10%;
-    --popover-foreground: 140 30% 93%;
-    --primary: 128 40% 69%; /* #8FCF97 */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 145 12% 18%; /* #2A332E */
-    --secondary-foreground: 140 30% 93%;
-    --muted: 145 12% 18%;
-    --muted-foreground: 145 14% 66%; /* #9FB2A6 */
-    --accent: 133 27% 51%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 25 30% 58%; /* #CFAF9B warm */
-    --destructive-foreground: 150 12% 10%;
-    --border: 145 12% 18%; /* #2A332E */
-    --input: 145 12% 18%;
-    --ring: 133 27% 51%;
-
-    --sage: 128 40% 69%; /* #8FCF97 */
-    --sage-dark: 133 27% 40%;
-    --sage-light: 145 12% 18%; /* #2A332E */
-    --sage-accent: 133 35% 64%; /* #7BCF8A */
-    --sage-text: 140 30% 93%; /* #E6F1EA */
-    --sage-muted: 145 14% 66%; /* #9FB2A6 */
-    --sage-warm: 150 13% 7%; /* #0F1412 */
   }
 
   body {
     font-family: 'Inter', sans-serif;
-    background-color: #F4F7F4;
-    color: #24342A;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior-y: none;
   }
 
-  .dark body {
-    background-color: #0F1412;
-    color: #E6F1EA;
-  }
-
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Nunito', sans-serif;
-    color: #24342A;
-  }
-
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    color: #E6F1EA;
+    color: var(--text-primary);
   }
 
   .font-handwritten {
@@ -159,4 +166,15 @@
   .pb-safe-bottom {
     padding-bottom: env(safe-area-inset-bottom, 16px);
   }
+
+  /* Custom colors to avoid inline styles */
+  .bg-anxiety { background-color: #F2D8C9; }
+  .bg-badge-night { background-color: #F8F4F0; }
+  .text-badge-night { color: #C4A484; }
+  .bg-badge-day { background-color: #FDF4EC; }
+  .text-badge-day { color: #F97316; }
+
+  .border-track-A { border-color: #8FBC8F; }
+  .border-track-B { border-color: #F4A460; }
+  .border-track-C { border-color: #D4A373; }
 }

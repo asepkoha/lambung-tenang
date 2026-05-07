@@ -82,14 +82,14 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
           }}
           className="relative"
         >
-          <div className="h-20 w-20 rounded-full bg-sage/20 flex items-center justify-center">
-            <CheckCircle2 className="h-10 w-10 text-sage animate-pulse" />
+          <div className="h-20 w-20 rounded-full bg-lt-color-primary/20 flex items-center justify-center border border-lt-border-subtle">
+            <CheckCircle2 className="h-10 w-10 text-lt-color-primary animate-pulse" />
           </div>
-          <div className="absolute inset-0 h-20 w-20 rounded-full border-4 border-sage border-t-transparent animate-spin" />
+          <div className="absolute inset-0 h-20 w-20 rounded-full border-4 border-lt-color-primary border-t-transparent animate-spin" />
         </motion.div>
         <div className="space-y-2">
-          <h2 className="text-2xl font-bold tracking-tight">Menganalisis Jawabanmu...</h2>
-          <p className="text-muted-foreground">Kami sedang menyiapkan jalur terbaik untuk perjalanan 14 harimu.</p>
+          <h2 className="text-2xl font-bold tracking-tight text-lt-text-primary">Menganalisis Jawabanmu...</h2>
+          <p className="text-lt-text-secondary">Kami sedang menyiapkan jalur terbaik untuk perjalanan 14 harimu.</p>
         </div>
       </div>
     );
@@ -107,17 +107,17 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
             size="sm" 
             onClick={handleBack}
             disabled={currentStep === 0}
-            className="text-muted-foreground hover:text-foreground -ml-2"
+            className="text-lt-text-secondary hover:text-lt-text-primary -ml-2"
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
-          <span className="text-xs font-medium text-muted-foreground font-mono">
+          <span className="text-xs font-medium text-lt-text-secondary font-mono">
             {currentStep + 1} / {totalSteps}
           </span>
         </div>
-        <div className="h-1 w-full bg-sage-light overflow-hidden rounded-full">
+        <div className="h-1.5 w-full bg-lt-bg-subtle border border-lt-border-subtle overflow-hidden rounded-full">
           <motion.div
-            className="h-full bg-sage"
+            className="h-full bg-lt-color-primary"
             initial={{ width: 0 }}
             animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -139,10 +139,10 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
             className="w-full flex flex-col min-h-full pb-4"
           >
             <div className="mb-5 shrink-0">
-              <h2 className="text-lg sm:text-xl font-bold leading-snug text-foreground mb-1">
+              <h2 className="text-lg sm:text-xl font-bold leading-snug text-lt-text-primary mb-1">
                 {currentQuestion.question}
               </h2>
-              <p className="text-muted-foreground italic text-xs">
+              <p className="text-lt-text-secondary italic text-xs">
                 Pilih jawaban yang paling mendekati perasaanmu saat ini.
               </p>
             </div>
@@ -155,20 +155,20 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleSelectOption(index)}
                   className={cn(
-                    "flex items-center justify-between p-3 sm:p-4 min-h-[48px] rounded-xl border-2 text-left transition-colors duration-200",
+                    "flex items-center justify-between p-3 sm:p-4 min-h-[48px] rounded-xl border transition-colors duration-200",
                     answers[currentStep] === index 
-                      ? "border-sage bg-sage/5 shadow-sm" 
-                      : "border-sage-light hover:border-sage/40 hover:bg-sage-light/50"
+                      ? "border-lt-color-primary bg-lt-bg-subtle shadow-sm" 
+                      : "border-lt-border-subtle hover:border-lt-color-primary/40 hover:bg-lt-bg-subtle/50"
                   )}
                 >
-                  <span className="text-sm sm:text-base font-medium leading-snug flex-1 pr-3 text-sage-text">
+                  <span className="text-sm sm:text-base font-medium leading-snug flex-1 pr-3 text-lt-text-primary">
                     {option.text}
                   </span>
                   <div className={cn(
-                    "h-4 w-4 sm:h-5 sm:w-5 rounded-full border-2 flex items-center justify-center shrink-0",
+                    "h-4 w-4 sm:h-5 sm:w-5 rounded-full border shrink-0 flex items-center justify-center",
                     answers[currentStep] === index 
-                      ? "border-sage bg-sage" 
-                      : "border-sage-muted/40"
+                      ? "border-lt-color-primary bg-lt-color-primary" 
+                      : "border-lt-border-subtle"
                   )}>
                     {answers[currentStep] === index && (
                       <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white" />
@@ -183,7 +183,7 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
 
       {/* Footer Info */}
       <div className="pt-2 shrink-0 text-center">
-        <p className="text-[10px] sm:text-xs text-muted-foreground/70 leading-relaxed">
+        <p className="text-[10px] sm:text-xs text-lt-text-secondary opacity-70 leading-relaxed">
           Privat & aman. Hanya untuk menyesuaikan pendampingan.
         </p>
       </div>

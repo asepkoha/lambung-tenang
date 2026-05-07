@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProfile } from '@/hooks/useProfile';
 import { useEntries } from '@/hooks/useEntries';
@@ -22,9 +23,9 @@ const activityLabels: Record<string, string> = {
 };
 
 const walmaghLabels: Record<string, { label: string; className: string }> = {
-  sesuai: { label: 'Sudah, Sesuai Dosis', className: 'bg-sage/15 text-sage-dark' },
-  tidak_sesuai: { label: 'Sudah, Tidak Sesuai Dosis', className: 'bg-destructive/15 text-destructive-dark' },
-  belum: { label: 'Belum', className: 'bg-sage-muted/15 text-sage-muted' },
+  sesuai: { label: 'Sudah, Sesuai Dosis', className: 'bg-lt-color-primary/10 text-lt-color-primary' },
+  tidak_sesuai: { label: 'Sudah, Tidak Sesuai Dosis', className: 'bg-destructive/10 text-destructive' },
+  belum: { label: 'Belum', className: 'bg-lt-text-muted/10 text-lt-text-muted' },
 };
 
 export default function History() {
@@ -42,8 +43,6 @@ export default function History() {
     anxiety: e.checkInData?.anxietyLevel || 0,
   }));
 
-  const maxAnxiety = 10;
-  const maxMood = 5;
 
   const toggleExpand = (day: number) => {
     setExpandedDay(expandedDay === day ? null : day);
@@ -51,20 +50,20 @@ export default function History() {
 
   return (
     <div className="page-container pb-20">
-      <h1 className="text-2xl font-bold text-sage-text dark:text-dark-text mb-2">Riwayat 14 Hari</h1>
-      <p className="text-sage-muted dark:text-dark-muted text-sm mb-6">Perjalanan dan pola harianmu.</p>
+      <h1 className="text-2xl font-bold text-lt-text-primary mb-2">Riwayat 14 Hari</h1>
+      <p className="text-lt-text-secondary text-sm mb-6">Perjalanan dan pola harianmu.</p>
 
       {entries.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center justify-center text-center p-8 mt-12 bg-white dark:bg-dark-surface rounded-3xl border border-sage-light dark:border-dark-disabled shadow-sm"
+          className="flex flex-col items-center justify-center text-center p-8 mt-12 bg-lt-bg-surface rounded-3xl border border-lt-border-subtle shadow-sm"
         >
-          <div className="w-24 h-24 bg-sage-light rounded-full flex items-center justify-center mb-6">
-            <Smile size={48} className="text-sage" strokeWidth={1.5} />
+          <div className="w-24 h-24 bg-lt-bg-subtle rounded-full flex items-center justify-center mb-6">
+            <Smile size={48} className="text-lt-color-primary" strokeWidth={1.5} />
           </div>
-          <h2 className="text-xl font-bold text-sage-text dark:text-dark-text mb-3">Belum Ada Catatan</h2>
-          <p className="text-sage-muted dark:text-dark-muted text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-lt-text-primary mb-3">Belum Ada Catatan</h2>
+          <p className="text-lt-text-secondary text-sm leading-relaxed">
             Perjalanan 14 harimu baru saja dimulai. Catatan harian dan tren mood-mu akan muncul di sini setelah kamu melakukan check-in pertamamu. 
             <br/><br/>
             Mari melangkah bersama, satu hari demi satu hari dengan perlahan.
@@ -76,19 +75,19 @@ export default function History() {
       {moodData.length > 1 && (
         <div className="card-soft p-5 mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <TrendingUp size={18} className="text-sage" />
-            <h2 className="text-sm font-bold text-sage-text dark:text-dark-text">Tren Mood & Anxiety</h2>
+            <TrendingUp size={18} className="text-lt-color-primary" />
+            <h2 className="text-sm font-bold text-lt-text-primary">Tren Mood & Anxiety</h2>
           </div>
 
           {/* Legend */}
           <div className="flex items-center gap-4 mb-3">
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded-sm bg-sage/50" />
-              <span className="text-[10px] text-sage-muted dark:text-dark-muted">Mood (1-5)</span>
+              <div className="w-3 h-3 rounded-sm bg-lt-color-primary/50" />
+              <span className="text-[10px] text-lt-text-secondary">Mood (1-5)</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: '#F2D8C9' }} />
-              <span className="text-[10px] text-sage-muted dark:text-dark-muted">Anxiety (1-10)</span>
+              <div className="w-3 h-3 rounded-sm bg-destructive/50" />
+              <span className="text-[10px] text-lt-text-secondary">Anxiety (1-10)</span>
             </div>
           </div>
 
@@ -98,23 +97,32 @@ export default function History() {
               <div key={d.day} className="flex-1 flex items-end gap-0.5 h-full">
                 {/* Mood bar - normalized to max 5 */}
                 <div
-                  className="flex-1 bg-sage/50 rounded-t-sm"
-                  style={{ height: `${(d.mood / maxMood) * 100}%` }}
+                  className={cn(
+                    "flex-1 bg-lt-color-primary/40 rounded-t-sm",
+                    d.mood === 1 ? "h-1/5" : d.mood === 2 ? "h-2/5" : d.mood === 3 ? "h-3/5" : d.mood === 4 ? "h-4/5" : "h-full"
+                  )}
                   title={`Mood: ${d.mood}/5`}
                 />
                 {/* Anxiety bar - normalized to max 10 */}
                 <div
-                  className="flex-1 rounded-t-sm"
-                  style={{
-                    height: `${(d.anxiety / maxAnxiety) * 100}%`,
-                    backgroundColor: '#F2D8C9',
-                  }}
+                  className={cn(
+                    "flex-1 bg-anxiety rounded-t-sm",
+                    d.anxiety === 1 ? "h-1/10" : 
+                    d.anxiety === 2 ? "h-2/10" : 
+                    d.anxiety === 3 ? "h-3/10" : 
+                    d.anxiety === 4 ? "h-4/10" : 
+                    d.anxiety === 5 ? "h-5/10" : 
+                    d.anxiety === 6 ? "h-6/10" : 
+                    d.anxiety === 7 ? "h-7/10" : 
+                    d.anxiety === 8 ? "h-8/10" : 
+                    d.anxiety === 9 ? "h-9/10" : "h-full"
+                  )}
                   title={`Anxiety: ${d.anxiety}/10`}
                 />
               </div>
             ))}
           </div>
-          <div className="flex justify-between text-[8px] text-sage-muted dark:text-dark-muted mt-1">
+          <div className="flex justify-between text-[8px] text-lt-text-secondary mt-1">
             <span>H1</span>
             <span>H{moodData[moodData.length - 1]?.day}</span>
           </div>
@@ -131,28 +139,30 @@ export default function History() {
             <div key={dayContent.dayNumber} className="card-soft overflow-hidden">
               <button
                 onClick={() => toggleExpand(dayContent.dayNumber)}
+                {...{ 'aria-expanded': isExpanded }}
+                aria-label={`Lihat detail Hari ${dayContent.dayNumber}: ${dayContent.title}`}
                 className="w-full p-4 flex items-center justify-between text-left"
               >
                 <div className="flex items-center gap-3">
                   <div
                     className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
                       entry?.completed
-                        ? 'bg-sage-dark dark:bg-dark-primary text-white'
-                        : 'bg-sage-light dark:bg-dark-disabled text-sage-muted dark:text-dark-muted'
+                        ? 'bg-lt-color-primary text-white'
+                        : 'bg-lt-bg-subtle text-lt-text-secondary'
                     }`}
                   >
                     {dayContent.dayNumber}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-sage-text dark:text-dark-text">{dayContent.title}</p>
-                    <p className="text-xs text-sage-muted dark:text-dark-muted">
+                    <p className="text-sm font-bold text-lt-text-primary">{dayContent.title}</p>
+                    <p className="text-xs text-lt-text-secondary">
                       {entry?.completed ? 'Check-in selesai' : 'Belum check-in'}
                     </p>
                   </div>
                 </div>
                 <ChevronDown
                   size={18}
-                  className={`text-sage-muted dark:text-dark-muted transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                  className={`text-lt-text-secondary transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                 />
               </button>
 
@@ -164,30 +174,30 @@ export default function History() {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-4 pb-4 pt-1 border-t border-sage-light dark:border-dark-disabled">
+                    <div className="px-4 pb-4 pt-1 border-t border-lt-border-subtle">
                       <div className="grid grid-cols-2 gap-3 mb-3">
-                        <div className="bg-sage-warm dark:bg-dark-surface-2 rounded-xl p-3">
-                          <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Mood</p>
+                        <div className="bg-lt-bg-subtle rounded-xl p-3">
+                          <p className="text-xs text-lt-text-secondary mb-1">Mood</p>
                           <div className="flex items-center gap-1">
                             {entry.checkInData.mood <= 2 ? (
                               <Frown size={16} className="text-destructive" />
                             ) : entry.checkInData.mood >= 4 ? (
-                              <Smile size={16} className="text-sage" />
+                              <Smile size={16} className="text-lt-color-primary" />
                             ) : (
-                              <Meh size={16} className="text-sage-muted" />
+                              <Meh size={16} className="text-lt-text-secondary" />
                             )}
-                            <span className="font-bold text-sage-text dark:text-dark-text">{entry.checkInData.mood}/5</span>
+                            <span className="font-bold text-lt-text-primary">{entry.checkInData.mood}/5</span>
                           </div>
                         </div>
-                        <div className="bg-sage-warm dark:bg-dark-surface-2 rounded-xl p-3">
-                          <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Anxiety</p>
+                        <div className="bg-lt-bg-subtle rounded-xl p-3">
+                          <p className="text-xs text-lt-text-secondary mb-1">Anxiety</p>
                           <span className="font-bold text-destructive">{entry.checkInData.anxietyLevel}/10</span>
                         </div>
                       </div>
 
                       {entry.checkInData.walmagh && (
                         <div className="mb-3">
-                          <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Walmagh:</p>
+                          <p className="text-xs text-lt-text-secondary mb-1">Walmagh:</p>
                           <span
                             className={`px-2 py-1 text-xs rounded-full inline-block ${walmaghLabels[entry.checkInData.walmagh]?.className ?? ''}`}
                           >
@@ -198,7 +208,7 @@ export default function History() {
 
                       {entry.checkInData.symptoms && (
                         <div className="mb-3">
-                          <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Gejala:</p>
+                          <p className="text-xs text-lt-text-secondary mb-1">Gejala:</p>
                           <div className="flex flex-wrap gap-1">
                             {Object.entries(entry.checkInData.symptoms)
                               .filter(([k, v]) => k !== 'none' && v)
@@ -211,7 +221,7 @@ export default function History() {
                                 </span>
                               ))}
                             {entry.checkInData.symptoms.none && (
-                              <span className="px-2 py-1 bg-sage/10 text-sage text-xs rounded-full">
+                              <span className="px-2 py-1 bg-lt-color-primary/10 text-lt-color-primary text-xs rounded-full">
                                 Tidak ada gejala
                               </span>
                             )}
@@ -221,12 +231,12 @@ export default function History() {
 
                       {entry.checkInData.activities.length > 0 && (
                         <div className="mb-3">
-                          <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Aktivitas:</p>
+                          <p className="text-xs text-lt-text-secondary mb-1">Aktivitas:</p>
                           <div className="flex flex-wrap gap-1">
                             {entry.checkInData.activities.map((a) => (
                               <span
                                 key={a}
-                                className="px-2 py-1 bg-sage/10 text-sage text-xs rounded-full"
+                                className="px-2 py-1 bg-lt-color-primary/10 text-lt-color-primary text-xs rounded-full"
                               >
                                 {activityLabels[a] ?? a}
                               </span>
@@ -236,9 +246,9 @@ export default function History() {
                       )}
 
                       {entry.checkInData.notes && (
-                        <div className="bg-sage-warm dark:bg-dark-surface-2 rounded-xl p-3">
-                          <p className="text-xs text-sage-muted dark:text-dark-muted mb-1">Catatan:</p>
-                          <p className="text-sm text-sage-text dark:text-dark-text italic">"{entry.checkInData.notes}"</p>
+                        <div className="bg-lt-bg-subtle rounded-xl p-3">
+                          <p className="text-xs text-lt-text-secondary mb-1">Catatan:</p>
+                          <p className="text-sm text-lt-text-primary italic">"{entry.checkInData.notes}"</p>
                         </div>
                       )}
                     </div>

@@ -160,16 +160,16 @@ export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, cl
   };
 
   // Sage palette colors
-  const playBg = 'bg-sage dark:bg-dark-primary hover:bg-sage-dark dark:hover:bg-dark-primary-light';
-  const labelColor = 'text-sage-accent dark:text-dark-primary-light';
-  const timerColor = 'text-sage-muted dark:text-dark-muted';
-  const sliderActive = '[&_[role=slider]]:border-sage dark:[&_[role=slider]]:border-dark-primary';
-  const ctrlBtn = 'text-sage-muted dark:text-dark-muted hover:text-sage-dark dark:hover:text-dark-primary-light';
-  const speedBtn = 'bg-sage-light dark:bg-dark-disabled text-sage-dark dark:text-dark-text hover:bg-sage-light/70 dark:hover:bg-dark-disabled/70';
+  const playBg = 'bg-lt-color-primary hover:bg-lt-color-primary-dark';
+  const labelColor = 'text-lt-color-primary';
+  const timerColor = 'text-lt-text-secondary';
+  const sliderActive = '[&_[role=slider]]:border-lt-color-primary';
+  const ctrlBtn = 'text-lt-text-secondary hover:text-lt-text-primary';
+  const speedBtn = 'bg-lt-bg-subtle text-lt-text-primary hover:bg-lt-bg-subtle/70';
 
   const containerBg = context === 'comfort' || context === 'acknowledge'
-    ? 'bg-sage-warm dark:bg-dark-surface-2'
-    : 'bg-sage-light/40 dark:bg-dark-surface';
+    ? 'bg-lt-bg-surface border border-lt-border-subtle shadow-sm'
+    : 'bg-lt-bg-subtle border border-lt-border-subtle';
 
   return (
     <div className={cn(containerBg, 'rounded-xl p-4 flex flex-col gap-3', className)}>
@@ -198,7 +198,7 @@ export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, cl
             disabled={isLoading}
           />
         ) : (
-          <div className="w-full h-1 bg-sage-light dark:bg-dark-disabled rounded-full" />
+          <div className="w-full h-1 bg-lt-bg-subtle rounded-full" />
         )}
       </div>
 

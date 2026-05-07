@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
 import Welcome from '@/pages/Welcome';
 import Onboarding from '@/pages/Onboarding';
 import Assessment from '@/pages/Assessment';
@@ -30,9 +29,8 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-sage-warm dark:bg-dark-bg text-sage-text dark:text-dark-text">
+    <div className="min-h-screen bg-lt-bg-base text-lt-text-primary">
       <div className="mx-auto max-w-md min-h-screen relative">
-        <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Welcome /></PageTransition>} />
             <Route path="/onboarding" element={<PageTransition><Onboarding /></PageTransition>} />
@@ -45,7 +43,6 @@ function App() {
             <Route path="/sos" element={<PageTransition><SOSPage /></PageTransition>} />
             <Route path="/completion" element={<PageTransition>{profile ? <CompletionPage /> : <Navigate to="/" />}</PageTransition>} />
           </Routes>
-        </AnimatePresence>
         {showNav && <BottomNav />}
       </div>
     </div>
