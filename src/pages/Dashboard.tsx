@@ -215,7 +215,6 @@ export default function HomeScreen(props: HomeScreenProps) {
               const isDone = entry?.completed;
               const isToday = dayNum === currentDay;
               const isFuture = dayNum > currentDay;
-              const isLast = dayNum === 14;
 
               let pillClass = 'bg-lt-bg-surface shadow-sm';
               let textClass = 'text-lt-text-secondary';
@@ -235,16 +234,9 @@ export default function HomeScreen(props: HomeScreenProps) {
                 icon = <CheckCircle2 size={16} className="text-lt-color-primary" strokeWidth={2.5} />;
                 label = null;
               } else if (isFuture) {
-                if (isLast) {
-                  pillClass = 'bg-lt-bg-surface shadow-sm border border-lt-border-subtle/60';
-                  textClass = 'text-lt-text-muted';
-                  icon = <Sprout size={20} className="text-lt-text-muted/40" strokeWidth={2.2} />;
-                  label = null;
-                } else {
-                  pillClass = 'bg-lt-bg-surface shadow-sm opacity-60';
-                  textClass = 'text-lt-text-muted';
-                  icon = <Lock size={10} className="text-lt-text-muted/40" />;
-                }
+                pillClass = 'bg-lt-bg-surface shadow-sm opacity-60';
+                textClass = 'text-lt-text-muted';
+                icon = <Lock size={10} className="text-lt-text-muted/40" />;
               }
 
               return (
