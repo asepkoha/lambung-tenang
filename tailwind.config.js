@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       colors: {
         sage: {
-          DEFAULT: '#6FAF7A',
+          DEFAULT: '#8FCF97',
           dark: '#4A8A57',
           light: '#E6F1E8',
           accent: '#8FCF97',
@@ -18,11 +18,13 @@ module.exports = {
         'dark-surface': '#161D19',
         'dark-surface-2': '#1B241F',
         'dark-surface-3': '#202A24',
+        'dark-surface-4': '#26322C',
+        'dark-card': '#161D19',
         'dark-disabled': '#2A332E',
         'dark-text': '#E6F1EA',
         'dark-muted': '#9FB2A6',
         'dark-accent': '#CFAF9B',
-        'dark-primary': '#5FA36B',
+        'dark-primary': '#8FCF97',
         'dark-primary-light': '#7BCF8A',
         'destructive-dark': '#C4A484',
         border: "hsl(var(--border))",

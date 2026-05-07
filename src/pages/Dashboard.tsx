@@ -233,7 +233,7 @@ export default function HomeScreen(props: HomeScreenProps) {
               );
 
               if (isToday) {
-                pillClass = 'bg-gradient-to-br from-[#6FAF7A] to-[#8FCF97] dark:from-[#5FA36B] dark:to-[#7BCF8A] shadow-md shadow-sage/30';
+                pillClass = 'bg-sage dark:bg-sage shadow-md shadow-sage/30';
                 textClass = 'text-white';
                 icon = <Sprout size={20} className="text-white" strokeWidth={2.2} />;
                 label = null;

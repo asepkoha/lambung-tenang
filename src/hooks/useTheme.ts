@@ -11,7 +11,7 @@ function applyTheme(dark: boolean) {
   } else {
     document.documentElement.classList.remove('dark');
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.setAttribute('content', '#6FAF7A');
+    if (metaTheme) metaTheme.setAttribute('content', '#8FCF97');
   }
 }
 

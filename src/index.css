@@ -5,7 +5,7 @@
 @layer base {
   :root {
     /* Sage Green Palette */
-    --sage: 131 28% 56%; /* #6FAF7A */
+    --sage: 128 40% 69%; /* #8FCF97 */
     --sage-dark: 136 31% 41%; /* #4A8A57 */
     --sage-light: 130 32% 92%; /* #E6F1E8 */
     --sage-accent: 128 40% 69%; /* #8FCF97 */
@@ -19,13 +19,13 @@
     --card-foreground: 145 18% 18%;
     --popover: 0 0% 100%;
     --popover-foreground: 145 18% 18%;
-    --primary: 131 28% 56%; /* #6FAF7A - sage green */
+    --primary: 128 40% 69%; /* #8FCF97 - sage green */
     --primary-foreground: 0 0% 100%;
     --secondary: 140 7% 47%; /* #6E7F73 - sage muted */
     --secondary-foreground: 0 0% 100%;
     --muted: 130 32% 92%; /* #E6F1E8 - sage light */
     --muted-foreground: 140 7% 47%;
-    --accent: 131 28% 56%;
+    --accent: 128 40% 69%;
     --accent-foreground: 0 0% 100%;
     --destructive: 30 38% 64%; /* #C4A484 - warm tan */
     --destructive-foreground: 0 0% 100%;
@@ -43,7 +43,7 @@
     --card-foreground: 140 30% 93%;
     --popover: 150 12% 10%;
     --popover-foreground: 140 30% 93%;
-    --primary: 133 27% 51%; /* #5FA36B */
+    --primary: 128 40% 69%; /* #8FCF97 */
     --primary-foreground: 0 0% 100%;
     --secondary: 145 12% 18%; /* #2A332E */
     --secondary-foreground: 140 30% 93%;
@@ -57,7 +57,7 @@
     --input: 145 12% 18%;
     --ring: 133 27% 51%;
 
-    --sage: 133 27% 51%; /* #5FA36B */
+    --sage: 128 40% 69%; /* #8FCF97 */
     --sage-dark: 133 27% 40%;
     --sage-light: 145 12% 18%; /* #2A332E */
     --sage-accent: 133 35% 64%; /* #7BCF8A */
@@ -105,11 +105,11 @@
 
   .btn-primary {
     @apply text-white font-medium rounded-full px-6 py-3.5 active:scale-[0.98] transition-transform disabled:pointer-events-none shadow-sm;
-    background: linear-gradient(135deg, #8FCF97, #6FAF7A);
+    background: linear-gradient(135deg, #8FCF97, #8FCF97);
     transition: background 0.2s ease, transform 0.1s ease;
   }
   .btn-primary:hover {
-    background: linear-gradient(135deg, #6FAF7A, #4A8A57);
+    background: linear-gradient(135deg, #8FCF97, #4A8A57);
   }
   .btn-primary:disabled {
     background: #DDE5DF;

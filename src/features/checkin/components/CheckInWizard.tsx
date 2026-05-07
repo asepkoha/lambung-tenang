@@ -217,7 +217,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
             </div>
             <div className="px-4 sm:px-6 space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-lg font-bold text-sage-muted">1</span>
+                <span className="text-lg font-bold text-sage-muted dark:text-dark-muted">1</span>
                 <Slider
                   value={[formData.anxiety]}
                   min={1}
@@ -226,10 +226,10 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   onValueChange={(val) => updateFormData('anxiety', val[0])}
                   className="flex-1 [&_[role=slider]]:active:scale-150 [&_[role=slider]]:transition-transform py-4"
                 />
-                <span className="text-lg font-bold text-sage-muted">10</span>
+                <span className="text-lg font-bold text-sage-muted dark:text-dark-muted">10</span>
               </div>
               <div className="text-center mt-2">
-                <span className="text-3xl sm:text-4xl font-black text-sage bg-sage/10 px-4 py-1 rounded-xl inline-block mb-2">{formData.anxiety}</span>
+                <span className="text-3xl sm:text-4xl font-black text-sage bg-sage/10 dark:bg-sage/20 px-4 py-1 rounded-xl inline-block mb-2">{formData.anxiety}</span>
                 <p className="text-xs sm:text-sm italic text-sage-muted mt-1">
                   {formData.anxiety <= 3 ? "Cukup tenang & terkendali" : 
                    formData.anxiety <= 7 ? "Mulai terasa mengganggu" : 
@@ -268,7 +268,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   onClick={() => toggleItem('symptoms', s.id)}
                   className={cn(
                     "flex items-center space-x-2 p-3 sm:p-4 rounded-xl border-2 transition-all cursor-pointer h-full",
-                    formData.symptoms.includes(s.id) ? "border-sage bg-sage/5" : "border-sage-light"
+                    formData.symptoms.includes(s.id) ? "border-sage bg-sage/5 dark:bg-sage/10" : "border-sage-light dark:border-dark-disabled"
                   )}
                 >
                   <Checkbox checked={formData.symptoms.includes(s.id)} className="shrink-0" />
@@ -342,12 +342,12 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   onClick={() => updateFormData('walmagh', opt.id)}
                   className={cn(
                     "flex items-center space-x-3 p-4 rounded-xl border-2 transition-all cursor-pointer",
-                    formData.walmagh === opt.id ? "border-sage bg-sage/5" : "border-sage-light"
+                    formData.walmagh === opt.id ? "border-sage bg-sage/5 dark:bg-sage/10" : "border-sage-light dark:border-dark-disabled"
                   )}
                 >
                   <div className={cn(
                     "w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center",
-                    formData.walmagh === opt.id ? "border-sage" : "border-sage-muted/40"
+                    formData.walmagh === opt.id ? "border-sage" : "border-sage-muted/40 dark:border-dark-disabled"
                   )}>
                     {formData.walmagh === opt.id && (
                       <div className="w-2.5 h-2.5 rounded-full bg-sage" />
@@ -392,8 +392,8 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   className={cn(
                     "flex items-center space-x-2 p-3 sm:p-4 rounded-xl border-2 transition-all cursor-pointer h-full",
                     formData.activities.includes(a.id)
-                      ? (hasDzikir ? "border-[#D4A373] bg-[#E8E0D5]" : "border-sage bg-sage/10")
-                      : (hasDzikir ? "border-[#E8E2D5]" : "border-sage-light")
+                      ? (hasDzikir ? "border-[#D4A373] bg-[#E8E0D5]" : "border-sage bg-sage/10 dark:bg-sage/20")
+                      : (hasDzikir ? "border-[#E8E2D5]" : "border-sage-light dark:border-dark-disabled")
                   )}
                 >
                   <Checkbox checked={formData.activities.includes(a.id)} className="shrink-0" />
@@ -416,7 +416,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
                   placeholder="Tuliskan di sini..."
                   className={cn(
                     "flex-1 max-h-[120px] rounded-2xl p-4 pr-16 pb-16 resize-none text-sm leading-relaxed transition-all",
-                    isRecording ? "border-2 border-sage" : "border border-sage-light"
+                    isRecording ? "border-2 border-sage" : "border border-sage-light dark:border-dark-disabled dark:bg-dark-surface-2"
                   )}
                   value={formData.reflection}
                   onChange={(e) => updateFormData('reflection', e.target.value)}
@@ -467,7 +467,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
             key={i}
             className={cn(
               "h-1.5 flex-1 rounded-full transition-all duration-300",
-              i <= step ? "bg-sage" : "bg-sage-light"
+              i <= step ? "bg-sage" : "bg-sage-light dark:bg-dark-disabled"
             )}
           />
         ))}
