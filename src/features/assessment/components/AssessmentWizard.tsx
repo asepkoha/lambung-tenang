@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useProfile } from '@/hooks/useProfile';
+import type { Track } from '@/types';
 import { assessmentQuestions, determineTrack } from '@/data/content';
 import { cn } from '@/lib/utils';
 
@@ -10,6 +12,7 @@ interface AssessmentWizardProps {
 }
 
 export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
+  const { updateProfile } = useProfile();
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -54,7 +57,7 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
     
     // Simulate processing for "magical" feel
     setTimeout(() => {
-      localStorage.setItem('userTrack', track);
+      updateProfile({ track: track as Track, assessmentAnswers: finalAnswers });
       onComplete(track);
     }, 1500);
   };

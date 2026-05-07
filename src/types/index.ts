@@ -43,6 +43,7 @@ export interface AppSettings {
   reminderTime: string; // "08:00"
   autoPlayVoice: boolean;
   onboardingDone: boolean;
+  doseOffset: number;
 }
 
 export interface DayContent {

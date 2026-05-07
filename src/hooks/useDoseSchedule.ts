@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import { differenceInDays } from 'date-fns';
 import { useProfile } from '@/hooks/useProfile';
+import { useSettings } from '@/hooks/useSettings';
 import { 
   DOSE_SCHEDULE_3X, 
   DOSE_SCHEDULE_2X, 
@@ -28,20 +28,12 @@ export function useDoseSchedule(providedCurrentDay?: number) {
   const frekuensi = isFase3 ? 2 : 3;
   const sendok = isFase3 ? 2 : 3;
 
-  // Baca offset user dari localStorage
-  const [offset, setOffsetState] = useState<number>(0);
-
-  useEffect(() => {
-    const savedOffset = localStorage.getItem('doseOffset');
-    if (savedOffset) {
-      setOffsetState(parseInt(savedOffset, 10));
-    }
-  }, []);
+  const { settings, setDoseOffset } = useSettings();
+  const offset = settings.doseOffset || 0;
 
   const setOffset = (newOffset: number) => {
     const boundedOffset = Math.max(-DOSE_SCHEDULE_OFFSET_MAX, Math.min(newOffset, DOSE_SCHEDULE_OFFSET_MAX));
-    setOffsetState(boundedOffset);
-    localStorage.setItem('doseOffset', boundedOffset.toString());
+    setDoseOffset(boundedOffset);
   };
 
   // Hitung jam aktual

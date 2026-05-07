@@ -6,8 +6,11 @@ import { STORAGE_KEYS } from '@/types';
 export function useProfile() {
   const [profile, setProfile] = useLocalStorage<UserProfile | null>(STORAGE_KEYS.profile, null);
 
-  const updateProfile = useCallback((newProfile: UserProfile | ((prev: UserProfile | null) => UserProfile | null)) => {
-    setProfile(newProfile);
+  const updateProfile = useCallback((updates: Partial<UserProfile>) => {
+    setProfile((prev) => {
+      if (!prev) return updates as UserProfile;
+      return { ...prev, ...updates };
+    });
   }, [setProfile]);
 
   const clearProfile = useCallback(() => {
