@@ -107,16 +107,20 @@
   }
 
   .btn-primary {
-    @apply text-white font-bold rounded-full px-6 py-4 active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none shadow-lg;
-    background: var(--color-primary);
+    @apply font-bold rounded-full px-6 py-4 active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none;
+    background: transparent;
+    border: 1px solid rgba(143, 207, 151, 0.35);
+    color: var(--color-primary);
   }
   .btn-primary:hover {
-    filter: brightness(1.1);
+    background: rgba(143, 207, 151, 0.10);
+    border: 1px solid rgba(143, 207, 151, 0.5);
   }
   .btn-primary:disabled {
-    background: var(--bg-subtle);
+    background: transparent;
+    border: 1px solid var(--text-muted);
     color: var(--text-muted);
-    box-shadow: none;
+    opacity: 0.3;
   }
 
   .btn-secondary {

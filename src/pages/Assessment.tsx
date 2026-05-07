@@ -79,7 +79,7 @@ export default function Assessment() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ketik nama panggilanmu..."
-              className="w-full h-14 px-4 rounded-xl border-lt-border-subtle bg-lt-bg-base focus-visible:ring-lt-color-primary/40 text-base font-bold text-lt-text-primary transition-all placeholder:text-lt-text-muted/50"
+              className="w-full h-14 px-4 rounded-xl border-lt-border-subtle bg-lt-bg-base focus-visible:border-[#0D5C4A] focus-visible:ring-[#0D5C4A]/25 text-base font-bold text-lt-text-primary transition-all placeholder:text-lt-text-muted/50"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
