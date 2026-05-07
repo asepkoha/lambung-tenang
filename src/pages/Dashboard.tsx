@@ -22,6 +22,7 @@ import { allTrackContent } from '@/data/content';
 import type { UserProfile, DayEntry } from '@/types';
 import { VoiceNotePlayer } from '@/features/dashboard/components/VoiceNotePlayer';
 import { SOSButton } from '@/features/sos/components/SOSButton';
+import { DoseTimeline } from '@/features/dashboard/components/DoseTimeline';
 import { cn } from '@/lib/utils';
 
 interface HomeScreenProps {
@@ -279,6 +280,10 @@ export default function HomeScreen(props: HomeScreenProps) {
             })}
           </div>
         </motion.div>
+
+        <div className="mb-6">
+          <DoseTimeline />
+        </div>
 
         {/* Card "UNTUK HARI INI" */}
         {!isComplete && dayContent && (
