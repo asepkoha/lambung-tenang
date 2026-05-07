@@ -8,41 +8,12 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { MOOD_OPTIONS, SYMPTOM_LIST, ACTIVITY_LIST, WALMAGH_OPTIONS } from '@/config/checkinOptions';
 
 interface CheckInWizardProps {
   onComplete: (data: any) => void;
   dayNumber: number;
 }
-
-const moods = [
-  { value: 1, label: 'Sangat Buruk', emoji: '😫' },
-  { value: 2, label: 'Buruk', emoji: '😔' },
-  { value: 3, label: 'Biasa Saja', emoji: '😐' },
-  { value: 4, label: 'Baik', emoji: '🙂' },
-  { value: 5, label: 'Sangat Baik', emoji: '😊' },
-];
-
-const symptomsList = [
-  { id: 'nausea', label: 'Mual' },
-  { id: 'bloating', label: 'Kembung' },
-  { id: 'heartburn', label: 'Nyeri Ulu Hati' },
-  { id: 'reflux', label: 'Asam Naik' },
-  { id: 'none', label: 'Tidak Ada' },
-];
-
-const activitiesList = [
-  { id: 'napas', label: 'Latihan Napas' },
-  { id: 'jalan', label: 'Jalan Santai' },
-  { id: 'meditasi', label: 'Dzikir Pagi/Sore' },
-  { id: 'musik', label: 'No Scrolling' },
-  { id: 'none', label: 'Tidak Ada' },
-];
-
-const walmaghOptions = [
-  { id: 'sesuai', label: 'Sudah, Sesuai Dosis' },
-  { id: 'tidak_sesuai', label: 'Sudah, Tidak Sesuai Dosis' },
-  { id: 'belum', label: 'Belum' },
-] as const;
 
 export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
   const [step, setStep] = useState(1);
@@ -205,7 +176,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
               <p className="text-xs sm:text-sm text-sage-muted dark:text-dark-muted">Pilih emoji yang paling mewakili mood-mu.</p>
             </div>
             <div className="flex justify-between items-center gap-2 sm:gap-3 px-1 sm:px-2">
-              {moods.map((m) => (
+              {MOOD_OPTIONS.map((m) => (
                 <motion.button
                   key={m.value}
                   whileHover={{ scale: 1.1 }}
@@ -287,7 +258,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
               }}
               className="grid grid-cols-2 gap-2 sm:gap-3 flex-1 px-1 content-start"
             >
-              {symptomsList.map((s) => (
+              {SYMPTOM_LIST.map((s) => (
                 <motion.div
                   variants={{
                     hidden: { opacity: 0, y: 5 },
@@ -361,7 +332,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
               }}
               className="flex flex-col gap-2 sm:gap-3 flex-1 px-1 content-start"
             >
-              {walmaghOptions.map((opt) => (
+              {WALMAGH_OPTIONS.map((opt) => (
                 <motion.div
                   variants={{
                     hidden: { opacity: 0, y: 5 },
@@ -410,7 +381,7 @@ export function CheckInWizard({ onComplete, dayNumber }: CheckInWizardProps) {
               }}
               className="grid grid-cols-2 gap-2 sm:gap-3 flex-1 px-1 content-start"
             >
-              {activitiesList.map((a) => (
+              {ACTIVITY_LIST.map((a) => (
                 <motion.div
                   variants={{
                     hidden: { opacity: 0, y: 5 },
