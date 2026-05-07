@@ -5,6 +5,7 @@ import { useNotification } from '@/hooks/useAudio';
 import type { AppSettings, UserProfile, DayEntry, VoiceContext } from '@/types';
 import { Bell, Download, Upload, Trash2, Info, ChevronRight, Leaf, Clock, FlaskConical, Moon } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import { useDoseSchedule } from '@/hooks/useDoseSchedule';
 import { 
   Select, 
   SelectContent, 
@@ -38,6 +39,7 @@ const timeOptions = generateTimeOptions();
 export default function Settings() {
   const notification = useNotification();
   const { isDark, toggleTheme } = useTheme();
+  const { offset, setOffset, schedule, frekuensi } = useDoseSchedule();
   const [settings, setSettings] = useState<AppSettings>(() => {
     return getStorageItem<AppSettings>('lt-settings') || defaultSettings;
   });
@@ -289,6 +291,44 @@ export default function Settings() {
             </p>
           </div>
         )}
+      </div>
+
+      {/* Pengaturan Dosis Walmagh */}
+      <div className="card-soft p-5 mb-4">
+        <div className="flex items-center gap-3 mb-4">
+          <Clock size={20} className="text-sage dark:text-dark-primary-light" />
+          <div>
+            <p className="font-medium text-sage-text dark:text-dark-text">Jadwal Minum Walmagh</p>
+            <p className="text-xs text-sage-muted dark:text-dark-muted">Sesuaikan jam dosis ke rutinitas harianmu</p>
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center bg-sage-light/30 dark:bg-dark-disabled/30 p-1 rounded-xl mb-4">
+          {[-2, -1, 0, 1, 2].map((val) => (
+            <button
+              key={val}
+              onClick={() => setOffset(val)}
+              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${
+                offset === val 
+                  ? 'bg-white dark:bg-dark-surface shadow-sm text-sage-text dark:text-dark-text' 
+                  : 'text-sage-muted dark:text-dark-muted hover:bg-white/50 dark:hover:bg-dark-surface/50'
+              }`}
+            >
+              {val === 0 ? 'Default' : val > 0 ? `+${val} jam` : `${val} jam`}
+            </button>
+          ))}
+        </div>
+        
+        <div className="pt-3 border-t border-sage-light dark:border-dark-disabled">
+          <p className="text-[11px] text-sage-muted dark:text-dark-muted mb-2">Preview Jadwal ({frekuensi}x sehari):</p>
+          <div className="flex gap-2 flex-wrap">
+            {schedule.map((jam, i) => (
+              <span key={i} className="text-xs font-medium text-sage-text dark:text-dark-text bg-sage/10 px-2 py-1 rounded-md">
+                {i === 0 ? 'Pagi' : i === 1 && frekuensi === 3 ? 'Siang' : 'Malam'}: {jam.toString().padStart(2, '0')}.00
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Data management */}
