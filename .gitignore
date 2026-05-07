@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 graphify-out/
+.env
+.env.local
+.env.production
