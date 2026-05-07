@@ -13,12 +13,12 @@ import SOSPage from '@/pages/SOSPage';
 import CompletionPage from '@/pages/CompletionPage';
 import { BottomNav } from '@/components/layout/BottomNav';
 import PageTransition from '@/components/layout/PageTransition';
-import { getStorageItem } from '@/hooks/useStorage';
+import { useProfile } from '@/hooks/useProfile';
 import { initTheme } from '@/hooks/useTheme';
 
 function App() {
   const location = useLocation();
-  const profile = getStorageItem('lt-profile');
+  const { profile } = useProfile();
 
   useEffect(() => {
     initTheme();

@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import { Play, Pause } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
-import type { Track, DayEntry } from '@/types';
+import type { Track } from '@/types';
 import { cn } from '@/lib/utils';
 import { getTodayVoiceNote } from '@/utils/selectVoiceContext';
-import { getStorageItem } from '@/hooks/useStorage';
+import { useEntries } from '@/hooks/useEntries';
 
 interface VoiceNotePlayerProps {
   track: Track;
@@ -18,7 +18,7 @@ interface VoiceNotePlayerProps {
 const SPEED_OPTIONS = [1, 1.25, 1.5, 0.75];
 
 export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, className }: VoiceNotePlayerProps) {
-  const previousEntries = getStorageItem<DayEntry[]>('lt-entries') || [];
+  const { entries: previousEntries } = useEntries();
   const { context } = getTodayVoiceNote(track, day, checkinData, previousEntries);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);

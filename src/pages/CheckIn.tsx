@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getStorageItem, setStorageItem } from '@/hooks/useStorage';
+import { useProfile } from '@/hooks/useProfile';
+import { useEntries } from '@/hooks/useEntries';
 import { getDayContent } from '@/data/content';
-import type { UserProfile, DayEntry, CheckInData } from '@/types';
+import type { DayEntry, CheckInData } from '@/types';
 import { Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { CheckInWizard } from '@/features/checkin/components/CheckInWizard';
@@ -25,16 +26,17 @@ interface WizardFormData {
 export default function CheckIn() {
   const { dayNumber } = useParams<{ dayNumber: string }>();
   const navigate = useNavigate();
-  const profile = getStorageItem<UserProfile>('lt-profile');
+  const { profile } = useProfile();
+  const { entries: previousEntries, addEntry } = useEntries();
   const [showSummary, setShowSummary] = useState(false);
   const [checkinData, setCheckinData] = useState<CheckInData | null>(null);
 
   if (!profile || !dayNumber) return null;
   const day = parseInt(dayNumber, 10);
-  const dayContent = getDayContent(profile.track, day);
+  const track = profile.track || 'A'; // Use track from profile
+  const dayContent = getDayContent(track, day);
 
   const handleComplete = (data: WizardFormData) => {
-    const previousEntries = getStorageItem<DayEntry[]>('lt-entries') || [];
     const context = selectVoiceContext(data, previousEntries);
     
     const newEntry: DayEntry = {
@@ -63,15 +65,7 @@ export default function CheckIn() {
       voiceNoteContext: context,
     };
 
-    const entries = [...previousEntries];
-    const existingIndex = entries.findIndex((e) => e.dayNumber === day);
-    if (existingIndex >= 0) {
-      entries[existingIndex] = newEntry;
-    } else {
-      entries.push(newEntry);
-    }
-
-    setStorageItem('lt-entries', entries);
+    addEntry(newEntry);
     setCheckinData(newEntry.checkInData ?? null);
     setShowSummary(true);
     toast.success("Check-in hari ini tersimpan ✓");
@@ -102,7 +96,7 @@ export default function CheckIn() {
               </span>
             </div>
             <VoiceNotePlayer
-              track={profile.track}
+              track={profile.track || 'A'}
               day={day}
               checkinData={checkinData}
               className="shadow-xl shadow-sage/5 border border-sage-light dark:border-dark-disabled"

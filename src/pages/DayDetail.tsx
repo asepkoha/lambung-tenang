@@ -1,8 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getDayContent } from '@/data/content';
-import { getStorageItem } from '@/hooks/useStorage';
-import type { UserProfile } from '@/types';
+import { useProfile } from '@/hooks/useProfile';
 import { ChevronLeft, CheckCircle2, Circle, Moon, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { VoiceNotePlayer } from '@/features/dashboard/components/VoiceNotePlayer';
@@ -10,7 +9,7 @@ import { VoiceNotePlayer } from '@/features/dashboard/components/VoiceNotePlayer
 export default function DayDetail() {
   const { dayNumber } = useParams<{ dayNumber: string }>();
   const navigate = useNavigate();
-  const profile = getStorageItem<UserProfile>('lt-profile');
+  const { profile } = useProfile();
   const [missionsDone, setMissionsDone] = useState<Set<number>>(new Set());
 
   if (!profile || !dayNumber) return null;

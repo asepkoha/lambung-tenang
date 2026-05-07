@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getStorageItem } from '@/hooks/useStorage';
+import { useProfile } from '@/hooks/useProfile';
+import { useSettings } from '@/hooks/useSettings';
 import { Leaf } from 'lucide-react';
 
 export default function Welcome() {
   const navigate = useNavigate();
-  const profile = getStorageItem('lt-profile');
-  const hasVisited = getStorageItem('lt-first-visit');
+  const { profile } = useProfile();
+  const { hasVisited } = useSettings();
 
   const handleStart = () => {
     if (profile) {

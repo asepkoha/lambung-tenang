@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { setStorageItem } from '@/hooks/useStorage';
+import { useSettings } from '@/hooks/useSettings';
 import { ChevronRight } from 'lucide-react';
 
 const slides = [
@@ -24,13 +24,14 @@ const slides = [
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { setHasVisited } = useSettings();
   const [current, setCurrent] = useState(0);
 
   const next = () => {
     if (current < slides.length - 1) {
       setCurrent(current + 1);
     } else {
-      setStorageItem('lt-first-visit', true);
+      setHasVisited(true);
       navigate('/assessment');
     }
   };

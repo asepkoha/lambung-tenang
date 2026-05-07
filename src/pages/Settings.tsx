@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { getStorageItem, setStorageItem, exportData, importData, clearAllData } from '@/hooks/useStorage';
+import { exportData, importData, clearAllData } from '@/hooks/useStorage';
 import { useNotification } from '@/hooks/useAudio';
-import type { AppSettings, UserProfile, DayEntry, VoiceContext } from '@/types';
+import type { DayEntry, VoiceContext } from '@/types';
 import { Bell, Download, Upload, Trash2, Info, ChevronRight, Leaf, Clock, FlaskConical, Moon } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 import { useDoseSchedule } from '@/hooks/useDoseSchedule';
+import { useProfile } from '@/hooks/useProfile';
+import { useEntries } from '@/hooks/useEntries';
+import { useSettings } from '@/hooks/useSettings';
 import { 
   Select, 
   SelectContent, 
@@ -14,13 +17,7 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 
-const defaultSettings: AppSettings = {
-  reminderEnabled: false,
-  reminderTime: '08:00',
-  autoPlayVoice: false,
-  onboardingDone: true,
-};
-
+// Generate time options with 30-minute intervals from 06:00 to 22:00
 // Generate time options with 30-minute intervals from 06:00 to 22:00
 const generateTimeOptions = () => {
   const options: { value: string; label: string }[] = [];
@@ -40,22 +37,13 @@ export default function Settings() {
   const notification = useNotification();
   const { isDark, toggleTheme } = useTheme();
   const { offset, setOffset, schedule, frekuensi } = useDoseSchedule();
-  const [settings, setSettings] = useState<AppSettings>(() => {
-    return getStorageItem<AppSettings>('lt-settings') || defaultSettings;
-  });
+  const { settings, setSettings } = useSettings();
+  const { profile, updateProfile } = useProfile();
+  const { setEntries } = useEntries();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [importError, setImportError] = useState('');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [notificationBlocked, setNotificationBlocked] = useState(false);
-
-  useEffect(() => {
-    setStorageItem('lt-settings', settings);
-  }, [settings]);
-
-  // Save notification time separately
-  useEffect(() => {
-    setStorageItem('notificationTime', settings.reminderTime);
-  }, [settings.reminderTime]);
 
   const toggleReminder = () => {
     if (!settings.reminderEnabled) {
@@ -120,7 +108,6 @@ export default function Settings() {
 
   // Simulate 14 days of check-in data (dev helper)
   const simulate14Days = () => {
-    const profile = getStorageItem<UserProfile>('lt-profile');
     if (!profile) {
       alert('Buat profil dulu sebelum simulasi');
       return;
@@ -171,8 +158,8 @@ export default function Settings() {
     const newStartDate = new Date(today);
     newStartDate.setDate(newStartDate.getDate() - 14);
     
-    setStorageItem('lt-entries', entries);
-    setStorageItem('lt-profile', {
+    setEntries(entries);
+    updateProfile({
       ...profile,
       startDate: newStartDate.toISOString(),
     });
@@ -180,7 +167,7 @@ export default function Settings() {
     window.location.reload();
   };
 
-  const profile = getStorageItem<UserProfile>('lt-profile');
+
 
   return (
     <div className="page-container pb-20 dark:text-dark-text">

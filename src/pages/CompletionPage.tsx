@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { getStorageItem } from '@/hooks/useStorage';
+import { useProfile } from '@/hooks/useProfile';
+import { useEntries } from '@/hooks/useEntries';
 import { Trophy, Star, Sparkles, ArrowRight, RotateCcw, Heart } from 'lucide-react';
-import type { UserProfile, DayEntry } from '@/types';
 
 export default function CompletionPage() {
   const navigate = useNavigate();
-  const profile = getStorageItem<UserProfile>('lt-profile');
-  const entries = getStorageItem<DayEntry[]>('lt-entries') || [];
+  const { profile } = useProfile();
+  const { entries } = useEntries();
 
   // Generate confetti animation values once using lazy initialization
   const [confettiParticles] = useState(() => {

@@ -16,13 +16,13 @@ import {
   Download,
   X,
 } from 'lucide-react';
-import { getStorageItem } from '@/hooks/useStorage';
-import { usePWAInstall } from '@/hooks/useTheme';
-import { allTrackContent } from '@/data/content';
-import type { UserProfile, DayEntry } from '@/types';
 import { VoiceNotePlayer } from '@/features/dashboard/components/VoiceNotePlayer';
 import { SOSButton } from '@/features/sos/components/SOSButton';
 import { DoseTimeline } from '@/features/dashboard/components/DoseTimeline';
+import { useProfile } from '@/hooks/useProfile';
+import { useEntries } from '@/hooks/useEntries';
+import { usePWAInstall } from '@/hooks/useTheme';
+import { allTrackContent } from '@/data/content';
 import { cn } from '@/lib/utils';
 
 interface HomeScreenProps {
@@ -39,8 +39,8 @@ const DEFAULT_MOTIVATION =
 
 export default function HomeScreen(props: HomeScreenProps) {
   const navigate = useNavigate();
-  const profile = getStorageItem<UserProfile>('lt-profile');
-  const entries = getStorageItem<DayEntry[]>('lt-entries') || [];
+  const { profile } = useProfile();
+  const { entries } = useEntries();
   const [isLoading, setIsLoading] = useState(true);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const { canInstall, install, dismiss } = usePWAInstall();

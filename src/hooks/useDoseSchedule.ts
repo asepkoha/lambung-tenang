@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { differenceInDays } from 'date-fns';
-import { getStorageItem } from '@/hooks/useStorage';
-import type { UserProfile } from '@/types';
+import { useProfile } from '@/hooks/useProfile';
 import { 
   DOSE_SCHEDULE_3X, 
   DOSE_SCHEDULE_2X, 
@@ -11,12 +10,12 @@ import {
 } from '@/config/constants';
 
 export function useDoseSchedule(providedCurrentDay?: number) {
+  const { profile } = useProfile();
   // Fallback membaca currentDay dengan cara yang sama seperti di Dashboard
   // jika tidak ada global state useAppState
   let currentDay = providedCurrentDay;
   
   if (!currentDay) {
-    const profile = getStorageItem<UserProfile>('lt-profile');
     const startDate = profile?.startDate ? new Date(profile.startDate) : new Date();
     const validStartDate = isNaN(startDate.getTime()) ? new Date() : startDate;
     const daysDiff = differenceInDays(new Date(), validStartDate);

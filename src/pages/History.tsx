@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getStorageItem } from '@/hooks/useStorage';
+import { useProfile } from '@/hooks/useProfile';
+import { useEntries } from '@/hooks/useEntries';
 import { allTrackContent } from '@/data/content';
-import type { DayEntry, UserProfile } from '@/types';
 import { ChevronDown, TrendingUp, Smile, Frown, Meh } from 'lucide-react';
 
 const symptomLabels: Record<string, string> = {
@@ -28,8 +28,8 @@ const walmaghLabels: Record<string, { label: string; className: string }> = {
 };
 
 export default function History() {
-  const profile = getStorageItem<UserProfile>('lt-profile');
-  const entries = getStorageItem<DayEntry[]>('lt-entries') || [];
+  const { profile } = useProfile();
+  const { entries } = useEntries();
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
 
   if (!profile) return null;

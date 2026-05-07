@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { allTrackContent } from '@/data/content';
-import { setStorageItem } from '@/hooks/useStorage';
+import { useProfile } from '@/hooks/useProfile';
+import { useEntries } from '@/hooks/useEntries';
 import type { Track } from '@/types';
 import { AssessmentWizard } from '@/features/assessment/components/AssessmentWizard';
 
 export default function Assessment() {
   const navigate = useNavigate();
+  const { updateProfile } = useProfile();
+  const { setEntries } = useEntries();
   const [name, setName] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [track, setTrack] = useState<Track | null>(null);
@@ -19,13 +22,13 @@ export default function Assessment() {
 
   const finish = () => {
     if (track && name.trim()) {
-      setStorageItem('lt-profile', {
+      updateProfile({
         name: name.trim(),
-        track,
+        track: track,
         startDate: new Date().toISOString(),
-        assessmentAnswers: [], // Wizard handles internal state, we just need the track
+        assessmentAnswers: [],
       });
-      setStorageItem('lt-entries', []);
+      setEntries([]);
       navigate('/dashboard');
     }
   };
