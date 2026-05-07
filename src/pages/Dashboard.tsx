@@ -224,19 +224,19 @@ export default function HomeScreen(props: HomeScreenProps) {
               );
 
               if (isToday) {
-                pillClass = 'bg-lt-color-primary shadow-md shadow-lt-color-primary/30';
-                textClass = 'text-white';
-                icon = <Sprout size={20} className="text-white" strokeWidth={2.2} />;
+                pillClass = 'bg-[#4BE066] shadow-[0_0_12px_rgba(75,224,102,0.4)]';
+                textClass = 'text-[#0F1412] font-bold';
+                icon = <Sprout size={22} className="text-[#0F1412]" strokeWidth={2.5} />;
                 label = null;
               } else if (isDone) {
-                pillClass = 'bg-lt-bg-subtle shadow-sm border border-lt-border-subtle';
-                textClass = 'text-lt-color-primary';
-                icon = <CheckCircle2 size={16} className="text-lt-color-primary" strokeWidth={2.5} />;
+                pillClass = 'bg-[rgba(75,224,102,0.12)]';
+                textClass = 'text-[#4BE066]';
+                icon = <CheckCircle2 size={18} className="text-[#4BE066]" strokeWidth={2.5} />;
                 label = null;
               } else if (isFuture) {
-                pillClass = 'bg-lt-bg-surface shadow-sm opacity-60';
-                textClass = 'text-lt-text-muted';
-                icon = <Lock size={10} className="text-lt-text-muted/40" />;
+                pillClass = 'bg-[rgba(255,255,255,0.05)] opacity-40';
+                textClass = 'text-[#6E7B73]';
+                icon = <Lock size={12} className="text-[#6E7B73]" />;
               }
 
               return (

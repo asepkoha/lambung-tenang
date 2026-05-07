@@ -8,6 +8,7 @@ module.exports = {
         'lt-bg': {
           base: 'var(--bg-base)',
           surface: 'var(--bg-surface)',
+          card: 'var(--bg-card)',
           elevated: 'var(--bg-elevated)',
           subtle: 'var(--bg-subtle)',
         },
