@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { differenceInDays, format } from 'date-fns';
 import { id } from 'date-fns/locale';
+import { getCurrentDay, calculateStreak } from '@/utils/programUtils';
 import {
   Sprout,
   Lock,
@@ -45,14 +46,13 @@ export default function HomeScreen(props: HomeScreenProps) {
   const [showInstallModal, setShowInstallModal] = useState(false);
   const { canInstall, install, dismiss } = usePWAInstall();
 
-  const trackContent = profile ? allTrackContent[profile.track] : null;
-  const startDate = profile?.startDate ? new Date(profile.startDate) : new Date();
-  const validStartDate = isNaN(startDate.getTime()) ? new Date() : startDate;
   const today = new Date();
-  const daysDiff = differenceInDays(today, validStartDate);
-  const calculatedDay = daysDiff + 1;
-  const computedCurrentDay = Math.min(Math.max(isNaN(calculatedDay) ? 1 : calculatedDay, 1), 14);
-  const isComplete = daysDiff + 1 > 14;
+  const trackContent = profile ? allTrackContent[profile.track] : null;
+  const computedCurrentDay = getCurrentDay(profile?.startDate);
+  // Keep isComplete logic simple, just check if they are past day 14.
+  // We can calculate daysDiff here or just assume if computedCurrentDay === 14 and they've actually completed 14 it might be done,
+  // but to preserve exact behavior:
+  const isComplete = profile?.startDate ? (differenceInDays(new Date(), new Date(profile.startDate)) + 1 > 14) : false;
 
   useEffect(() => {
     const t = setTimeout(() => setIsLoading(false), 400);
@@ -81,15 +81,7 @@ export default function HomeScreen(props: HomeScreenProps) {
   const motivationMessage = props.motivationMessage ?? DEFAULT_MOTIVATION;
 
   const todayEntry = entries.find((e) => e.dayNumber === currentDay);
-  const streak = entries.reduce((max, entry, i, arr) => {
-    if (!entry.completed) return max;
-    let count = 1;
-    for (let j = i - 1; j >= 0; j--) {
-      if (arr[j]?.completed) count++;
-      else break;
-    }
-    return Math.max(max, count);
-  }, 0);
+  const streak = calculateStreak(entries);
 
   const moodLabels = ['Sangat Sedih', 'Sedih', 'Biasa', 'Baik', 'Sangat Baik'];
   const moodStatus = todayEntry?.checkInData?.mood
