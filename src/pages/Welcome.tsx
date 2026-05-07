@@ -19,10 +19,10 @@ export default function Welcome() {
   };
 
   return (
-    <div className="page-container h-[100dvh] flex flex-col justify-between relative overflow-hidden pt-8 pb-4 px-6">
+    <div className="page-container h-[100dvh] flex flex-col justify-between relative overflow-hidden pt-8 pb-4 px-6 dark:bg-dark-bg">
       {/* Background decorative circles */}
-      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] rounded-full bg-[#E8E2D5] blur-3xl pointer-events-none" />
-      <div className="absolute bottom-[-80px] right-[-80px] w-[250px] h-[250px] rounded-full bg-[#A8D5A8]/30 blur-3xl pointer-events-none" />
+      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] rounded-full bg-sage-light dark:bg-dark-disabled/40 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-[-80px] right-[-80px] w-[250px] h-[250px] rounded-full bg-sage/30 dark:bg-dark-primary/20 blur-3xl pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -35,9 +35,9 @@ export default function Welcome() {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="w-16 h-16 bg-[#8FBC8F]/10 rounded-full flex items-center justify-center mb-4"
+          className="w-16 h-16 bg-sage/10 rounded-full flex items-center justify-center mb-4"
         >
-          <Leaf size={32} className="text-[#8FBC8F]" strokeWidth={1.5} />
+          <Leaf size={32} className="text-sage" strokeWidth={1.5} />
         </motion.div>
 
         {/* Hero Image */}
@@ -61,8 +61,8 @@ export default function Welcome() {
           transition={{ delay: 0.5 }}
           className="text-center my-2"
         >
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#3D322B] mb-2">Lambung Tenang</h1>
-          <p className="text-[#6B5B4F] text-base sm:text-lg font-handwritten leading-relaxed">
+          <h1 className="text-2xl sm:text-3xl font-bold text-sage-text dark:text-dark-text mb-2">Lambung Tenang</h1>
+          <p className="text-sage-muted dark:text-dark-muted text-base sm:text-lg font-handwritten leading-relaxed">
             14 hari menemanimu, <br /> tanpa buru-buru.
           </p>
         </motion.div>
@@ -84,9 +84,9 @@ export default function Welcome() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="text-[#B5ADA0] text-xs"
+          className="text-sage-muted dark:text-dark-muted text-xs"
         >
-          Pendamping pasif untuk GERD-Anxiety
+          Pendampingan untuk Penyintas GERD-Anxiety
         </motion.p>
       </div>
     </div>

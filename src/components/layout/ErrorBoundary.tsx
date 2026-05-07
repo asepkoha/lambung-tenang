@@ -27,13 +27,13 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#F7F5F2] flex flex-col items-center justify-center p-6 text-center space-y-6">
+        <div className="min-h-screen bg-sage-warm flex flex-col items-center justify-center p-6 text-center space-y-6">
           <div className="h-24 w-24 bg-red-100 rounded-full flex items-center justify-center mb-2">
             <AlertCircle size={48} className="text-red-500" />
           </div>
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-[#2D2A26]">Ups, ada yang salah</h1>
-            <p className="text-[#7A746E]">
+            <h1 className="text-2xl font-bold text-sage-text">Ups, ada yang salah</h1>
+            <p className="text-sage-muted">
               Terjadi kesalahan tak terduga. Kami memohon maaf atas ketidaknyamanan ini.
             </p>
           </div>

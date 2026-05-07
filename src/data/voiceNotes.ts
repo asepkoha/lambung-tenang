@@ -277,14 +277,25 @@ export const voiceNotes = {
   }
 };
 
+// Type definitions for voice notes
+type VoiceContext = 'morning' | 'comfort' | 'celebrate' | 'acknowledge';
+type Track = 'A' | 'B' | 'C';
+type DayString = `${number}${number}`;
+type DayVoiceNotes = Record<VoiceContext, string>;
+type TrackVoiceNotes = Record<DayString, DayVoiceNotes>;
+type VoiceNotesData = Record<Track, TrackVoiceNotes>;
+
 // Helper function to get voice note
 export const getVoiceNote = (track: string, day: number | string, context: string): string | null => {
-  const dayStr = String(day).padStart(2, '0');
-  return (voiceNotes as any)[track]?.[dayStr]?.[context] || (voiceNotes as any)[track]?.[dayStr]?.['morning'] || null;
+  const dayStr = String(day).padStart(2, '0') as DayString;
+  const typedVoiceNotes = voiceNotes as VoiceNotesData;
+  return typedVoiceNotes[track as Track]?.[dayStr]?.[context as VoiceContext]
+    || typedVoiceNotes[track as Track]?.[dayStr]?.['morning']
+    || null;
 };
 
 // Helper to get all contexts for a day
-export const getDayVoiceNotes = (track: string, day: number | string): any => {
-  const dayStr = String(day).padStart(2, '0');
-  return (voiceNotes as any)[track]?.[dayStr] || null;
+export const getDayVoiceNotes = (track: string, day: number | string): DayVoiceNotes | null => {
+  const dayStr = String(day).padStart(2, '0') as DayString;
+  return (voiceNotes as VoiceNotesData)[track as Track]?.[dayStr] || null;
 };

@@ -79,10 +79,10 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
           }}
           className="relative"
         >
-          <div className="h-20 w-20 rounded-full bg-primary/20 flex items-center justify-center">
-            <CheckCircle2 className="h-10 w-10 text-primary animate-pulse" />
+          <div className="h-20 w-20 rounded-full bg-sage/20 flex items-center justify-center">
+            <CheckCircle2 className="h-10 w-10 text-sage animate-pulse" />
           </div>
-          <div className="absolute inset-0 h-20 w-20 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+          <div className="absolute inset-0 h-20 w-20 rounded-full border-4 border-sage border-t-transparent animate-spin" />
         </motion.div>
         <div className="space-y-2">
           <h2 className="text-2xl font-bold tracking-tight">Menganalisis Jawabanmu...</h2>
@@ -112,9 +112,9 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
             {currentStep + 1} / {totalSteps}
           </span>
         </div>
-        <div className="h-1 w-full bg-secondary/50 overflow-hidden rounded-full">
+        <div className="h-1 w-full bg-sage-light overflow-hidden rounded-full">
           <motion.div
-            className="h-full bg-primary"
+            className="h-full bg-sage"
             initial={{ width: 0 }}
             animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -154,18 +154,18 @@ export function AssessmentWizard({ onComplete }: AssessmentWizardProps) {
                   className={cn(
                     "flex items-center justify-between p-3 sm:p-4 min-h-[48px] rounded-xl border-2 text-left transition-colors duration-200",
                     answers[currentStep] === index 
-                      ? "border-primary bg-primary/5 shadow-sm" 
-                      : "border-secondary hover:border-primary/30 hover:bg-secondary/50"
+                      ? "border-sage bg-sage/5 shadow-sm" 
+                      : "border-sage-light hover:border-sage/40 hover:bg-sage-light/50"
                   )}
                 >
-                  <span className="text-sm sm:text-base font-medium leading-snug flex-1 pr-3">
+                  <span className="text-sm sm:text-base font-medium leading-snug flex-1 pr-3 text-sage-text">
                     {option.text}
                   </span>
                   <div className={cn(
                     "h-4 w-4 sm:h-5 sm:w-5 rounded-full border-2 flex items-center justify-center shrink-0",
                     answers[currentStep] === index 
-                      ? "border-primary bg-primary" 
-                      : "border-muted-foreground/30"
+                      ? "border-sage bg-sage" 
+                      : "border-sage-muted/40"
                   )}>
                     {answers[currentStep] === index && (
                       <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white" />

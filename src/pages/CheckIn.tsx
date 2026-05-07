@@ -3,25 +3,37 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getStorageItem, setStorageItem } from '@/hooks/useStorage';
 import { getDayContent } from '@/data/content';
-import type { UserProfile, DayEntry } from '@/types';
+import type { UserProfile, DayEntry, CheckInData } from '@/types';
 import { Star } from 'lucide-react';
 import { toast } from 'sonner';
-import { CheckInWizard } from '@/components/CheckInWizard';
-import { VoiceNotePlayer } from '@/components/VoiceNotePlayer';
+import { CheckInWizard } from '@/features/checkin/components/CheckInWizard';
+import { VoiceNotePlayer } from '@/features/dashboard/components/VoiceNotePlayer';
 import { selectVoiceContext } from '@/utils/selectVoiceContext';
+
+// Wizard form data structure (matches CheckInWizard internal state)
+interface WizardFormData {
+  mood?: number;
+  anxiety?: number;
+  symptoms?: string[];
+  food?: string;
+  sleep?: number;
+  activities?: string[];
+  reflection?: string;
+  walmagh?: 'sesuai' | 'tidak_sesuai' | 'belum';
+}
 
 export default function CheckIn() {
   const { dayNumber } = useParams<{ dayNumber: string }>();
   const navigate = useNavigate();
   const profile = getStorageItem<UserProfile>('lt-profile');
   const [showSummary, setShowSummary] = useState(false);
-  const [checkinData, setCheckinData] = useState<any>(null);
+  const [checkinData, setCheckinData] = useState<CheckInData | null>(null);
 
   if (!profile || !dayNumber) return null;
   const day = parseInt(dayNumber, 10);
   const dayContent = getDayContent(profile.track, day);
 
-  const handleComplete = (data: any) => {
+  const handleComplete = (data: WizardFormData) => {
     const previousEntries = getStorageItem<DayEntry[]>('lt-entries') || [];
     const context = selectVoiceContext(data, previousEntries);
     
@@ -45,6 +57,7 @@ export default function CheckIn() {
         sleepQuality: 3, // Wizard uses sleep hours mainly, could be enhanced
         activities: data?.activities || [],
         notes: data?.reflection || '',
+        walmagh: data?.walmagh || undefined,
       },
       voiceNotePlayed: false,
       voiceNoteContext: context,
@@ -59,7 +72,7 @@ export default function CheckIn() {
     }
 
     setStorageItem('lt-entries', entries);
-    setCheckinData(newEntry.checkInData);
+    setCheckinData(newEntry.checkInData ?? null);
     setShowSummary(true);
     toast.success("Check-in hari ini tersimpan ✓");
   };
@@ -70,29 +83,29 @@ export default function CheckIn() {
 
   if (showSummary) {
     return (
-      <div className="page-container h-[100dvh] flex flex-col pt-8 pb-4">
+      <div className="page-container min-h-screen flex flex-col pt-8 pb-24 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="flex-1 flex flex-col items-center justify-center text-center"
         >
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#8FBC8F]/10 rounded-full flex items-center justify-center mb-4 shrink-0">
-            <Star size={32} className="text-[#8FBC8F] fill-[#8FBC8F]" />
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sage/10 rounded-full flex items-center justify-center mb-4 shrink-0">
+            <Star size={32} className="text-sage fill-sage" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#3D322B] mb-1">Check-in Selesai</h2>
-          <p className="text-[#6B5B4F] text-xs sm:text-sm mb-8">Terima kasih sudah menemani dirimu hari ini.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-sage-text dark:text-dark-text mb-1">Check-in Selesai</h2>
+          <p className="text-sage-muted dark:text-dark-muted text-xs sm:text-sm mb-8">Terima kasih sudah menemani dirimu hari ini.</p>
 
           <div className="w-full space-y-3 mb-8">
             <div className="text-left px-1">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5ADA0]">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-sage-muted dark:text-dark-muted">
                 Respons Khusus Untukmu
               </span>
             </div>
-            <VoiceNotePlayer 
+            <VoiceNotePlayer
               track={profile.track}
               day={day}
               checkinData={checkinData}
-              className="shadow-xl shadow-[#8FBC8F]/5 border border-[#E8E2D5]"
+              className="shadow-xl shadow-sage/5 border border-sage-light dark:border-dark-disabled"
             />
           </div>
 
@@ -107,10 +120,10 @@ export default function CheckIn() {
   }
 
   return (
-    <div className="page-container h-[100dvh] flex flex-col pt-6 pb-2">
+    <div className="page-container min-h-screen flex flex-col pt-6 pb-24 overflow-y-auto">
       <div className="mb-4 shrink-0 text-center">
-        <h1 className="text-xl sm:text-2xl font-bold text-[#3D322B]">Check-in Hari {day}</h1>
-        <p className="text-[10px] sm:text-sm text-[#B5ADA0] italic">"{dayContent.subtitle}"</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-sage-text dark:text-dark-text">Check-in Hari {day}</h1>
+        <p className="text-[10px] sm:text-sm text-sage-muted dark:text-dark-muted italic">"{dayContent.subtitle}"</p>
       </div>
       
       <div className="flex-1 flex flex-col min-h-0">

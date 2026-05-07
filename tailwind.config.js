@@ -5,6 +5,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        sage: {
+          DEFAULT: '#6FAF7A',
+          dark: '#4A8A57',
+          light: '#E6F1E8',
+          accent: '#8FCF97',
+          text: '#24342A',
+          muted: '#6E7F73',
+          warm: '#F4F7F4',
+        },
+        'dark-bg': '#0F1412',
+        'dark-surface': '#161D19',
+        'dark-surface-2': '#1B241F',
+        'dark-surface-3': '#202A24',
+        'dark-disabled': '#2A332E',
+        'dark-text': '#E6F1EA',
+        'dark-muted': '#9FB2A6',
+        'dark-accent': '#CFAF9B',
+        'dark-primary': '#5FA36B',
+        'dark-primary-light': '#7BCF8A',
+        'destructive-dark': '#C4A484',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

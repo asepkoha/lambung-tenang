@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { allTrackContent } from '@/data/content';
 import { setStorageItem } from '@/hooks/useStorage';
 import type { Track } from '@/types';
-import { AssessmentWizard } from '@/components/AssessmentWizard';
+import { AssessmentWizard } from '@/features/assessment/components/AssessmentWizard';
 
 export default function Assessment() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function Assessment() {
   if (showResult && track) {
     const info = allTrackContent[track];
     return (
-      <div className="page-container h-[100dvh] flex flex-col justify-between pt-8 pb-4">
+      <div className="page-container min-h-screen flex flex-col justify-between pt-8 pb-24 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -47,12 +47,12 @@ export default function Assessment() {
             <img src={info.image} alt={info.name} className="w-full h-full object-cover bg-white" />
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#B5ADA0]">Analisis Selesai</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#3D322B] leading-tight">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-sage-muted">Analisis Selesai</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-sage-text leading-tight">
               {info.name}
             </h2>
           </div>
-          <p className="text-[#6B5B4F] text-xs sm:text-sm leading-relaxed px-4 mt-3 bg-white/50 py-3 rounded-2xl italic">
+          <p className="text-sage-muted text-xs sm:text-sm leading-relaxed px-4 mt-3 bg-white/50 py-3 rounded-2xl italic">
             "{info.description}"
           </p>
         </motion.div>
@@ -64,7 +64,7 @@ export default function Assessment() {
             transition={{ delay: 0.3 }}
             className="card-soft p-4 mb-4 border-2 border-transparent shadow-lg"
           >
-            <label className="block text-xs font-bold text-[#B5ADA0] uppercase tracking-widest mb-2">
+            <label className="block text-xs font-bold text-sage-muted uppercase tracking-widest mb-2">
               Siapa namamu?
             </label>
             <input
@@ -72,7 +72,7 @@ export default function Assessment() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ketik nama panggilanmu..."
-              className="w-full px-3 py-3 rounded-xl border-2 border-[#E8E2D5] bg-white focus:outline-none focus:border-[#8FBC8F] focus:ring-4 focus:ring-[#8FBC8F]/10 text-base font-bold text-[#6B5B4F] transition-all"
+              className="w-full px-3 py-3 rounded-xl border-2 border-gray-200 bg-white focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 text-base font-bold text-sage-text transition-all"
               onKeyDown={(e) => e.key === 'Enter' && finish()}
               autoFocus
             />
@@ -95,10 +95,10 @@ export default function Assessment() {
   }
 
   return (
-    <div className="page-container h-[100dvh] flex flex-col pt-6 pb-2">
+    <div className="page-container min-h-screen flex flex-col pt-6 pb-24 overflow-y-auto">
       <div className="mb-2 shrink-0 text-center">
-        <h1 className="text-xl font-bold text-[#3D322B]">Asesmen Personal</h1>
-        <p className="text-[10px] sm:text-xs text-[#B5ADA0]">Bantu kami menyesuaikan program untukmu</p>
+        <h1 className="text-xl font-bold text-sage-text">Asesmen Personal</h1>
+        <p className="text-[10px] sm:text-xs text-sage-muted">Bantu kami menyesuaikan program untukmu</p>
       </div>
       
       <div className="flex-1 flex flex-col min-h-0">

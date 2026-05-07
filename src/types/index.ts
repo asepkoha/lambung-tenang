@@ -26,6 +26,7 @@ export interface CheckInData {
   sleepQuality: number; // 1-5
   activities: string[];
   notes: string;
+  walmagh?: 'sesuai' | 'tidak_sesuai' | 'belum';
 }
 
 export interface DayEntry {
