@@ -1,61 +1,61 @@
-import type { DayAudio, UniversalAudio, ProgramTrack } from '@/types';
+import type { DayAudio, UniversalAudio, Track } from '@/types';
 
 // Track A — Ketenangan (Anxiety)
 export const TRACK_A: DayAudio[] = [
-  { day: 0, track: 'ketenangan', morningAudioUrl: 'public/audio/A/0_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
-  { day: 1, track: 'ketenangan', morningAudioUrl: 'public/audio/A/1_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
-  { day: 2, track: 'ketenangan', morningAudioUrl: 'public/audio/A/2_morning.mp3', morningTitle: 'Memberi Izin untuk Lelah', isUnlocked: false },
-  { day: 3, track: 'ketenangan', morningAudioUrl: 'public/audio/A/3_morning.mp3', morningTitle: 'Mengenal Sinyal, Bukan Ancaman', isUnlocked: false },
-  { day: 4, track: 'ketenangan', morningAudioUrl: 'public/audio/A/4_morning.mp3', morningTitle: 'Menanam Akar di Bawah Tanah', isUnlocked: false },
-  { day: 5, track: 'ketenangan', morningAudioUrl: 'public/audio/A/5_morning.mp3', morningTitle: 'Rahasia Otak Kedua', isUnlocked: false },
-  { day: 6, track: 'ketenangan', morningAudioUrl: 'public/audio/A/6_morning.mp3', morningTitle: 'Gerak Sadar (Jalan Kaki sebagai Terapi)', isUnlocked: false },
-  { day: 7, track: 'ketenangan', morningAudioUrl: 'public/audio/A/7_morning.mp3', morningTitle: 'Merayakan Jeda dan Kemenangan Kecil', isUnlocked: false },
-  { day: 8, track: 'ketenangan', morningAudioUrl: 'public/audio/A/8_morning.mp3', morningTitle: 'Melepaskan Genggaman yang Melelahkan', isUnlocked: false },
-  { day: 9, track: 'ketenangan', morningAudioUrl: 'public/audio/A/9_morning.mp3', morningTitle: 'Membangun Kembali Kepercayaan Diri', isUnlocked: false },
-  { day: 10, track: 'ketenangan', morningAudioUrl: 'public/audio/A/10_morning.mp3', morningTitle: 'Membangun Benteng Harian', isUnlocked: false },
-  { day: 11, track: 'ketenangan', morningAudioUrl: 'public/audio/A/11_morning.mp3', morningTitle: 'Menghadapi Badai yang Kembali Datang', isUnlocked: false },
-  { day: 12, track: 'ketenangan', morningAudioUrl: 'public/audio/A/12_morning.mp3', morningTitle: 'Berteman dengan Ketidakpastian', isUnlocked: false },
-  { day: 13, track: 'ketenangan', morningAudioUrl: 'public/audio/A/13_morning.mp3', morningTitle: 'Menemukan Versi Baru Dirimu', isUnlocked: false },
-  { day: 14, track: 'ketenangan', morningAudioUrl: 'public/audio/A/14_morning.mp3', morningTitle: 'Perjalanan Pulang Menuju Tenang', isUnlocked: false },
+  { day: 0, track: 'A', morningAudioUrl: 'public/audio/A/0_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
+  { day: 1, track: 'A', morningAudioUrl: 'public/audio/A/1_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
+  { day: 2, track: 'A', morningAudioUrl: 'public/audio/A/2_morning.mp3', morningTitle: 'Memberi Izin untuk Lelah', isUnlocked: false },
+  { day: 3, track: 'A', morningAudioUrl: 'public/audio/A/3_morning.mp3', morningTitle: 'Mengenal Sinyal, Bukan Ancaman', isUnlocked: false },
+  { day: 4, track: 'A', morningAudioUrl: 'public/audio/A/4_morning.mp3', morningTitle: 'Menanam Akar di Bawah Tanah', isUnlocked: false },
+  { day: 5, track: 'A', morningAudioUrl: 'public/audio/A/5_morning.mp3', morningTitle: 'Rahasia Otak Kedua', isUnlocked: false },
+  { day: 6, track: 'A', morningAudioUrl: 'public/audio/A/6_morning.mp3', morningTitle: 'Gerak Sadar (Jalan Kaki sebagai Terapi)', isUnlocked: false },
+  { day: 7, track: 'A', morningAudioUrl: 'public/audio/A/7_morning.mp3', morningTitle: 'Merayakan Jeda dan Kemenangan Kecil', isUnlocked: false },
+  { day: 8, track: 'A', morningAudioUrl: 'public/audio/A/8_morning.mp3', morningTitle: 'Melepaskan Genggaman yang Melelahkan', isUnlocked: false },
+  { day: 9, track: 'A', morningAudioUrl: 'public/audio/A/9_morning.mp3', morningTitle: 'Membangun Kembali Kepercayaan Diri', isUnlocked: false },
+  { day: 10, track: 'A', morningAudioUrl: 'public/audio/A/10_morning.mp3', morningTitle: 'Membangun Benteng Harian', isUnlocked: false },
+  { day: 11, track: 'A', morningAudioUrl: 'public/audio/A/11_morning.mp3', morningTitle: 'Menghadapi Badai yang Kembali Datang', isUnlocked: false },
+  { day: 12, track: 'A', morningAudioUrl: 'public/audio/A/12_morning.mp3', morningTitle: 'Berteman dengan Ketidakpastian', isUnlocked: false },
+  { day: 13, track: 'A', morningAudioUrl: 'public/audio/A/13_morning.mp3', morningTitle: 'Menemukan Versi Baru Dirimu', isUnlocked: false },
+  { day: 14, track: 'A', morningAudioUrl: 'public/audio/A/14_morning.mp3', morningTitle: 'Perjalanan Pulang Menuju Tenang', isUnlocked: false },
 ];
 
-// Track G — Kenyamanan (GERD)
-export const TRACK_G: DayAudio[] = [
-  { day: 0, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/0_morning.mp3', morningTitle: 'Lambungmu Bukan Musuhmu', isUnlocked: false },
-  { day: 1, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/1_morning.mp3', morningTitle: 'Mengenal Cara Kerja Lambungmu', isUnlocked: false },
-  { day: 2, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/2_morning.mp3', morningTitle: 'Hubungan Makanan dan Perasaanmu', isUnlocked: false },
-  { day: 3, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/3_morning.mp3', morningTitle: 'Tiga Kebiasaan Kecil yang Besar Dampaknya', isUnlocked: false },
-  { day: 4, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/4_morning.mp3', morningTitle: 'Makanan Teman dan Makanan Pemicu', isUnlocked: false },
-  { day: 5, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/5_morning.mp3', morningTitle: 'Stres dan Asam Lambung — Koneksi Nyata', isUnlocked: false },
-  { day: 6, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/6_morning.mp3', morningTitle: 'Tidur dan Lambung yang Tidak Bisa Dipisahkan', isUnlocked: false },
-  { day: 7, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/7_morning.mp3', morningTitle: 'Separuh Jalan — Tubuhmu Sedang Berproses', isUnlocked: false },
-  { day: 8, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/8_morning.mp3', morningTitle: 'Minuman yang Sering Dilupakan', isUnlocked: false },
-  { day: 9, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/9_morning.mp3', morningTitle: 'Konsistensi Lebih Penting dari Kesempurnaan', isUnlocked: false },
-  { day: 10, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/10_morning.mp3', morningTitle: 'Membangun Pola Makan Jangka Panjang', isUnlocked: false },
-  { day: 11, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/11_morning.mp3', morningTitle: 'Ketika Gejala Kambuh — Ini yang Perlu Dilakukan', isUnlocked: false },
-  { day: 12, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/12_morning.mp3', morningTitle: 'Suplemen dan Herbal — Memahami Perannya', isUnlocked: false },
-  { day: 13, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/13_morning.mp3', morningTitle: 'Lambung yang Sembuh Adalah Lambung yang Dijaga', isUnlocked: false },
-  { day: 14, track: 'kenyamanan', morningAudioUrl: 'public/audio/G/14_morning.mp3', morningTitle: 'Terima Kasih Sudah Mempercayai Perjalanan Ini', isUnlocked: false },
+// Track B — Kenyamanan (GERD)
+export const TRACK_B: DayAudio[] = [
+  { day: 0, track: 'B', morningAudioUrl: 'public/audio/G/0_morning.mp3', morningTitle: 'Lambungmu Bukan Musuhmu', isUnlocked: false },
+  { day: 1, track: 'B', morningAudioUrl: 'public/audio/G/1_morning.mp3', morningTitle: 'Mengenal Cara Kerja Lambungmu', isUnlocked: false },
+  { day: 2, track: 'B', morningAudioUrl: 'public/audio/G/2_morning.mp3', morningTitle: 'Hubungan Makanan dan Perasaanmu', isUnlocked: false },
+  { day: 3, track: 'B', morningAudioUrl: 'public/audio/G/3_morning.mp3', morningTitle: 'Tiga Kebiasaan Kecil yang Besar Dampaknya', isUnlocked: false },
+  { day: 4, track: 'B', morningAudioUrl: 'public/audio/G/4_morning.mp3', morningTitle: 'Makanan Teman dan Makanan Pemicu', isUnlocked: false },
+  { day: 5, track: 'B', morningAudioUrl: 'public/audio/G/5_morning.mp3', morningTitle: 'Stres dan Asam Lambung — Koneksi Nyata', isUnlocked: false },
+  { day: 6, track: 'B', morningAudioUrl: 'public/audio/G/6_morning.mp3', morningTitle: 'Tidur dan Lambung yang Tidak Bisa Dipisahkan', isUnlocked: false },
+  { day: 7, track: 'B', morningAudioUrl: 'public/audio/G/7_morning.mp3', morningTitle: 'Separuh Jalan — Tubuhmu Sedang Berproses', isUnlocked: false },
+  { day: 8, track: 'B', morningAudioUrl: 'public/audio/G/8_morning.mp3', morningTitle: 'Minuman yang Sering Dilupakan', isUnlocked: false },
+  { day: 9, track: 'B', morningAudioUrl: 'public/audio/G/9_morning.mp3', morningTitle: 'Konsistensi Lebih Penting dari Kesempurnaan', isUnlocked: false },
+  { day: 10, track: 'B', morningAudioUrl: 'public/audio/G/10_morning.mp3', morningTitle: 'Membangun Pola Makan Jangka Panjang', isUnlocked: false },
+  { day: 11, track: 'B', morningAudioUrl: 'public/audio/G/11_morning.mp3', morningTitle: 'Ketika Gejala Kambuh — Ini yang Perlu Dilakukan', isUnlocked: false },
+  { day: 12, track: 'B', morningAudioUrl: 'public/audio/G/12_morning.mp3', morningTitle: 'Suplemen dan Herbal — Memahami Perannya', isUnlocked: false },
+  { day: 13, track: 'B', morningAudioUrl: 'public/audio/G/13_morning.mp3', morningTitle: 'Lambung yang Sembuh Adalah Lambung yang Dijaga', isUnlocked: false },
+  { day: 14, track: 'B', morningAudioUrl: 'public/audio/G/14_morning.mp3', morningTitle: 'Terima Kasih Sudah Mempercayai Perjalanan Ini', isUnlocked: false },
 ];
 
-// Track M — Pulih Seutuhnya (Mix A + G)
-// Ganjil → Track A, Genap → Track G
-export const TRACK_M: DayAudio[] = [
-  { day: 0,  track: 'pulih', morningAudioUrl: 'public/audio/A/0_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
-  { day: 1,  track: 'pulih', morningAudioUrl: 'public/audio/A/1_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
-  { day: 2,  track: 'pulih', morningAudioUrl: 'public/audio/G/2_morning.mp3', morningTitle: 'Hubungan Makanan dan Perasaanmu', isUnlocked: false },
-  { day: 3,  track: 'pulih', morningAudioUrl: 'public/audio/A/3_morning.mp3', morningTitle: 'Mengenal Sinyal, Bukan Ancaman', isUnlocked: false },
-  { day: 4,  track: 'pulih', morningAudioUrl: 'public/audio/G/4_morning.mp3', morningTitle: 'Makanan Teman dan Makanan Pemicu', isUnlocked: false },
-  { day: 5,  track: 'pulih', morningAudioUrl: 'public/audio/A/5_morning.mp3', morningTitle: 'Rahasia Otak Kedua', isUnlocked: false },
-  { day: 6,  track: 'pulih', morningAudioUrl: 'public/audio/G/6_morning.mp3', morningTitle: 'Tidur dan Lambung yang Tidak Bisa Dipisahkan', isUnlocked: false },
-  { day: 7,  track: 'pulih', morningAudioUrl: 'public/audio/A/7_morning.mp3', morningTitle: 'Merayakan Jeda dan Kemenangan Kecil', isUnlocked: false },
-  { day: 8,  track: 'pulih', morningAudioUrl: 'public/audio/G/8_morning.mp3', morningTitle: 'Minuman yang Sering Dilupakan', isUnlocked: false },
-  { day: 9,  track: 'pulih', morningAudioUrl: 'public/audio/A/9_morning.mp3', morningTitle: 'Membangun Kembali Kepercayaan Diri', isUnlocked: false },
-  { day: 10, track: 'pulih', morningAudioUrl: 'public/audio/G/10_morning.mp3', morningTitle: 'Membangun Pola Makan Jangka Panjang', isUnlocked: false },
-  { day: 11, track: 'pulih', morningAudioUrl: 'public/audio/A/11_morning.mp3', morningTitle: 'Menghadapi Badai yang Kembali Datang', isUnlocked: false },
-  { day: 12, track: 'pulih', morningAudioUrl: 'public/audio/G/12_morning.mp3', morningTitle: 'Suplemen dan Herbal — Memahami Perannya', isUnlocked: false },
-  { day: 13, track: 'pulih', morningAudioUrl: 'public/audio/A/13_morning.mp3', morningTitle: 'Menemukan Versi Baru Dirimu', isUnlocked: false },
-  { day: 14, track: 'pulih', morningAudioUrl: 'public/audio/G/14_morning.mp3', morningTitle: 'Terima Kasih Sudah Mempercayai Perjalanan Ini', isUnlocked: false },
+// Track C — Pulih Seutuhnya (Mix A + B)
+// Ganjil → Track A, Genap → Track B
+export const TRACK_C: DayAudio[] = [
+  { day: 0,  track: 'C', morningAudioUrl: 'public/audio/A/0_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
+  { day: 1,  track: 'C', morningAudioUrl: 'public/audio/A/1_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
+  { day: 2,  track: 'C', morningAudioUrl: 'public/audio/G/2_morning.mp3', morningTitle: 'Hubungan Makanan dan Perasaanmu', isUnlocked: false },
+  { day: 3,  track: 'C', morningAudioUrl: 'public/audio/A/3_morning.mp3', morningTitle: 'Mengenal Sinyal, Bukan Ancaman', isUnlocked: false },
+  { day: 4,  track: 'C', morningAudioUrl: 'public/audio/G/4_morning.mp3', morningTitle: 'Makanan Teman dan Makanan Pemicu', isUnlocked: false },
+  { day: 5,  track: 'C', morningAudioUrl: 'public/audio/A/5_morning.mp3', morningTitle: 'Rahasia Otak Kedua', isUnlocked: false },
+  { day: 6,  track: 'C', morningAudioUrl: 'public/audio/G/6_morning.mp3', morningTitle: 'Tidur dan Lambung yang Tidak Bisa Dipisahkan', isUnlocked: false },
+  { day: 7,  track: 'C', morningAudioUrl: 'public/audio/A/7_morning.mp3', morningTitle: 'Merayakan Jeda dan Kemenangan Kecil', isUnlocked: false },
+  { day: 8,  track: 'C', morningAudioUrl: 'public/audio/G/8_morning.mp3', morningTitle: 'Minuman yang Sering Dilupakan', isUnlocked: false },
+  { day: 9,  track: 'C', morningAudioUrl: 'public/audio/A/9_morning.mp3', morningTitle: 'Membangun Kembali Kepercayaan Diri', isUnlocked: false },
+  { day: 10, track: 'C', morningAudioUrl: 'public/audio/G/10_morning.mp3', morningTitle: 'Membangun Pola Makan Jangka Panjang', isUnlocked: false },
+  { day: 11, track: 'C', morningAudioUrl: 'public/audio/A/11_morning.mp3', morningTitle: 'Menghadapi Badai yang Kembali Datang', isUnlocked: false },
+  { day: 12, track: 'C', morningAudioUrl: 'public/audio/G/12_morning.mp3', morningTitle: 'Suplemen dan Herbal — Memahami Perannya', isUnlocked: false },
+  { day: 13, track: 'C', morningAudioUrl: 'public/audio/A/13_morning.mp3', morningTitle: 'Menemukan Versi Baru Dirimu', isUnlocked: false },
+  { day: 14, track: 'C', morningAudioUrl: 'public/audio/G/14_morning.mp3', morningTitle: 'Terima Kasih Sudah Mempercayai Perjalanan Ini', isUnlocked: false },
 ];
 
 // Universal Audio — shared semua track
@@ -79,12 +79,12 @@ export const UNIVERSAL_AUDIO: Record<'acknowledge'|'comfort'|'celebrate', Univer
 
 // Helper: ambil audio berdasarkan track + hari
 export function getTrackAudio(
-  track: ProgramTrack, day: number
+  track: Track, day: number
 ): DayAudio | undefined {
-  if (track === 'ketenangan') 
+  if (track === 'A')
     return TRACK_A.find(d => d.day === day);
-  if (track === 'kenyamanan') 
-    return TRACK_G.find(d => d.day === day);
-  if (track === 'pulih') 
-    return TRACK_M.find(d => d.day === day);
+  if (track === 'B')
+    return TRACK_B.find(d => d.day === day);
+  if (track === 'C')
+    return TRACK_C.find(d => d.day === day);
 }

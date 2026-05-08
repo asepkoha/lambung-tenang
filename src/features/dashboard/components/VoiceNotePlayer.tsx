@@ -1,13 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import { Play, Pause } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
-import type { ProgramTrack } from '@/types';
+import type { Track } from '@/types';
 import { cn } from '@/lib/utils';
 import { getTrackAudio } from '@/data/voiceNotes';
 
 interface VoiceNotePlayerProps {
-  programTrack: ProgramTrack;
+  track: Track;
   day: number;
+  audioType?: 'morning' | 'response';
   checkinData?: any;
   title?: string;
   onComplete?: () => void;
@@ -16,8 +17,8 @@ interface VoiceNotePlayerProps {
 
 const SPEED_OPTIONS = [1, 1.25, 1.5, 0.75];
 
-export function VoiceNotePlayer({ programTrack, day, checkinData: _checkinData, title, onComplete, className }: VoiceNotePlayerProps) {
-  const audioData = getTrackAudio(programTrack, day);
+export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData: _checkinData, title, onComplete, className }: VoiceNotePlayerProps) {
+  const audioData = getTrackAudio(track, day);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -102,7 +103,7 @@ export function VoiceNotePlayer({ programTrack, day, checkinData: _checkinData, 
         }
       };
     }
-  }, [programTrack, day, audioData]);
+  }, [track, day, audioData]);
 
   // Apply playback rate
   useEffect(() => {
@@ -172,12 +173,16 @@ export function VoiceNotePlayer({ programTrack, day, checkinData: _checkinData, 
 
   const containerBg = 'bg-lt-bg-subtle border border-lt-border-subtle';
 
+  const playerHeading = title ?? (audioType === 'morning'
+    ? audioData?.morningTitle || 'Audio Pendamping · Pagi'
+    : 'Pesan untuk Hari Ini');
+
   return (
     <div className={cn(containerBg, 'rounded-xl p-4 flex flex-col gap-3', className)}>
       {/* Top: label + timer */}
       <div className="flex items-center justify-between">
-        <span className={cn('text-[10px] uppercase font-bold tracking-wider', labelColor)}>
-          {title || 'Audio Pendamping · Pagi'}
+        <span className={cn('text-[10px] uppercase font-bold tracking-wider', audioType === 'morning' ? labelColor : timerColor)}>
+          {playerHeading}
         </span>
         <span className={cn('text-xs font-medium', timerColor)}>
           {formatTime(currentTime)} / {hasAudioFile ? formatTime(duration) : '--:--'}

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { allTrackContent } from '@/data/content';
 import { useProfile } from '@/hooks/useProfile';
 import { useEntries } from '@/hooks/useEntries';
-import type { Track, ProgramTrack } from '@/types';
+import type { Track } from '@/types';
 import { AssessmentWizard } from '@/features/assessment/components/AssessmentWizard';
 
 export default function Assessment() {
@@ -16,23 +16,22 @@ export default function Assessment() {
   const [name, setName] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [track, setTrack] = useState<Track | null>(null);
-  const [programTrack, setProgramTrack] = useState<ProgramTrack | null>(null);
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
 
   const handleAssessmentComplete = (selectedTrack: string) => {
     setTrack(selectedTrack as Track);
     setShowResult(true);
   };
 
-  const handleProgramTrackSelect = (selectedProgramTrack: ProgramTrack) => {
-    setProgramTrack(selectedProgramTrack);
+  const handleTrackSelect = (selectedTrackValue: Track) => {
+    setSelectedTrack(selectedTrackValue);
   };
 
   const finish = () => {
-    if (track && programTrack && name.trim()) {
+    if (selectedTrack && name.trim()) {
       updateProfile({
         name: name.trim(),
-        track: track,
-        programTrack: programTrack,
+        track: selectedTrack,
         startDate: new Date().toISOString(),
         assessmentAnswers: [],
       });
@@ -41,7 +40,7 @@ export default function Assessment() {
     }
   };
 
-  if (showResult && track && !programTrack) {
+  if (showResult && track && !selectedTrack) {
     const info = allTrackContent[track];
     return (
       <div className="page-container min-h-screen flex flex-col justify-between pt-8 pb-24 overflow-y-auto">
@@ -86,7 +85,7 @@ export default function Assessment() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => handleProgramTrackSelect('ketenangan')}
+                onClick={() => handleTrackSelect('A')}
                 className="w-full p-4 rounded-xl border border-lt-border-subtle bg-lt-bg-base hover:bg-lt-bg-surface transition-all text-left"
               >
                 <div className="font-semibold text-lt-text-primary mb-1">Aku sering cemas, sulit tidur, pikiran berisik</div>
@@ -98,7 +97,7 @@ export default function Assessment() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => handleProgramTrackSelect('kenyamanan')}
+                onClick={() => handleTrackSelect('B')}
                 className="w-full p-4 rounded-xl border border-lt-border-subtle bg-lt-bg-base hover:bg-lt-bg-surface transition-all text-left"
               >
                 <div className="font-semibold text-lt-text-primary mb-1">Perutku yang paling sering tidak nyaman — asam naik, kembung, begah</div>
@@ -110,7 +109,7 @@ export default function Assessment() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => handleProgramTrackSelect('pulih')}
+                onClick={() => handleTrackSelect('C')}
                 className="w-full p-4 rounded-xl border border-lt-border-subtle bg-lt-bg-base hover:bg-lt-bg-surface transition-all text-left"
               >
                 <div className="font-semibold text-lt-text-primary mb-1">Keduanya — perut dan pikiran sama-sama menguras energiku</div>
@@ -123,7 +122,7 @@ export default function Assessment() {
     );
   }
 
-  if (showResult && track && programTrack) {
+  if (showResult && track && selectedTrack) {
     const info = allTrackContent[track];
     return (
       <div className="page-container min-h-screen flex flex-col justify-between pt-8 pb-24 overflow-y-auto">

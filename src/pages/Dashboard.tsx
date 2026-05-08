@@ -290,8 +290,9 @@ export default function HomeScreen(props: HomeScreenProps) {
             </p>
 
             <VoiceNotePlayer
-              programTrack={profile.programTrack}
+              track={profile.track}
               day={currentDay}
+              audioType="morning"
               checkinData={todayEntry?.checkInData}
               className="mb-4"
             />

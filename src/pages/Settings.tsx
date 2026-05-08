@@ -186,8 +186,8 @@ export default function Settings() {
           <div>
             <p className="font-bold text-lt-text-primary">{profile.name}</p>
             <p className="text-xs text-lt-text-secondary">
-              {profile.programTrack === 'ketenangan' ? 'Jalur Ketenangan' : 
-               profile.programTrack === 'kenyamanan' ? 'Jalur Kenyamanan' : 'Jalur Pulih Menyeluruh'}
+              {((profile.track as string) === 'A' || (profile.track as string) === 'ketenangan') ? 'Jalur Ketenangan' :
+               ((profile.track as string) === 'B' || (profile.track as string) === 'kenyamanan') ? 'Jalur Kenyamanan' : 'Jalur Pulih Menyeluruh'}
             </p>
           </div>
         </motion.div>

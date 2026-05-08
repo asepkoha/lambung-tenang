@@ -54,7 +54,7 @@ export default function DayDetail() {
           className="mb-6"
         >
           <VoiceNotePlayer 
-            programTrack={profile.programTrack}
+            track={profile.track}
             day={day}
             title="Voice Note Pendamping"
           />

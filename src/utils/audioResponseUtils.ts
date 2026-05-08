@@ -1,4 +1,4 @@
-import type { ProgramTrack, UniversalAudio } from '@/types';
+import type { UniversalAudio } from '@/types';
 import { UNIVERSAL_AUDIO } from '@/data/voiceNotes';
 
 /**
@@ -16,7 +16,7 @@ export function getUniversalAudio(context: 'acknowledge' | 'comfort' | 'celebrat
  * Get context-specific audio based on user state
  */
 export function getContextAudio(
-  _programTrack: ProgramTrack,
+  _track: unknown,
   context: 'acknowledge' | 'comfort' | 'celebrate',
   variant?: 1 | 2 | 3
 ): UniversalAudio | null {

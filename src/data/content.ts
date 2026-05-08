@@ -1,4 +1,4 @@
-import type { Track, TrackContent, VoiceContext, DayContent, ProgramTrack } from '@/types';
+import type { Track, TrackContent, VoiceContext, DayContent } from '@/types';
 import { getTrackAudio } from './voiceNotes';
 
 export const assessmentQuestions = [
@@ -330,15 +330,7 @@ export function determineTrack(answers: number[]): Track {
 }
 
 export function getVoiceNotePath(track: Track, day: number, context: VoiceContext): string {
-  // Map old Track to new ProgramTrack
-  const programTrackMap: Record<Track, ProgramTrack> = {
-    'A': 'ketenangan',
-    'B': 'kenyamanan', 
-    'C': 'pulih'
-  };
-  
-  const programTrack = programTrackMap[track];
-  const audioData = getTrackAudio(programTrack, day);
+  const audioData = getTrackAudio(track, day);
   
   if (audioData && context === 'morning') {
     return audioData.morningAudioUrl;
