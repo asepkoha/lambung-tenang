@@ -224,19 +224,19 @@ export default function HomeScreen(props: HomeScreenProps) {
               );
 
               if (isToday) {
-                pillClass = 'bg-[#4BE066] shadow-[0_0_12px_rgba(75,224,102,0.4)]';
-                textClass = 'text-[#0F1412] font-bold';
-                icon = <Sprout size={22} className="text-[#0F1412]" strokeWidth={2.5} />;
+                pillClass = 'bg-lt-color-primary shadow-[0_0_12px_rgba(107,142,90,0.4)]';
+                textClass = 'text-white font-bold';
+                icon = <Sprout size={22} className="text-white" strokeWidth={2.5} />;
                 label = null;
               } else if (isDone) {
-                pillClass = 'bg-[rgba(75,224,102,0.12)]';
-                textClass = 'text-[#4BE066]';
-                icon = <CheckCircle2 size={18} className="text-[#4BE066]" strokeWidth={2.5} />;
+                pillClass = 'bg-[rgba(107,142,90,0.12)]';
+                textClass = 'text-lt-color-primary';
+                icon = <CheckCircle2 size={18} className="text-lt-color-primary" strokeWidth={2.5} />;
                 label = null;
               } else if (isFuture) {
                 pillClass = 'bg-[rgba(255,255,255,0.05)] opacity-40';
-                textClass = 'text-[#6E7B73]';
-                icon = <Lock size={12} className="text-[#6E7B73]" />;
+                textClass = 'text-lt-text-secondary';
+                icon = <Lock size={12} className="text-lt-text-secondary" />;
               }
 
               return (

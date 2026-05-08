@@ -6,31 +6,34 @@
   :root {
     /* Dark mode as default */
     /* Surfaces */
-    --bg-base:           #0F1412;
-    --bg-surface:        #151C18;
-    --bg-card:           #18211C;
-    --bg-elevated:       #1E2A22;
+    --bg-base:           #1a1f1b;
+    --bg-surface:        #232b24;
+    --bg-card:           var(--bg-surface);
+    --bg-elevated:       #2d3a2f;
+    --bg-subtle:         #3a4a3c;
 
     /* Border & Glow */
-    --border-subtle:     rgba(95,255,125,0.10);
-    --glow-soft:         rgba(72,255,110,0.18);
-    --glow-active:       rgba(75,224,102,0.25);
+    --border-subtle:     rgba(107,142,90,0.15);
+    --glow-soft:         rgba(107,142,90,0.18);
+    --glow-active:       rgba(107,142,90,0.25);
 
-    /* Primary Green */
-    --color-primary:     #4BE066;
-    --color-primary-hover: #5AF075;
-    --color-primary-bg:  rgba(75,224,102,0.12);
-    --color-primary-border: rgba(75,224,102,0.20);
+    /* Primary */
+    --color-primary:     #6B8E5A;
+    --color-primary-dark: #5a7a4a;
+    --color-primary-hover:#5a7a4a;
+    --color-primary-bg:  rgba(107,142,90,0.12);
+    --color-primary-border: rgba(107,142,90,0.20);
 
     /* Text */
-    --text-primary:      #F5F7F5;
-    --text-secondary:    #A8B3AC;
-    --text-muted:        #6E7B73;
+    --text-primary:      #e8f0e9;
+    --text-secondary:    #8fa891;
+    --text-muted:        #5a6b5c;
 
     /* Button */
-    --btn-primary-bg:    linear-gradient(135deg,#4BE066,#3acc55);
-    --btn-primary-text:  #0a1a0e;
-    --btn-primary-shadow: 0 4px 16px rgba(75,224,102,0.25);
+    --btn-primary-bg:    #6B8E5A;
+    --btn-primary-text:  #ffffff;
+    --btn-primary-hover:  #5a7a4a;
+    --btn-primary-shadow: none;
 
     /* Legacy HSL variables for shadcn compatibility */
     --sage: 128 40% 69%;
@@ -72,9 +75,14 @@
     --text-primary:   #2d2a26;
     --text-secondary: #6b6b6b;
     --text-muted:     #9e9e9e;
-    --color-primary:  #8fcf97;
-    --color-primary-dark: #6bbf76;
+    --color-primary:  #6B8E5A;
+    --color-primary-dark: #5a7a4a;
+    --color-primary-hover:#5a7a4a;
     --border-subtle:  #e8e8e8;
+    --bg-base-light:      #f5f3ef;
+    --bg-surface-light:   #ffffff;
+    --text-primary-light: #2d2a26;
+    --text-secondary-light:#6b6b6b;
 
     /* Legacy HSL variables for shadcn compatibility */
     --background: 120 13% 97%;
@@ -130,16 +138,16 @@
     color: var(--btn-primary-text);
     border: none;
     border-radius: 16px;
-    box-shadow: var(--btn-primary-shadow);
+    box-shadow: none;
   }
   .btn-primary:hover {
-    filter: brightness(1.05);
-    box-shadow: 0 6px 20px rgba(75,224,102,0.35);
+    background: var(--btn-primary-hover);
+    box-shadow: none;
   }
   .btn-primary:active {
     scale: 0.98;
-    background: linear-gradient(135deg,#5AF075,#4BE066);
-    box-shadow: 0 2px 8px rgba(75,224,102,0.35);
+    background: var(--btn-primary-hover);
+    box-shadow: none;
   }
   .btn-primary:disabled {
     background: rgba(255,255,255,0.05);
@@ -161,8 +169,8 @@
 
   /* Progress Bar fill gradient & glow */
   [data-slot="slider-range"] {
-    background: linear-gradient(90deg, #4BE066, #5AF075) !important;
-    box-shadow: 0 0 8px rgba(75, 224, 102, 0.4);
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark)) !important;
+    box-shadow: 0 0 8px rgba(107, 142, 90, 0.4);
   }
 
   .page-container {

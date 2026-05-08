@@ -29,9 +29,9 @@ export function BottomNav() {
                 key={tab.path}
                 to={tab.path}
                 className={`flex flex-col items-center justify-center gap-1 transition-all relative min-w-[70px] ${
-                  isActive ? 'text-[#4BE066]' : 'text-[#6E7B73]'
+                  isActive ? 'text-lt-color-primary' : 'text-lt-text-secondary'
                 }`}
-                style={isActive ? { filter: 'drop-shadow(0 0 4px rgba(75, 224, 102, 0.5))' } : {}}
+                style={isActive ? { filter: 'drop-shadow(0 0 4px rgba(107, 142, 90, 0.5))' } : {}}
               >
                 <tab.icon size={20} strokeWidth={isActive ? 2.5 : 2} fill={isActive ? 'currentColor' : 'none'} />
                 <span className="text-[9px] font-bold uppercase tracking-tighter">{tab.label}</span>

@@ -17,7 +17,7 @@ export default function CompletionPage() {
       rotate: Math.random() * 360,
       duration: Math.random() * 3 + 2,
       delay: Math.random() * 2,
-      color: ['#8FCF97', '#8FCF97', '#E6F1E8', '#F2D8C9'][Math.floor(Math.random() * 4)],
+      color: ['var(--color-primary)', 'var(--color-primary)', '#E6F1E8', '#F2D8C9'][Math.floor(Math.random() * 4)],
     }));
   });
 
