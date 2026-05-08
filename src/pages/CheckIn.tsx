@@ -96,7 +96,7 @@ export default function CheckIn() {
               </span>
             </div>
             <VoiceNotePlayer
-              track={profile.track || 'A'}
+              programTrack={profile.programTrack || 'ketenangan'}
               day={day}
               checkinData={checkinData}
               className="shadow-xl shadow-lt-color-primary/5 border border-lt-border-subtle"

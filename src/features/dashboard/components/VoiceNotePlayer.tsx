@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { Play, Pause } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
-import type { Track } from '@/types';
+import type { ProgramTrack } from '@/types';
 import { cn } from '@/lib/utils';
-import { getTodayVoiceNote } from '@/utils/selectVoiceContext';
-import { useEntries } from '@/hooks/useEntries';
+import { getTrackAudio } from '@/data/voiceNotes';
 
 interface VoiceNotePlayerProps {
-  track: Track;
+  programTrack: ProgramTrack;
   day: number;
   checkinData?: any;
   title?: string;
@@ -17,9 +16,8 @@ interface VoiceNotePlayerProps {
 
 const SPEED_OPTIONS = [1, 1.25, 1.5, 0.75];
 
-export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, className }: VoiceNotePlayerProps) {
-  const { entries: previousEntries } = useEntries();
-  const { context } = getTodayVoiceNote(track, day, checkinData, previousEntries);
+export function VoiceNotePlayer({ programTrack, day, checkinData: _checkinData, title, onComplete, className }: VoiceNotePlayerProps) {
+  const audioData = getTrackAudio(programTrack, day);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,14 +29,19 @@ export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, cl
 
   // Initialize audio
   useEffect(() => {
+    if (!audioData) {
+      setHasAudioFile(false);
+      setIsLoading(false);
+      return;
+    }
+
     let audio: HTMLAudioElement | null = null;
 
     try {
       audio = new Audio();
       audioRef.current = audio;
 
-      const dayStr = String(day).padStart(2, '0');
-      const audioUrl = `/audio/${track}/${dayStr}_${context}.mp3`;
+      const audioUrl = audioData.morningAudioUrl;
 
       const handleLoadedMetadata = () => {
         try {
@@ -99,7 +102,7 @@ export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, cl
         }
       };
     }
-  }, [track, day, context]);
+  }, [programTrack, day, audioData]);
 
   // Apply playback rate
   useEffect(() => {
@@ -125,7 +128,7 @@ export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, cl
         audioRef.current.play();
         setIsPlaying(true);
       } else {
-        const utterance = new SpeechSynthesisUtterance(context);
+        const utterance = new SpeechSynthesisUtterance(audioData?.morningTitle || 'Audio Pendamping');
         utterance.lang = 'id-ID';
         utterance.onend = () => {
           setIsPlaying(false);
@@ -167,9 +170,7 @@ export function VoiceNotePlayer({ track, day, checkinData, title, onComplete, cl
   const ctrlBtn = 'text-lt-text-secondary hover:text-lt-text-primary';
   const speedBtn = 'bg-lt-bg-subtle text-lt-text-primary hover:bg-lt-bg-subtle/70';
 
-  const containerBg = context === 'comfort' || context === 'acknowledge'
-    ? 'bg-lt-bg-surface border border-lt-border-subtle shadow-sm'
-    : 'bg-lt-bg-subtle border border-lt-border-subtle';
+  const containerBg = 'bg-lt-bg-subtle border border-lt-border-subtle';
 
   return (
     <div className={cn(containerBg, 'rounded-xl p-4 flex flex-col gap-3', className)}>

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { allTrackContent } from '@/data/content';
 import { useProfile } from '@/hooks/useProfile';
 import { useEntries } from '@/hooks/useEntries';
-import type { Track } from '@/types';
+import type { Track, ProgramTrack } from '@/types';
 import { AssessmentWizard } from '@/features/assessment/components/AssessmentWizard';
 
 export default function Assessment() {
@@ -16,17 +16,23 @@ export default function Assessment() {
   const [name, setName] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [track, setTrack] = useState<Track | null>(null);
+  const [programTrack, setProgramTrack] = useState<ProgramTrack | null>(null);
 
   const handleAssessmentComplete = (selectedTrack: string) => {
     setTrack(selectedTrack as Track);
     setShowResult(true);
   };
 
+  const handleProgramTrackSelect = (selectedProgramTrack: ProgramTrack) => {
+    setProgramTrack(selectedProgramTrack);
+  };
+
   const finish = () => {
-    if (track && name.trim()) {
+    if (track && programTrack && name.trim()) {
       updateProfile({
         name: name.trim(),
         track: track,
+        programTrack: programTrack,
         startDate: new Date().toISOString(),
         assessmentAnswers: [],
       });
@@ -35,7 +41,89 @@ export default function Assessment() {
     }
   };
 
-  if (showResult && track) {
+  if (showResult && track && !programTrack) {
+    const info = allTrackContent[track];
+    return (
+      <div className="page-container min-h-screen flex flex-col justify-between pt-8 pb-24 overflow-y-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mt-4 mb-4 flex-1 flex flex-col justify-center"
+        >
+          <div
+            className={cn(
+              "w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mb-4 overflow-hidden border-4 shadow-xl ring-4 ring-lt-bg-base shrink-0",
+              track === 'A' ? 'border-track-A' : track === 'B' ? 'border-track-B' : 'border-track-C'
+            )}
+          >
+            <img src={info.image} alt={info.name} className="w-full h-full object-cover bg-lt-bg-surface" />
+          </div>
+          <div className="space-y-1">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-lt-text-secondary">Analisis Selesai</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-lt-text-primary leading-tight">
+              {info.name}
+            </h2>
+          </div>
+          <p className="text-lt-text-secondary text-xs sm:text-sm leading-relaxed px-4 mt-3 bg-lt-bg-subtle py-3 rounded-2xl italic border border-lt-border-subtle">
+            "{info.description}"
+          </p>
+        </motion.div>
+
+        <div className="w-full pb-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="card-soft p-4 mb-4 border border-lt-border-subtle shadow-lg"
+          >
+            <label className="block text-sm font-bold text-lt-text-primary mb-4 text-center">
+              Apa yang paling sering kamu rasakan belakangan ini?
+            </label>
+            <div className="space-y-3">
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleProgramTrackSelect('ketenangan')}
+                className="w-full p-4 rounded-xl border border-lt-border-subtle bg-lt-bg-base hover:bg-lt-bg-surface transition-all text-left"
+              >
+                <div className="font-semibold text-lt-text-primary mb-1">Aku sering cemas, sulit tidur, pikiran berisik</div>
+                <div className="text-xs text-lt-text-secondary">Jalur Ketenangan</div>
+              </motion.button>
+              
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleProgramTrackSelect('kenyamanan')}
+                className="w-full p-4 rounded-xl border border-lt-border-subtle bg-lt-bg-base hover:bg-lt-bg-surface transition-all text-left"
+              >
+                <div className="font-semibold text-lt-text-primary mb-1">Perutku yang paling sering tidak nyaman — asam naik, kembung, begah</div>
+                <div className="text-xs text-lt-text-secondary">Jalur Kenyamanan</div>
+              </motion.button>
+              
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleProgramTrackSelect('pulih')}
+                className="w-full p-4 rounded-xl border border-lt-border-subtle bg-lt-bg-base hover:bg-lt-bg-surface transition-all text-left"
+              >
+                <div className="font-semibold text-lt-text-primary mb-1">Keduanya — perut dan pikiran sama-sama menguras energiku</div>
+                <div className="text-xs text-lt-text-secondary">Jalur Pulih Menyeluruh</div>
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
+
+  if (showResult && track && programTrack) {
     const info = allTrackContent[track];
     return (
       <div className="page-container min-h-screen flex flex-col justify-between pt-8 pb-24 overflow-y-auto">

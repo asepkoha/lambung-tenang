@@ -1,4 +1,3 @@
-import { getVoiceNote } from '@/data/voiceNotes';
 import type { Track, VoiceContext, DayEntry, CheckInData } from '@/types';
 
 // Check-in data from wizard (form data) before it's transformed to CheckInData
@@ -72,9 +71,10 @@ export function selectVoiceContext(
 /**
  * Gets the specific script and context for today's check-in.
  */
-export function getTodayVoiceNote(track: Track, day: number, checkinData: WizardCheckInData | CheckInData | null, previousEntries: DayEntry[] = []) {
+export function getTodayVoiceNote(_track: Track, _day: number, checkinData: WizardCheckInData | CheckInData | null, previousEntries: DayEntry[] = []) {
   const context = selectVoiceContext(checkinData, previousEntries);
-  const script = getVoiceNote(track, day, context);
+  // TODO: Implement script retrieval for new audio system
+  const script = '';
 
   return {
     context,

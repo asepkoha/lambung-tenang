@@ -1,5 +1,5 @@
-import type { Track, TrackContent, VoiceContext, DayContent } from '@/types';
-import { getVoiceNote } from './voiceNotes';
+import type { Track, TrackContent, VoiceContext, DayContent, ProgramTrack } from '@/types';
+import { getTrackAudio } from './voiceNotes';
 
 export const assessmentQuestions = [
   {
@@ -330,13 +330,26 @@ export function determineTrack(answers: number[]): Track {
 }
 
 export function getVoiceNotePath(track: Track, day: number, context: VoiceContext): string {
+  // Map old Track to new ProgramTrack
+  const programTrackMap: Record<Track, ProgramTrack> = {
+    'A': 'ketenangan',
+    'B': 'kenyamanan', 
+    'C': 'pulih'
+  };
+  
+  const programTrack = programTrackMap[track];
+  const audioData = getTrackAudio(programTrack, day);
+  
+  if (audioData && context === 'morning') {
+    return audioData.morningAudioUrl;
+  }
+  
+  // Fallback for other contexts or if no audio data
   return `/voice-notes/${track}-${String(day).padStart(2, '0')}-${context}.mp3`;
 }
 
-export function getVoiceNoteTranscript(track: Track, day: number, context: VoiceContext): string {
-  const script = getVoiceNote(track, day, context);
-  if (script) return script;
-
-  const dayContent = getDayContent(track, day);
-  return dayContent.voiceNotes[context] || dayContent.voiceNotes.morning;
+export function getVoiceNoteTranscript(_track: Track, _day: number, _context: VoiceContext): string {
+  // For now, return empty string as transcripts are not implemented in new system
+  // TODO: Add transcript support to new audio system
+  return '';
 }
