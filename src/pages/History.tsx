@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProfile } from '@/hooks/useProfile';
 import { useEntries } from '@/hooks/useEntries';
@@ -36,12 +35,17 @@ export default function History() {
   if (!profile) return null;
   const trackContent = allTrackContent[profile.track];
 
-  // Build chart data
-  const moodData = entries.map((e) => ({
-    day: e.dayNumber,
-    mood: e.checkInData?.mood || 0,
-    anxiety: e.checkInData?.anxietyLevel || 0,
-  }));
+  // Build chart data — always 14 slots, fill missing days with 0
+  const moodData = Array.from({ length: 14 }, (_, i) => {
+    const day = i + 1;
+    const entry = entries.find((e) => e.dayNumber === day);
+    return {
+      day,
+      mood: entry?.checkInData?.mood ?? 0,
+      anxiety: entry?.checkInData?.anxietyLevel ?? 0,
+      completed: entry?.completed ?? false,
+    };
+  });
 
 
   const toggleExpand = (day: number) => {
@@ -64,15 +68,15 @@ export default function History() {
           </div>
           <h2 className="text-xl font-bold text-lt-text-primary mb-3">Belum Ada Catatan</h2>
           <p className="text-lt-text-secondary text-sm leading-relaxed">
-            Perjalanan 14 harimu baru saja dimulai. Catatan harian dan tren mood-mu akan muncul di sini setelah kamu melakukan check-in pertamamu. 
+            Perjalanan 14 harimu baru saja dimulai. Catatan harian dan tren mood-mu akan muncul di sini setelah kamu menyelesaikan misi pertamamu. 
             <br/><br/>
             Mari melangkah bersama, satu hari demi satu hari dengan perlahan.
           </p>
         </motion.div>
       ) : (
         <>
-          {/* Mini charts - combined Mood & Anxiety */}
-      {moodData.length > 1 && (
+      {/* Mini charts - combined Mood & Anxiety */}
+      {entries.length > 0 && (
         <div className="card-soft p-5 mb-6">
           <div className="flex items-center gap-2 mb-3">
             <TrendingUp size={18} className="text-lt-color-primary" />
@@ -91,40 +95,38 @@ export default function History() {
             </div>
           </div>
 
-          {/* Combined bar chart */}
-          <div className="flex items-end gap-1 h-20">
+          {/* Combined bar chart — 14 fixed slots */}
+          <div className="flex items-end gap-0.5 h-20">
             {moodData.map((d) => (
-              <div key={d.day} className="flex-1 flex items-end gap-0.5 h-full">
-                {/* Mood bar - normalized to max 5 */}
+              <div key={d.day} className="flex-1 flex items-end gap-px h-full">
+                {/* Mood bar — scale: 1-5 → 20%-100% */}
                 <div
-                  className={cn(
-                    "flex-1 bg-lt-color-primary/40 rounded-t-sm",
-                    d.mood === 1 ? "h-1/5" : d.mood === 2 ? "h-2/5" : d.mood === 3 ? "h-3/5" : d.mood === 4 ? "h-4/5" : "h-full"
-                  )}
-                  title={`Mood: ${d.mood}/5`}
+                  className="flex-1 rounded-t-sm transition-all"
+                  style={{
+                    height: d.mood > 0 ? `${(d.mood / 5) * 100}%` : '2px',
+                    backgroundColor: d.completed
+                      ? 'var(--color-primary)'
+                      : 'var(--bg-subtle)',
+                    opacity: d.mood > 0 ? 0.7 : 0.2,
+                  }}
+                  title={d.mood > 0 ? `H${d.day} Mood: ${d.mood}/5` : `H${d.day} belum misi`}
                 />
-                {/* Anxiety bar - normalized to max 10 */}
+                {/* Anxiety bar — scale: 1-10 → 10%-100% */}
                 <div
-                  className={cn(
-                    "flex-1 bg-anxiety rounded-t-sm",
-                    d.anxiety === 1 ? "h-1/10" : 
-                    d.anxiety === 2 ? "h-2/10" : 
-                    d.anxiety === 3 ? "h-3/10" : 
-                    d.anxiety === 4 ? "h-4/10" : 
-                    d.anxiety === 5 ? "h-5/10" : 
-                    d.anxiety === 6 ? "h-6/10" : 
-                    d.anxiety === 7 ? "h-7/10" : 
-                    d.anxiety === 8 ? "h-8/10" : 
-                    d.anxiety === 9 ? "h-9/10" : "h-full"
-                  )}
-                  title={`Anxiety: ${d.anxiety}/10`}
+                  className="flex-1 rounded-t-sm transition-all"
+                  style={{
+                    height: d.anxiety > 0 ? `${(d.anxiety / 10) * 100}%` : '2px',
+                    backgroundColor: d.completed ? '#F2D8C9' : 'var(--bg-subtle)',
+                    opacity: d.anxiety > 0 ? 0.85 : 0.2,
+                  }}
+                  title={d.anxiety > 0 ? `H${d.day} Anxiety: ${d.anxiety}/10` : `H${d.day} belum misi`}
                 />
               </div>
             ))}
           </div>
           <div className="flex justify-between text-[8px] text-lt-text-secondary mt-1">
             <span>H1</span>
-            <span>H{moodData[moodData.length - 1]?.day}</span>
+            <span>H14</span>
           </div>
         </div>
       )}
@@ -156,7 +158,7 @@ export default function History() {
                   <div>
                     <p className="text-sm font-bold text-lt-text-primary">{dayContent.title}</p>
                     <p className="text-xs text-lt-text-secondary">
-                      {entry?.completed ? 'Check-in selesai' : 'Belum check-in'}
+                      {entry?.completed ? 'Misi selesai' : 'Belum misi'}
                     </p>
                   </div>
                 </div>

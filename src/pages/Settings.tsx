@@ -402,7 +402,7 @@ export default function Settings() {
           >
             <h3 className="text-lg font-bold text-lt-text-primary mb-2">Izinkan Pengingat?</h3>
             <p className="text-sm text-lt-text-secondary mb-6">
-              Kami akan mengingatkan Anda untuk check-in setiap hari melalui notifikasi aplikasi.
+              Kami akan mengingatkan Anda untuk menyelesaikan misi setiap hari melalui notifikasi aplikasi.
             </p>
             <div className="flex gap-3">
               <button
@@ -432,7 +432,7 @@ export default function Settings() {
           >
             <h3 className="text-lg font-bold text-lt-text-primary mb-2">Hapus Semua Data?</h3>
             <p className="text-sm text-lt-text-secondary mb-6">
-              Tindakan ini tidak bisa dibatalkan. Semua check-in, profil, dan pengaturan akan hilang.
+              Tindakan ini tidak bisa dibatalkan. Semua misi, profil, dan pengaturan akan hilang.
             </p>
             <div className="flex gap-3">
               <button

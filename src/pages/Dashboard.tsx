@@ -302,7 +302,7 @@ export default function HomeScreen(props: HomeScreenProps) {
                 onClick={handleCheckIn}
                 className="flex-1 flex items-center justify-center gap-2 h-12 rounded-full bg-lt-color-primary hover:bg-lt-color-primary/90 text-white font-medium text-sm transition-colors shadow-sm"
               >
-                {todayEntry?.completed ? 'Update Check-in' : 'Yuk, Cerita Kondisi Hari Ini'}
+                {todayEntry?.completed ? 'Update Misi' : 'Yuk, Cerita Kondisi Hari Ini'}
               </button>
               <button
                 onClick={handleViewDay}

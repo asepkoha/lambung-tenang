@@ -12,7 +12,7 @@ const slides = [
   },
   {
     image: 'onboarding-2.webp',
-    title: 'Check-in Harian, Bertahap',
+    title: 'Misi Harian, Bertahap',
     text: 'Setiap hari, kamu akan menulis perasaan, gejala, dan kegiatan. Tidak dikejar, tidak di-judge. Satu langkah kecil setiap hari.',
   },
   {

@@ -29,6 +29,9 @@
     --text-secondary:    #8fa891;
     --text-muted:        #5a6b5c;
 
+    /* Navigation */
+    --nav-bg:            rgba(0, 0, 0, 0.95);
+
     /* Button */
     --btn-primary-bg:    #6B8E5A;
     --btn-primary-text:  #ffffff;
@@ -79,6 +82,7 @@
     --color-primary-dark: #5a7a4a;
     --color-primary-hover:#5a7a4a;
     --border-subtle:  #e8e8e8;
+    --nav-bg:         rgba(255, 255, 255, 0.95);
     --bg-base-light:      #f5f3ef;
     --bg-surface-light:   #ffffff;
     --text-primary-light: #2d2a26;
@@ -207,7 +211,7 @@
   .border-track-C { border-color: #D4A373; }
 
   .glass-nav {
-    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
   }
 }

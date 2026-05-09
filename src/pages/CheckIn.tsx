@@ -68,7 +68,7 @@ export default function CheckIn() {
     addEntry(newEntry);
     setCheckinData(newEntry.checkInData ?? null);
     setShowSummary(true);
-    toast.success("Check-in hari ini tersimpan ✓");
+    toast.success("Misi hari ini tersimpan ✓");
   };
 
   const handleDone = () => {
@@ -86,7 +86,7 @@ export default function CheckIn() {
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-lt-color-primary/10 rounded-full flex items-center justify-center mb-4 shrink-0">
             <Star size={32} className="text-lt-color-primary fill-lt-color-primary" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-lt-text-primary mb-1">Check-in Selesai</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-lt-text-primary mb-1">Misi Selesai 🌿</h2>
           <p className="text-lt-text-secondary text-xs sm:text-sm mb-8">Terima kasih sudah menemani dirimu hari ini.</p>
 
           <div className="w-full space-y-3 mb-8">
@@ -117,7 +117,7 @@ export default function CheckIn() {
   return (
     <div className="page-container min-h-screen flex flex-col pt-6 pb-24 overflow-y-auto">
       <div className="mb-4 shrink-0 text-center">
-        <h1 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Check-in Hari {day}</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-lt-text-primary">Misi Hari {day}</h1>
         <p className="text-[10px] sm:text-sm text-lt-text-secondary italic">"{dayContent.subtitle}"</p>
       </div>
       

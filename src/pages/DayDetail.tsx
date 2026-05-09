@@ -139,13 +139,13 @@ export default function DayDetail() {
         </motion.div>
       </div>
 
-      {/* Check-in CTA */}
+      {/* Misi CTA */}
       <div className="pt-2">
         <button
           onClick={() => navigate(`/checkin/${day}`)}
           className="btn-primary w-full"
         >
-          {day === new Date().getDate() ? 'Check-in Hari Ini' : `Check-in Hari ${day}`}
+          {day === new Date().getDate() ? 'Misi Hari Ini' : `Misi Hari ${day}`}
         </button>
       </div>
     </div>
