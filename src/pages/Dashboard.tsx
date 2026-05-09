@@ -254,11 +254,7 @@ export default function HomeScreen(props: HomeScreenProps) {
                 >
                   {icon}
                   {label}
-                  {isToday && (
-                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] font-bold text-lt-color-primary whitespace-nowrap">
-                      Hari {dayNum}
-                    </span>
-                  )}
+
                 </motion.button>
               );
             })}
