@@ -2,7 +2,6 @@ import type { DayAudio, UniversalAudio, Track } from '@/types';
 
 // Track A — Ketenangan (Anxiety)
 export const TRACK_A: DayAudio[] = [
-  { day: 0, track: 'A', morningAudioUrl: '/audio/A/0_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
   { day: 1, track: 'A', morningAudioUrl: '/audio/A/01_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
   { day: 2, track: 'A', morningAudioUrl: '/audio/A/2_morning.mp3', morningTitle: 'Memberi Izin untuk Lelah', isUnlocked: false },
   { day: 3, track: 'A', morningAudioUrl: '/audio/A/3_morning.mp3', morningTitle: 'Mengenal Sinyal, Bukan Ancaman', isUnlocked: false },
@@ -21,7 +20,6 @@ export const TRACK_A: DayAudio[] = [
 
 // Track B — Kenyamanan (GERD)
 export const TRACK_B: DayAudio[] = [
-  { day: 0, track: 'B', morningAudioUrl: '/audio/G/0_morning.mp3', morningTitle: 'Lambungmu Bukan Musuhmu', isUnlocked: false },
   { day: 1, track: 'B', morningAudioUrl: '/audio/G/1_morning.mp3', morningTitle: 'Mengenal Cara Kerja Lambungmu', isUnlocked: false },
   { day: 2, track: 'B', morningAudioUrl: '/audio/G/2_morning.mp3', morningTitle: 'Hubungan Makanan dan Perasaanmu', isUnlocked: false },
   { day: 3, track: 'B', morningAudioUrl: '/audio/G/3_morning.mp3', morningTitle: 'Tiga Kebiasaan Kecil yang Besar Dampaknya', isUnlocked: false },
@@ -41,7 +39,6 @@ export const TRACK_B: DayAudio[] = [
 // Track C — Pulih Seutuhnya (Mix A + B)
 // Ganjil → Track A, Genap → Track B
 export const TRACK_C: DayAudio[] = [
-  { day: 0,  track: 'C', morningAudioUrl: '/audio/A/0_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
   { day: 1,  track: 'C', morningAudioUrl: '/audio/A/01_morning.mp3', morningTitle: 'Menjemput Rasa Aman', isUnlocked: false },
   { day: 2,  track: 'C', morningAudioUrl: '/audio/G/2_morning.mp3', morningTitle: 'Hubungan Makanan dan Perasaanmu', isUnlocked: false },
   { day: 3,  track: 'C', morningAudioUrl: '/audio/A/3_morning.mp3', morningTitle: 'Mengenal Sinyal, Bukan Ancaman', isUnlocked: false },
