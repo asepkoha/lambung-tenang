@@ -69,7 +69,8 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
         onComplete?.();
       };
 
-      const handleError = (_e: Event) => {
+      const handleError = (e: Event) => {
+        console.warn('Audio load error, falling back to SpeechSynthesis:', e);
         setHasAudioFile(false);
         setIsLoading(false);
       };
@@ -81,6 +82,13 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
 
       setIsLoading(true);
       audio.src = audioUrl;
+      // Pre-check if URL is valid (basic)
+      if (!audioUrl) {
+        setHasAudioFile(false);
+        setIsLoading(false);
+        return;
+      }
+      
       audio.load();
 
       return () => {
@@ -95,6 +103,7 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
       };
     } catch (e) {
       console.error('Error initializing audio:', e);
+      setHasAudioFile(false);
       setIsLoading(false);
       return () => {
         if (audio) {
@@ -119,21 +128,35 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
   };
 
   const handleTogglePlay = () => {
-    if (!audioRef.current) return;
+    if (!audioRef.current && !hasAudioFile) {
+       // Manual fallback if ref is null but we want to play
+    }
 
     if (isPlaying) {
-      audioRef.current.pause();
+      if (hasAudioFile && audioRef.current) {
+        audioRef.current.pause();
+      } else {
+        window.speechSynthesis.cancel();
+      }
       setIsPlaying(false);
     } else {
-      if (hasAudioFile) {
-        audioRef.current.play();
+      if (hasAudioFile && audioRef.current) {
+        audioRef.current.play().catch(err => {
+          console.error("Playback failed, falling back:", err);
+          setHasAudioFile(false);
+          handleTogglePlay(); // Retry with fallback
+        });
         setIsPlaying(true);
       } else {
-        const utterance = new SpeechSynthesisUtterance(audioData?.morningTitle || 'Audio Pendamping');
+        const textToSpeak = audioData?.morningTitle || 'Audio Pendamping';
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
         utterance.lang = 'id-ID';
         utterance.onend = () => {
           setIsPlaying(false);
           onComplete?.();
+        };
+        utterance.onerror = () => {
+          setIsPlaying(false);
         };
         setIsPlaying(true);
         window.speechSynthesis.speak(utterance);
@@ -181,9 +204,16 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
     <div className={cn(containerBg, 'rounded-xl p-4 flex flex-col gap-3', className)}>
       {/* Top: label + timer */}
       <div className="flex items-center justify-between">
-        <span className={cn('text-[10px] uppercase font-bold tracking-wider', audioType === 'morning' ? labelColor : timerColor)}>
-          {playerHeading}
-        </span>
+        <div className="flex flex-col">
+          <span className={cn('text-[10px] uppercase font-bold tracking-wider', audioType === 'morning' ? labelColor : timerColor)}>
+            {playerHeading}
+          </span>
+          {!hasAudioFile && !isLoading && (
+            <span className="text-[9px] text-lt-color-primary font-medium opacity-70 italic">
+              Menggunakan AI Voice
+            </span>
+          )}
+        </div>
         <span className={cn('text-xs font-medium', timerColor)}>
           {formatTime(currentTime)} / {hasAudioFile ? formatTime(duration) : '--:--'}
         </span>

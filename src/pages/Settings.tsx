@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { exportData, importData, clearAllData } from '@/hooks/useStorage';
-import { useNotification } from '@/hooks/useAudio';
+import { useNotification } from '@/hooks/useNotification';
 import type { DayEntry, VoiceContext } from '@/types';
 import { Bell, Download, Upload, Trash2, Info, ChevronRight, Leaf, Clock, FlaskConical, Moon } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';

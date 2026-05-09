@@ -1,6 +1,6 @@
 import { useLocalStorage } from './useStorage';
 import type { AppSettings } from '@/types';
-import { STORAGE_KEYS } from '@/types';
+import { STORAGE_KEYS } from '@/config/constants';
 
 const defaultSettings: AppSettings = {
   reminderEnabled: false,

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { STORAGE_KEYS } from '@/types';
+import { STORAGE_KEYS } from '@/config/constants';
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -36,15 +36,17 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
   const setValue = useCallback(
     (value: T | ((val: T) => T)) => {
       try {
-        const valueToStore = value instanceof Function ? value(storedValue) : value;
-        setStoredValue(valueToStore);
-        localStorage.setItem(key, JSON.stringify(valueToStore));
-        window.dispatchEvent(new CustomEvent('local-storage-sync', { detail: { key } }));
+        setStoredValue((prev) => {
+          const valueToStore = value instanceof Function ? value(prev) : value;
+          localStorage.setItem(key, JSON.stringify(valueToStore));
+          window.dispatchEvent(new CustomEvent('local-storage-sync', { detail: { key } }));
+          return valueToStore;
+        });
       } catch (error) {
         console.error('Error writing localStorage', error);
       }
     },
-    [key, storedValue]
+    [key]
   );
 
   return [storedValue, setValue] as const;

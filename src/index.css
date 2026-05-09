@@ -205,4 +205,9 @@
   .border-track-A { border-color: #8FBC8F; }
   .border-track-B { border-color: #F4A460; }
   .border-track-C { border-color: #D4A373; }
+
+  .glass-nav {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }

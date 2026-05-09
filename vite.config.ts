@@ -8,7 +8,26 @@ import { inspectAttr } from 'kimi-plugin-inspect-react'
 export default defineConfig({
   base: '/',
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // React core — rarely changes, long cache lifetime
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          // Animation library — large, isolate for caching
+          'vendor-motion': ['framer-motion'],
+          // Radix UI components — changes only on shadcn upgrades
+          'vendor-radix': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-slider',
+            '@radix-ui/react-switch',
+            '@radix-ui/react-select',
+            '@radix-ui/react-accordion',
+          ],
+        },
+      },
+    },
   },
   plugins: [
     inspectAttr(),

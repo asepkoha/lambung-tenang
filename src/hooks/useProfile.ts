@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useLocalStorage, removeStorageItem } from './useStorage';
 import type { UserProfile } from '@/types';
-import { STORAGE_KEYS } from '@/types';
+import { STORAGE_KEYS } from '@/config/constants';
 
 export function useProfile() {
   const [profile, setProfile] = useLocalStorage<UserProfile | null>(STORAGE_KEYS.profile, null);

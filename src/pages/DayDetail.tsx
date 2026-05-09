@@ -1,7 +1,8 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getDayContent } from '@/data/content';
 import { useProfile } from '@/hooks/useProfile';
+import { getCurrentDay } from '@/utils/programUtils';
 import { ChevronLeft, CheckCircle2, Circle, Moon, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { VoiceNotePlayer } from '@/features/dashboard/components/VoiceNotePlayer';
@@ -15,6 +16,14 @@ export default function DayDetail() {
   if (!profile || !dayNumber) return null;
 
   const day = parseInt(dayNumber, 10);
+  const currentDay = getCurrentDay(profile.startDate);
+  const isFuture = day > currentDay;
+
+  // Protect route: redirect to dashboard if day is locked
+  if (isFuture) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   const content = getDayContent(profile.track, day);
 
   const toggleMission = (i: number) => {

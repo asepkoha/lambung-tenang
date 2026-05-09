@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useLocalStorage } from './useStorage';
 import type { DayEntry } from '@/types';
-import { STORAGE_KEYS } from '@/types';
+import { STORAGE_KEYS } from '@/config/constants';
 
 export function useEntries() {
   const [entries, setEntries] = useLocalStorage<DayEntry[]>(STORAGE_KEYS.entries, []);

@@ -11,3 +11,11 @@ export const DOSE_SCHEDULE_3X = [5, 13, 21];   // jam: 05.00, 13.00, 21.00
 export const DOSE_SCHEDULE_2X = [6, 18];        // jam: 06.00, 18.00
 export const DOSE_SCHEDULE_OFFSET_MAX = 2;      // maksimal geser ±2 jam
 export const FASE3_START_DAY = 10;
+
+// Kunci LocalStorage — semua storage key terpusat di sini
+export const STORAGE_KEYS = {
+  profile: 'lt-profile',
+  entries: 'lt-entries',
+  settings: 'lt-settings',
+  firstVisit: 'lt-first-visit',
+} as const;

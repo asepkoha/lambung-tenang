@@ -79,9 +79,3 @@ export interface TrackContent {
   days: DayContent[];
 }
 
-export const STORAGE_KEYS = {
-  profile: 'lt-profile',
-  entries: 'lt-entries',
-  settings: 'lt-settings',
-  firstVisit: 'lt-first-visit',
-} as const;
