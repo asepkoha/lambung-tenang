@@ -23,20 +23,12 @@ export function useAudioPlayer() {
     hasAudioFile: false,
   });
 
-  const checkAudioFile = useCallback(async (track: Track, day: number, context: VoiceContext): Promise<boolean> => {
-    const path = getVoiceNotePath(track, day, context);
-    try {
-      const response = await fetch(path, { method: 'HEAD' });
-      return response.ok;
-    } catch {
-      return false;
-    }
-  }, []);
-
   const playTTS = useCallback((track: Track, day: number, context: VoiceContext) => {
     if (!window.speechSynthesis) return;
 
     const text = getVoiceNoteTranscript(track, day, context);
+    if (!text) return;
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'id-ID';
     utterance.rate = 0.9;
@@ -88,38 +80,52 @@ export function useAudioPlayer() {
 
     setState((s) => ({ ...s, isLoading: true, isPlaying: false, currentTime: 0, duration: 0 }));
 
-    const hasFile = await checkAudioFile(track, day, context);
-    setState((s) => ({ ...s, hasAudioFile: hasFile, isLoading: false }));
+    // Instead of HEAD check (which CORS blocks on R2), try to play directly.
+    // If the audio file fails to load, fall back to TTS.
+    const path = getVoiceNotePath(track, day, context);
+    const audio = new Audio();
+    audioRef.current = audio;
 
-    if (hasFile) {
-      const path = getVoiceNotePath(track, day, context);
-      const audio = new Audio(path);
-      audioRef.current = audio;
+    audio.addEventListener('loadedmetadata', () => {
+      setState((s) => ({ ...s, duration: audio.duration, hasAudioFile: true, isLoading: false }));
+    });
 
-      audio.addEventListener('loadedmetadata', () => {
-        setState((s) => ({ ...s, duration: audio.duration }));
-      });
+    audio.addEventListener('canplaythrough', () => {
+      setState((s) => ({ ...s, isLoading: false }));
+    });
 
-      audio.addEventListener('ended', () => {
-        setState((s) => ({ ...s, isPlaying: false, currentTime: 0 }));
-        if (timerRef.current) clearInterval(timerRef.current);
-      });
+    audio.addEventListener('ended', () => {
+      setState((s) => ({ ...s, isPlaying: false, currentTime: 0 }));
+      if (timerRef.current) clearInterval(timerRef.current);
+    });
 
-      audio.addEventListener('error', () => {
-        // Fallback to TTS
+    audio.addEventListener('error', () => {
+      // Audio file not available on R2, fallback to TTS
+      console.warn(`Audio not available at ${path}, falling back to TTS`);
+      setState((s) => ({ ...s, hasAudioFile: false, isLoading: false }));
+      playTTS(track, day, context);
+    });
+
+    timerRef.current = setInterval(() => {
+      if (audioRef.current) {
+        setState((s) => ({ ...s, currentTime: audioRef.current?.currentTime ?? s.currentTime }));
+      }
+    }, 500);
+
+    audio.src = path;
+    audio.load();
+
+    audio.play()
+      .then(() => {
+        setState((s) => ({ ...s, isPlaying: true, hasAudioFile: true, isLoading: false }));
+      })
+      .catch(() => {
+        // Autoplay blocked or file error — fallback to TTS
+        console.warn('Autoplay blocked or error, falling back to TTS');
+        setState((s) => ({ ...s, hasAudioFile: false, isLoading: false }));
         playTTS(track, day, context);
       });
-
-      timerRef.current = setInterval(() => {
-        setState((s) => ({ ...s, currentTime: audio.currentTime }));
-      }, 500);
-
-      audio.play().catch(() => playTTS(track, day, context));
-      setState((s) => ({ ...s, isPlaying: true }));
-    } else {
-      playTTS(track, day, context);
-    }
-  }, [checkAudioFile, playTTS]);
+  }, [playTTS]);
 
   const pause = useCallback(() => {
     if (audioRef.current) {
@@ -185,4 +191,3 @@ export function useAudioPlayer() {
     stop,
   };
 }
-

@@ -80,15 +80,15 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
       audio.addEventListener('ended', handleEnded);
       audio.addEventListener('error', handleError);
 
-      setIsLoading(true);
-      audio.src = audioUrl;
       // Pre-check if URL is valid (basic)
       if (!audioUrl) {
         setHasAudioFile(false);
         setIsLoading(false);
         return;
       }
-      
+
+      setIsLoading(true);
+      audio.src = audioUrl;
       audio.load();
 
       return () => {

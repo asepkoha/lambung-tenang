@@ -336,12 +336,20 @@ export function getVoiceNotePath(track: Track, day: number, context: VoiceContex
     return audioData.morningAudioUrl;
   }
   
-  // Fallback for other contexts or if no audio data
-  return `/voice-notes/${track}-${String(day).padStart(2, '0')}-${context}.mp3`;
+  // Fallback for other contexts — also use R2
+  const R2_BASE_URL = 'https://audio.kangasep.my.id';
+  return `${R2_BASE_URL}/voice-notes/${track}-${String(day).padStart(2, '0')}-${context}.mp3`;
 }
 
-export function getVoiceNoteTranscript(_track: Track, _day: number, _context: VoiceContext): string {
-  // For now, return empty string as transcripts are not implemented in new system
-  // TODO: Add transcript support to new audio system
-  return '';
+export function getVoiceNoteTranscript(track: Track, day: number, context: VoiceContext): string {
+  // Return transcript text from DayContent voiceNotes for TTS fallback
+  try {
+    const dayContent = allTrackContent[track]?.days.find((d) => d.dayNumber === day);
+    if (dayContent?.voiceNotes?.[context]) {
+      return dayContent.voiceNotes[context];
+    }
+  } catch {
+    // ignore
+  }
+  return 'Audio pendamping sedang dimuat. Silakan coba lagi nanti.';
 }
