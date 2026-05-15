@@ -3,7 +3,8 @@ import { Play, Pause } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import type { Track } from '@/types';
 import { cn } from '@/lib/utils';
-import { getTrackAudio } from '@/data/voiceNotes';
+import { getTrackAudio, UNIVERSAL_AUDIO } from '@/data/voiceNotes';
+import { selectVoiceContext } from '@/utils/selectVoiceContext';
 
 interface VoiceNotePlayerProps {
   track: Track;
@@ -20,6 +21,22 @@ const SPEED_OPTIONS = [1, 1.25, 1.5, 0.75];
 export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData: _checkinData, title, onComplete, className }: VoiceNotePlayerProps) {
   const audioData = getTrackAudio(track, day);
 
+  // Determine which audio to play
+  let targetAudioUrl = '';
+  let targetAudioTitle = '';
+
+  if (audioType === 'morning') {
+    targetAudioUrl = audioData?.morningAudioUrl || '';
+    targetAudioTitle = audioData?.morningTitle || 'Audio Pendamping';
+  } else {
+    const context = selectVoiceContext(_checkinData);
+    const validContext = context === 'morning' ? 'comfort' : (context as 'acknowledge' | 'comfort' | 'celebrate');
+    const variantIndex = (day - 1) % 3; // Cycle through 0, 1, 2
+    const univAudio = UNIVERSAL_AUDIO[validContext][variantIndex];
+    targetAudioUrl = univAudio?.audioUrl || '';
+    targetAudioTitle = univAudio?.label || 'Pesan untuk Hari Ini';
+  }
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -30,7 +47,7 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
 
   // Initialize audio
   useEffect(() => {
-    if (!audioData) {
+    if (!targetAudioUrl) {
       setHasAudioFile(false);
       setIsLoading(false);
       return;
@@ -42,7 +59,7 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
       audio = new Audio();
       audioRef.current = audio;
 
-      const audioUrl = audioData.morningAudioUrl;
+      const audioUrl = targetAudioUrl;
 
       const handleLoadedMetadata = () => {
         try {
@@ -148,7 +165,7 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
         });
         setIsPlaying(true);
       } else {
-        const textToSpeak = audioData?.morningTitle || 'Audio Pendamping';
+        const textToSpeak = targetAudioTitle;
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
         utterance.lang = 'id-ID';
         utterance.onend = () => {
@@ -196,9 +213,7 @@ export function VoiceNotePlayer({ track, day, audioType = 'morning', checkinData
 
   const containerBg = 'bg-lt-bg-subtle border border-lt-border-subtle';
 
-  const playerHeading = title ?? (audioType === 'morning'
-    ? audioData?.morningTitle || 'Audio Pendamping · Pagi'
-    : 'Pesan untuk Hari Ini');
+  const playerHeading = title ?? targetAudioTitle;
 
   return (
     <div className={cn(containerBg, 'rounded-xl p-4 flex flex-col gap-3', className)}>
